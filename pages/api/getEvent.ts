@@ -8,11 +8,10 @@ const prepareSessions = (e: ServerEvent[]): Session[] => {
     const availableSeats = ((e[i].limit - e[i].RSVP.length) > 0) ? (e[i].limit - e[i].RSVP.length) : 0;
     const noLimit = (e[i].limit == 0);
     sessions.push({
+      id: e[i].id,
       startDateTime: e[i].startDateTime,
-      timezone: e[i].timezone,
       availableSeats,
       totalSeats: e[i].limit,
-      offset: e[i].offset,
       noLimit,
     });
   }

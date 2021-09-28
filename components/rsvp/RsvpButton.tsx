@@ -1,21 +1,29 @@
 const RsvpButton = ({
   handleClick,
+  disabled,
 }: {
   handleClick:any
+  disabled: boolean
 }) => {
   return (
     <button
-      className="
-        bg-primary rounded-lg
-        py-2
-        mt-4
-        text-gray-200
+      className={`
+        ${disabled? `
+          bg-gray-400 
+          text-gray-600 
+          cursor-not-allowed` :
+          `bg-primary
+          text-gray-200
+          hover:bg-primary-dark
+        `}
         font-nato
+        py-2
+        rounded-lg
         text-lg
         uppercase
-        hover:bg-primary-dark
-      "
+      `}
       onClick={handleClick}
+      disabled={disabled}
     >
       {`RSVP →`}
     </button>

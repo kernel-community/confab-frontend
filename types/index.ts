@@ -1,9 +1,8 @@
 export type Session = {
-  startDateTime?: Date,
-  timezone?: string,
+  id?:number,
+  startDateTime?: string,
   availableSeats?: number
   totalSeats?: number
-  offset?: number
   noLimit?: boolean
 }
 
@@ -21,10 +20,8 @@ export type ServerEvent = {
   title: string
   descriptionText: string | null
   descriptionHtml: string | null
-  startDateTime: Date
-  endDateTime: Date
-  offset: number
-  timezone: string
+  startDateTime: string
+  endDateTime: string
   location: string
   hash: string
   series: boolean

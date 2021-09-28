@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable no-invalid-this */
 import Image from 'next/image';
 import personVector from '../../public/vectors/person.png';
@@ -7,21 +8,45 @@ import FieldLabel from '../form/FieldLabel';
 import RsvpButton from './RsvpButton';
 import {useState} from 'react';
 import {Session as ClientSession} from '../../types';
+import {DateTime} from 'luxon';
+
+const isPast = (date: string): boolean => {
+  const zone = DateTime.local().zoneName;
+  const time = DateTime.fromISO(date, {zone});
+  const now = DateTime.local();
+  return now > time;
+};
+const getDateTimeString = (
+    date: string, // iso string with offset
+    option: 'date' | 'time',
+): string => {
+  const zone = DateTime.local().zoneName;
+  const time = DateTime.fromISO(date, {zone});
+  switch (option) {
+    case 'date':
+      return time.toFormat('d LLL, yyyy');
+      break;
+    case 'time':
+      return time.toFormat('hh:mm a');
+    default: return '';
+  }
+};
+
 const Session = ({
   active,
   handleClick,
   data,
-  startDateTime,
-  offset,
+  date,
+  time,
   availableSeats,
   totalSeats,
-  noLimit
+  noLimit,
 }: {
   active: boolean
   handleClick: any
-  data:number
-  startDateTime: Date
-  offset: number
+  data: number
+  date: string
+  time: string
   availableSeats?: number
   totalSeats?: number
   noLimit?:boolean
@@ -41,32 +66,30 @@ const Session = ({
         py-2
         font-inter 
         flex flex-row items-center justify-center
-        gap-3
+        gap-5
       `}
     >
       <input
-        onChange={() => handleClick(data)}
+        onChange={(e) => handleClick(data, e.target.checked)}
         disabled={!active}
         type="checkbox"
         className={`
           ${!active? `text-gray-500` : ``}
-          p-2 rounded-sm
+          p-2 rounded-md
           text-primary border-gray-300
           cursor-pointer
           focus:border-primary focus:ring-primary
         `}
       />
       <div
-        className="flex flex-col"
+        className="flex flex-col gap-1"
       >
-        <div>
-          {
-            new Date(startDateTime).toDateString()
-          }
+        <div className="text-sm">
+          {`${date} at ${time}`}
         </div>
         {noLimit ? <></> : (<div
           className="
-          flex flex-row items-center text-sm
+          flex flex-row items-center text-xs
           gap-1
         "
         >
@@ -106,7 +129,7 @@ const RsvpForAllButton = ({
     >
       <input
         type="checkbox"
-        onChange={handleClick}
+        onChange={(e) => handleClick(e.target.checked)}
         className="
           p-2 rounded-sm
           text-primary border-gray-300
@@ -121,41 +144,72 @@ const RsvpForAllButton = ({
   );
 };
 
-const SessionsWrapper = ({
-  sessions,
-}: {
-  sessions: ClientSession[]
-}) => {
-  // maintain selected/not-selected objects of sessions from the data
-  // given from parent
-  // submit to api
+const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
   const [showSessions, setShowSessions] = useState<boolean>(true);
-  const handleSessionSelect = (e:number) => {
-    console.log(e);
+  const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);
+  const [email, setEmail] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSessionSelect = (id:number, checked: boolean) => {
+    switch (checked) {
+      case true:
+        setToRsvp([...toRsvp, id]);
+        break;
+      case false:
+        setToRsvp(toRsvp.filter((r) => r!=id));
+        break;
+      default: '';
+    }
   };
-  const handleAllSessionsSelect = () => {
+  const handleAllSessionsSelect = (checked: boolean) => {
     setShowSessions(!showSessions);
+    switch (checked) {
+      case true:
+        setToRsvp(sessions.map((s) => s.id));
+        break;
+      case false:
+        setToRsvp([]);
+        break;
+      default: '';
+    }
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('submitting now');
+    console.log('email', email);
+    console.log('to rsvp', toRsvp);
+    setLoading(true);
+    const r = (await (await fetch('/api/rsvp', {
+      body: JSON.stringify({rsvp: {email, events: toRsvp}}),
+      method: 'POST',
+      headers: {'Content-type': 'application/json'},
+    })).json()).data;
+    setLoading(false);
   };
   return (
     <>
       <div
         className="flex flex-col gap-3 mt-3"
       >
-        <RsvpForAllButton
+        {sessions.length > 1 ? (<RsvpForAllButton
           handleClick={handleAllSessionsSelect.bind(this)}
-        />
+        />): <></>}
         {showSessions ? (
             sessions.map((session, key) => {
               return <Session
-                active={(session.noLimit || session.availableSeats! > 0)}
+                active={(
+                  session.noLimit ||
+                  ((session.availableSeats! > 0) &&
+                    !isPast(session.startDateTime!))
+                )}
                 handleClick={handleSessionSelect.bind(this)}
                 key={key}
-                data={124}
-                startDateTime={session.startDateTime!}
-                offset={session.offset!}
+                data={session.id!}
+                date={
+                  getDateTimeString(session.startDateTime!, 'date')
+                }
+                time={
+                  getDateTimeString(session.startDateTime!, 'time')
+                }
                 availableSeats={session.availableSeats!}
                 totalSeats={session.totalSeats!}
                 noLimit={session.noLimit}
@@ -163,9 +217,32 @@ const SessionsWrapper = ({
             })
       ) : <></>}
       </div>
-      <RsvpButton
-        handleClick={handleSubmit.bind(this)}
-      />
+      <div className="
+        mt-6
+        flex flex-col gap-3
+      ">
+        <input
+          type="text"
+          name="email"
+          id="email"
+          className={`
+            rounded-lg
+            ring-gray-300 border-gray-300
+            focus:border-primary focus:ring-primary
+            ${loading? `bg-gray-300` : ``}
+          `}
+          placeholder="email"
+          onChange={(e)=>{
+            setEmail(e.target.value);
+          }}
+          disabled={loading}
+        />
+        <RsvpButton
+          handleClick={handleSubmit.bind(this)}
+          disabled={loading}
+        />
+      </div>
+
     </>
   );
 };
