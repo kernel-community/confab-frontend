@@ -149,7 +149,7 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
   const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);
   const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [done, setDone] = useState(false);
   const handleSessionSelect = (id:number, checked: boolean) => {
     switch (checked) {
       case true:
@@ -181,6 +181,7 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
       headers: {'Content-type': 'application/json'},
     })).json()).data;
     setLoading(false);
+    setDone(true);
   };
   return (
     <>
@@ -218,26 +219,35 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
         mt-6
         flex flex-col gap-3
       ">
-        <input
-          type="text"
-          name="email"
-          id="email"
-          className={`
+        {done ?
+        (
+          <FieldLabel>
+            RSVP Recorded.
+          </FieldLabel>
+        ):
+         (
+           <>
+             <input
+               type="text"
+               name="email"
+               id="email"
+               className={`
             rounded-lg
             ring-gray-300 border-gray-300
             focus:border-primary focus:ring-primary
             ${loading? `bg-gray-300` : ``}
           `}
-          placeholder="email"
-          onChange={(e)=>{
-            setEmail(e.target.value);
-          }}
-          disabled={loading}
-        />
-        <RsvpButton
-          handleClick={handleSubmit.bind(this)}
-          disabled={loading}
-        />
+               placeholder="email"
+               onChange={(e)=>{
+                 setEmail(e.target.value);
+               }}
+               disabled={loading}
+             />
+             <RsvpButton
+               handleClick={handleSubmit.bind(this)}
+               disabled={loading}
+             />
+           </>)}
       </div>
 
     </>

@@ -1,10 +1,13 @@
 import type {NextPage} from 'next';
 import Main from '../layouts/Main';
+import BigFatBanner from '../components/BigFatBanner';
 
 const Test: NextPage = () => {
   return (
     <Main>
-      <div>Home page!</div>
+      <BigFatBanner
+        text="Coming Soon!"
+      />
     </Main>
   );
 };
