@@ -15,7 +15,7 @@ const Description = ({
           "
     >
       <article className="
-        prose prose-sm max-w-none font-noto
+        prose prose-lg max-w-none font-noto
         "
       >
         <div
