@@ -14,10 +14,11 @@ const Main = ({children}: {children: any}) => {
       </Head>
       <div className="flex flex-col h-screen">
         {/* <Navbar /> */}
-        <div className="flex-1 bg-skin">
+        <div className="flex-1 bg-skin flex flex-col justify-center">
           <div className="
-            bg-skin-muted sm:mb-10 sm:mt-24 sm:mx-24 lg:mx-80
+            bg-skin-muted
             rounded-lg shadow-lg
+            mx-auto max-w-5xl
           ">
             {children}
           </div>
