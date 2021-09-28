@@ -6,7 +6,7 @@ const Footer = () => {
     font-inter text-sm font-semibold text-primary
     `}>
       <div>
-        Built with [❤️, 😭, ☕️] by &nbsp;
+        Built at &nbsp;
         <a
           href="https://kernel.community/"
           target="_blank"
