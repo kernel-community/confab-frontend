@@ -1,9 +1,10 @@
 const FieldLabel = ({children, styles}: {children: any, styles?: string}) => {
   return (
     <div className={`
-      font-inter ${styles}
+      font-inter 
       text-primary
       font-semibold
+      ${styles}
     `}>
       {children}
     </div>

@@ -8,15 +8,15 @@ const Navbar = () => {
   const router = useRouter();
   return (
     <div className={`
-    w-full flex flex-row gap-3 justify-center items-center
-    bg-primary-light py-5
+    w-full flex flex-row gap-8 justify-center items-center
+    bg-skin-muted
     font-inter text-sm font-semibold text-primary
     `}>
       <Link href="/">
         <div className={`
-        flex flex-row items-center gap-1
+        flex flex-row items-center gap-1 py-5
         cursor-pointer
-        ${router.pathname == '/' ? '' : 'opacity-50'}
+        ${router.pathname == '/' ? 'border-b-2 border-primary' : 'opacity-50'}
         `}>
           <Image
             src={homeIcon}
@@ -26,9 +26,9 @@ const Navbar = () => {
       </Link>
       <Link href="/propose">
         <div className={`
-        flex flex-row items-center gap-1
+        flex flex-row items-center gap-1 py-5
         cursor-pointer
-        ${router.pathname == '/propose' ? '' : 'opacity-50'}
+        ${router.pathname == '/propose' ? 'border-b-2 border-primary' : 'opacity-50'}
         `}>
           <Image
             src={proposeIcon}

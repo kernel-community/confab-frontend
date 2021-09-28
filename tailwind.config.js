@@ -12,6 +12,7 @@ module.exports = {
           muted: '#71A2A8',
           light: '#C2D8DA',
           lighter: '#D4E4E6',
+          dark: '#003940',
         },
         secondary: {
           DEFAULT: '#00ACB2',
@@ -26,6 +27,9 @@ module.exports = {
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
         'robotoSlab': ['Roboto Slab', 'serif'],
+        'roboto': ['Roboto', 'sans-serif'],
+        'noto': ['Noto Sans'],
+        'alegreya': ['Alegreya Sans SC', 'sans-serif'],
       },
     },
   },
@@ -34,5 +38,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
   ],
 };
