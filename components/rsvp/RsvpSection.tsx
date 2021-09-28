@@ -174,11 +174,8 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
     }
   };
   const handleSubmit = async () => {
-    console.log('submitting now');
-    console.log('email', email);
-    console.log('to rsvp', toRsvp);
     setLoading(true);
-    const r = (await (await fetch('/api/rsvp', {
+    (await (await fetch('/api/rsvp', {
       body: JSON.stringify({rsvp: {email, events: toRsvp}}),
       method: 'POST',
       headers: {'Content-type': 'application/json'},
