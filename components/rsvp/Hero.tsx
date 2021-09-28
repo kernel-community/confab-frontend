@@ -12,13 +12,18 @@ const Hero = ({
       ">
       <div className="
           absolute bottom-5 left-8
-          font-robotoSlab font-extrabold text-6xl
+          font-robotoSlab
+          font-bold text-3xl
+          sm:font-extrabold sm:text-6xl
           text-gray-800
+          px-3
         ">
         {title}
         <div
           className="
-            text-2xl font-alegreya font-medium
+            font-alegreya
+            sm:font-medium sm:text-2xl
+            font-medium text-xl
             text-gray-600
           "
         >

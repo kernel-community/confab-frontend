@@ -63,10 +63,9 @@ const Session = ({
         border-0
         rounded-xl
         text-center
-        py-2
         font-inter 
         flex flex-row items-center justify-center
-        gap-5
+        gap-1
       `}
     >
       <input
@@ -75,18 +74,23 @@ const Session = ({
         type="checkbox"
         className={`
           ${!active? `text-gray-500` : ``}
-          p-2 rounded-md
+          p-2 m-4 rounded-md
           text-primary border-gray-300
           cursor-pointer
           focus:border-primary focus:ring-primary
         `}
       />
       <div
-        className="flex flex-col gap-1"
+        className="flex flex-col gap-1 m-4 font-robotoSlab uppercase"
       >
-        <div className="text-sm">
-          {`${date} at ${time}`}
+        <div className="text-lg">
+          {date}
+
         </div>
+        <span className="text-sm">
+          {time}
+        </span>
+
         {noLimit ? <></> : (<div
           className="
           flex flex-row items-center text-xs
@@ -121,17 +125,17 @@ const RsvpForAllButton = ({
           border-primary
           rounded-xl
           text-center
-          py-2
+          py-1
           font-inter text-primary
           hover:bg-primary-lighter cursor-pointer
-          flex flex-row w-full justify-center items-center gap-3
+          flex flex-row w-full justify-center items-center gap-1
         "
     >
       <input
         type="checkbox"
         onChange={(e) => handleClick(e.target.checked)}
         className="
-          p-2 rounded-sm
+          p-2 m-4 rounded-sm
           text-primary border-gray-300
           cursor-pointer
           focus:border-primary focus:ring-primary
