@@ -268,7 +268,7 @@ const RsvpSection = ({
   return (
     <div
       className="
-            pl-2 pr-6 py-12
+            sm:pl-2 sm:pr-6 pr-4 pl-4 py-12
             flex flex-col gap-2
           "
     >
