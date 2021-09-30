@@ -11,7 +11,7 @@ const Description = ({
   return (
     <div
       className="
-            col-span-2 p-12
+            col-span-2 py-12 px-6
           "
     >
       <article className="
