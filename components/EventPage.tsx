@@ -29,20 +29,19 @@ const EventPage = ({
       })).json()).data;
       setEventDetails(r);
     })();
-    setLoading(false);
+    if (eventDetails.title) setLoading(false);
   }, [event]);
   useEffect(() => {
-    setSessions(eventDetails.sessions!);
-  }, [sessions]);
+    if (eventDetails.title) setLoading(false);
+  }, [eventDetails]);
   return (
     <>
-      <Hero
-        title={eventDetails.title}
-        type={eventDetails.type}
-      />
-      {
-      loading?
-        <Spinner /> :
+      {loading ? <Spinner /> : (
+      <>
+        <Hero
+          title={eventDetails.title}
+          type={eventDetails.type}
+        />
         <div className="grid grid-cols-1 lg:grid-cols-3">
           <Description
             description={eventDetails.description}
@@ -53,7 +52,8 @@ const EventPage = ({
             sessions={eventDetails.sessions!}
           />) : <></>}
         </div>
-      }
+      </>
+      )}
     </>
   );
 };
