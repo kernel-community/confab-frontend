@@ -2,7 +2,6 @@
 /* eslint-disable no-invalid-this */
 import Image from 'next/image';
 import personVector from '../../public/vectors/person.png';
-import handVector from '../../public/vectors/hand.png';
 import circlesVector from '../../public/vectors/circles.png';
 import FieldLabel from '../form/FieldLabel';
 import RsvpButton from './RsvpButton';
