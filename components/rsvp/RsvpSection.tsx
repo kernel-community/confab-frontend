@@ -24,7 +24,7 @@ const getDateTimeString = (
   const time = DateTime.fromISO(date, {zone});
   switch (option) {
     case 'date':
-      return time.toFormat('d LLL, yyyy');
+      return time.toFormat('d LLL,');
       break;
     case 'time':
       return time.toFormat('hh:mm a');
@@ -64,7 +64,7 @@ const Session = ({
         rounded-xl
         text-center
         font-inter 
-        flex flex-row items-center justify-center
+        flex flex-row items-center justify-left
         gap-1
       `}
     >
@@ -81,33 +81,32 @@ const Session = ({
         `}
       />
       <div
-        className="flex flex-col gap-1 m-4 font-robotoSlab uppercase"
+        className="flex-1 flex flex-row gap-4 my-2 mx-1 font-inter"
       >
-        <div className="text-lg">
-          {date}
-
+        <div className="flex-1 text-sm uppercase text-left my-auto">
+          {date}&nbsp;{time}
         </div>
-        <span className="text-sm">
-          {time}
-        </span>
 
-        {noLimit ? <></> : (<div
-          className="
-          flex flex-row items-center text-xs
-          gap-1
-        "
-        >
-          <Image
-            src={handVector}
-            width={'15px'}
-            height={'15px'}
-          />
-          <FieldLabel
-            styles={`${!active? 'text-primary-muted': ''}`}
+        {noLimit ?
+        (
+          <div className="text-xs my-auto mr-2">
+            No seat limit
+          </div>
+        ) : (
+          <div
+            className="
+            flex flex-col items-center text-sm justify-self-end
+            gap-0 my-auto mr-4
+          "
           >
-            {availableSeats}/{totalSeats} Seats
-          </FieldLabel>
-        </div>)}
+            <div
+              className={`${!active? 'text-primary-muted': ''}`}
+            >
+              {availableSeats}/{totalSeats}
+            </div>
+            <span className="text-xs">Seats</span>
+          </div>
+        )}
       </div>
     </label>
   );
@@ -270,7 +269,7 @@ const RsvpSection = ({
   return (
     <div
       className="
-            p-12
+            px-2 py-12
             flex flex-col gap-2
           "
     >
