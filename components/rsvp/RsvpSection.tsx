@@ -55,8 +55,8 @@ const Session = ({
       className={`
         ${active?
           `
-            bg-primary-lighter text-primary
-            hover:bg-primary-light cursor-pointer
+            bg-primary-muted 
+            hover:bg-primary-dark cursor-pointer
           ` :
           'bg-gray-200 text-gray-500 cursor-not-allowed'}
         border-0
@@ -80,9 +80,9 @@ const Session = ({
         `}
       />
       <div
-        className="flex-1 flex flex-row gap-4 my-2 mx-1 font-inter"
+        className="flex-1 flex flex-row gap-4 my-2 mx-1 font-inter text-skin-muted"
       >
-        <div className="flex-1 text-sm uppercase text-left my-auto">
+        <div className="flex-1 text-base uppercase text-left my-auto">
           {date}&nbsp;{time}
         </div>
 
@@ -122,11 +122,11 @@ const RsvpForAllButton = ({
           bg-primary-light border-2
           border-primary
           rounded-xl
-          text-center
           py-1
           font-inter text-primary
           hover:bg-primary-lighter cursor-pointer
-          flex flex-row w-full justify-center items-center gap-1
+          flex flex-row w-full items-center gap-1 justify-items-start
+          uppercase
         "
     >
       <input
@@ -139,8 +139,8 @@ const RsvpForAllButton = ({
           focus:border-primary focus:ring-primary
         "
       />
-      <div>
-        RSVP for all Sessions
+      <div className="flex-1">
+        RSVP for Entire Series
       </div>
     </label>
   );
