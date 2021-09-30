@@ -3,7 +3,7 @@ import Description from './rsvp/Description';
 import RsvpSection from './rsvp/RsvpSection';
 import {useState, useEffect} from 'react';
 import Spinner from './Spinner';
-import {ClientEvent, Session} from '../types';
+import {ClientEvent} from '../types';
 const EventPage = ({
   event,
 }: {
@@ -11,13 +11,12 @@ const EventPage = ({
 }) => {
   // call api here, pass data to children
   const [loading, setLoading] = useState<boolean>(false);
-  const [sessions, setSessions] = useState<Session[]>([]);
   const [eventDetails, setEventDetails] = useState<ClientEvent>({
     title: '',
     description: '',
     proposerName: '',
     sessionCount: 0,
-    sessions,
+    sessions: [],
   });
   useEffect(() => {
     setLoading(true);
