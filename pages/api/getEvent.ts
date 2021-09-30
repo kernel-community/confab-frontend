@@ -5,7 +5,7 @@ import {ServerEvent, ClientEvent, Session} from '../../types';
 const prepareSessions = (e: ServerEvent[]): Session[] => {
   const sessions: Session[] = [];
   for (let i = 0; i < e.length; i ++) {
-    const availableSeats = ((e[i].limit - e[i].RSVP.length) > 0) ? (e[i].limit - e[i].RSVP.length) : 0;
+    const availableSeats = ((e[i].limit - e[i].RSVP[0].attendees.length) > 0) ? (e[i].limit - e[i].RSVP[0].attendees.length) : 0;
     const noLimit = (e[i].limit == 0);
     sessions.push({
       id: e[i].id,
