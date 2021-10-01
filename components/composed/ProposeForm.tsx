@@ -56,6 +56,7 @@ const ProposeForm = ({
     });
     console.log('session number', sessionNumber);
     console.log('e', e);
+    setSessionDetails([{}]);
   };
   const resetSessions = (isRecurring: boolean) => {
     if (!isRecurring) {
