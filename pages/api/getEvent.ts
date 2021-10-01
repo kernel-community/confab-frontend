@@ -1,11 +1,13 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-const serverUrl = process.env.SERVER_URL;
+import {serverUrl} from '../../utils/serverUrl';
 import {ServerEvent, ClientEvent, Session} from '../../types';
 
 const prepareSessions = (e: ServerEvent[]): Session[] => {
   const sessions: Session[] = [];
   for (let i = 0; i < e.length; i ++) {
-    const availableSeats = ((e[i].limit - e[i].RSVP[0].attendees.length) > 0) ? (e[i].limit - e[i].RSVP[0].attendees.length) : 0;
+    const limit = e[i].limit;
+    const rsvpArray = e[i].RSVP[0] ? e[i].RSVP[0] : {attendees: []};
+    const availableSeats = ((limit - rsvpArray.attendees.length) > 0) ? (limit - rsvpArray.attendees.length) : 0;
     const noLimit = (e[i].limit == 0);
     sessions.push({
       id: e[i].id,

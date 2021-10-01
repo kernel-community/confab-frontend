@@ -216,6 +216,12 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
               />;
             })
       ) : <></>}
+        <div className="font-inter uppercase text-xxs text-primary">
+        All Dates and Times are in your local timezone&nbsp;
+          <span className="font-semibold">
+            {Intl.DateTimeFormat().resolvedOptions().timeZone}
+          </span>
+        </div>
       </div>
       <div className="
         mt-6
