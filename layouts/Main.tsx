@@ -1,5 +1,5 @@
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from '../components/composed/Navbar';
+import Footer from '../components/composed/Footer';
 import Head from 'next/head';
 
 const Main = ({children}: {children: any}) => {

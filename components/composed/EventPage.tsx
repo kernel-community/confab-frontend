@@ -1,9 +1,9 @@
-import Hero from './rsvp/Hero';
-import Description from './rsvp/Description';
-import RsvpSection from './rsvp/RsvpSection';
+import Hero from '../rsvp/Hero';
+import Description from '../rsvp/Description';
+import RsvpSection from '../rsvp/RsvpSection';
 import {useState, useEffect} from 'react';
 import Spinner from './Spinner';
-import {ClientEvent} from '../types';
+import {ClientEvent} from '../../types';
 const EventPage = ({
   event,
 }: {

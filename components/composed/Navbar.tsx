@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import proposeIcon from '../public/vectors/propose.png';
-import homeIcon from '../public/vectors/home.png';
+import proposeIcon from '../../public/vectors/propose.png';
+import homeIcon from '../../public/vectors/home.png';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 
@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div className={`
     w-full flex flex-row gap-8 justify-center items-center
-    bg-skin-muted
+    sm:bg-skin-muted bg-primary-light
     font-inter text-sm font-semibold text-primary
     `}>
       <Link href="/">

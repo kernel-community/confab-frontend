@@ -1,8 +1,14 @@
-import FieldLabel from '../FieldLabel';
 import Session from './Session';
 import {useState} from 'react';
+import FieldLabel from '../atomic/StrongText';
 
-const SessionsInput = () => {
+const SessionsInput = ({
+  handleChange,
+  resetSessions,
+}: {
+  handleChange: any
+  resetSessions: any
+}) => {
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const handleCheckBox = () => {
     setIsRecurring(!isRecurring);
@@ -27,6 +33,8 @@ const SessionsInput = () => {
       />
       <Session
         isRecurring={isRecurring}
+        handleChange={handleChange}
+        resetSessions={resetSessions}
       />
     </>
   );

@@ -21,6 +21,7 @@ const prepareSessions = (e: ServerEvent[]): Session[] => {
 };
 
 const prepareResponse = (e: ServerEvent[]): ClientEvent => {
+  console.log(e);
   const firstInSeries = e[0];
   return {
     title: firstInSeries.title,

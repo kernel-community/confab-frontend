@@ -1,9 +1,11 @@
-const RsvpButton = ({
+const Button = ({
   handleClick,
   disabled,
+  buttonText,
 }: {
   handleClick:any
-  disabled: boolean
+  disabled?: boolean
+  buttonText: string
 }) => {
   return (
     <>
@@ -21,6 +23,7 @@ const RsvpButton = ({
         py-2
         rounded-lg
         text-lg
+        w-full
       `}
         onClick={handleClick}
         disabled={disabled}
@@ -29,7 +32,7 @@ const RsvpButton = ({
           {disabled ?(<span className="bg-highlight rounded-full h-2 w-2 animate-ping">
           </span>):<></>}
           <div>
-            {`RSVP →`}
+            {buttonText}
           </div>
         </div>
 
@@ -37,4 +40,4 @@ const RsvpButton = ({
     </>
   );
 };
-export default RsvpButton;
+export default Button;

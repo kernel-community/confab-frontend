@@ -1,6 +1,6 @@
 import type {NextPage} from 'next';
 import Main from '../layouts/Main';
-import BigFatBanner from '../components/BigFatBanner';
+import BigFatBanner from '../components/composed/BigFatBanner';
 
 const Test: NextPage = () => {
   return (

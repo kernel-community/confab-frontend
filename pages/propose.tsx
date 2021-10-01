@@ -1,6 +1,6 @@
 import type {NextPage} from 'next';
 import Main from '../layouts/Main';
-import ProposeForm from '../components/ProposeForm';
+import ProposeForm from '../components/composed/ProposeForm';
 
 const Propose: NextPage = () => {
   return (
