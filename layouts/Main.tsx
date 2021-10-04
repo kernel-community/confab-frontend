@@ -1,5 +1,5 @@
-// import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from '../components/composed/Navbar';
+import Footer from '../components/composed/Footer';
 import Head from 'next/head';
 
 const Main = ({children}: {children: any}) => {
@@ -14,12 +14,12 @@ const Main = ({children}: {children: any}) => {
         <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@0,300;0,400;0,500;0,700;0,800;1,300;1,400;1,500;1,700;1,800&display=swap" rel="stylesheet" />
       </Head>
       <div className="flex flex-col h-screen">
-        {/* <Navbar /> */}
-        <div className="flex-1 bg-skin flex flex-col justify-center lg:p-20">
+        <Navbar />
+        <div className="flex-1 bg-skin flex flex-col justify-center lg:px-20 lg:py-12">
           <div className="
             bg-skin-muted
             rounded-lg shadow-lg
-            mx-auto max-w-5xl
+            lg:mx-44
           ">
             {children}
           </div>

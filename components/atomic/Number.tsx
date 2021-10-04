@@ -1,6 +1,12 @@
-import FieldLabel from '../FieldLabel';
+import FieldLabel from './StrongText';
 
-const Limit = () => {
+const Number = ({
+  fieldName,
+  handleChange,
+}: {
+  fieldName: string,
+  handleChange: any
+}) => {
   return (
     <>
       <FieldLabel>
@@ -20,4 +26,4 @@ const Limit = () => {
   );
 };
 
-export default Limit;
+export default Number;

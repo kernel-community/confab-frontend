@@ -1,13 +1,13 @@
 import type {NextPage} from 'next';
 import Main from '../layouts/Main';
-import ProposeForm from '../components/ProposeForm';
+import ProposeForm from '../components/composed/ProposeForm';
 
 const Propose: NextPage = () => {
   return (
     <Main>
       <div className="flex flex-col">
         <div className="
-            font-inter mx-auto font-bold text-3xl
+            font-inter mx-auto font-bold sm:text-3xl text-xl
             text-primary mt-10 mb-10
           ">
             Propose a Conversation

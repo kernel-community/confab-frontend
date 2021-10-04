@@ -32,6 +32,9 @@ module.exports = {
         'noto': ['Noto Sans'],
         'alegreya': ['Alegreya Sans SC', 'sans-serif'],
       },
+      fontSize: {
+        'xxs': '0.69rem',
+      },
     },
   },
   variants: {

@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import personVector from '../../public/vectors/person.png';
 import circlesVector from '../../public/vectors/circles.png';
-import FieldLabel from '../form/FieldLabel';
-import RsvpButton from './RsvpButton';
+import FieldLabel from '../atomic/StrongText';
+import Button from '../atomic/Button';
 import {useState} from 'react';
 import {Session as ClientSession} from '../../types';
 import {DateTime} from 'luxon';
@@ -216,6 +216,12 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
               />;
             })
       ) : <></>}
+        <div className="font-inter uppercase text-xxs text-primary">
+        All Dates and Times are in your local timezone&nbsp;
+          <span className="font-semibold">
+            {Intl.DateTimeFormat().resolvedOptions().timeZone}
+          </span>
+        </div>
       </div>
       <div className="
         mt-6
@@ -245,9 +251,10 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
                }}
                disabled={loading}
              />
-             <RsvpButton
+             <Button
                handleClick={handleSubmit.bind(this)}
                disabled={loading}
+               buttonText={`RSVP →`}
              />
            </>)}
       </div>

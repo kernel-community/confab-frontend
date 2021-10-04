@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-const serverUrl = process.env.SERVER_URL;
+import {serverUrl} from '../../utils';
 
 export default async function rsvp(
     req: NextApiRequest,
