@@ -8,10 +8,12 @@ const DateTimeWrapper = ({
   isRecurring,
   handleChange,
   resetSessions,
+  deleteSessionData,
 }: {
   isRecurring: boolean
   handleChange: any
   resetSessions: any
+  deleteSessionData: any
 },
 ) => {
   const [count, setCount] = useState<number>(0);
@@ -23,6 +25,7 @@ const DateTimeWrapper = ({
       handleChange={handleChange}
       displayDelete={false}
       displaySessionLabel={isRecurring}
+      deleteSessionData={deleteSessionData}
     />,
   ]);
   useEffect(() => {
@@ -34,6 +37,7 @@ const DateTimeWrapper = ({
         handleChange={handleChange}
         displayDelete={false}
         displaySessionLabel={isRecurring}
+        deleteSessionData={deleteSessionData}
       />,
     ]);
     resetSessions(isRecurring);
@@ -54,6 +58,7 @@ const DateTimeWrapper = ({
                 deleteSession.bind(this)
               }
               displaySessionLabel={true}
+              deleteSessionData={deleteSessionData}
             />,
         ),
     );
@@ -87,10 +92,12 @@ const Session = ({
   isRecurring,
   handleChange,
   resetSessions,
+  deleteSession,
 } : {
   isRecurring: boolean
   handleChange: any
   resetSessions: any
+  deleteSession: any
 }) => {
   return (
     <>
@@ -110,7 +117,7 @@ const Session = ({
           </span>
         </div>
       </FieldLabel>
-      <DateTimeWrapper isRecurring={isRecurring} handleChange={handleChange} resetSessions={resetSessions} />
+      <DateTimeWrapper isRecurring={isRecurring} handleChange={handleChange} resetSessions={resetSessions} deleteSessionData={deleteSession} />
     </>
   );
 };

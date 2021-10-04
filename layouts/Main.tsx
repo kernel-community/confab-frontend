@@ -19,7 +19,7 @@ const Main = ({children}: {children: any}) => {
           <div className="
             bg-skin-muted
             rounded-lg shadow-lg
-            mx-auto max-w-5xl
+            lg:mx-44
           ">
             {children}
           </div>

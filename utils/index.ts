@@ -1,0 +1,16 @@
+const e = process.env.ENV;
+let serverUrl: string;
+let slackChannel: string;
+let gCalendar: string;
+
+if (e == 'prod') {
+  serverUrl = process.env.PROD_SERVER_URL || '';
+  slackChannel = 'conversations';
+  gCalendar = 'conversations';
+} else if (e=='dev') {
+  serverUrl = process.env.DEV_SERVER_URL || '';
+  slackChannel = 'testing';
+  gCalendar = 'testing';
+}
+
+export {serverUrl, gCalendar, slackChannel};

@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div className={`
     w-full flex flex-row gap-8 justify-center items-center
-    sm:bg-skin-muted bg-primary-light
+    lg:bg-skin-muted bg-primary-light
     font-inter text-sm font-semibold text-primary
     `}>
       <Link href="/">

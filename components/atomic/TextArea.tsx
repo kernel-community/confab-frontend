@@ -1,6 +1,6 @@
 import FieldLabel from './StrongText';
 
-const TextField = ({
+const TextAreaField = ({
   name,
   fieldName,
   handleChange,
@@ -16,20 +16,17 @@ const TextField = ({
       >
         {fieldName}
       </FieldLabel>
-      <input
-        type="text"
+      <textarea
         name={`${name}`}
-        id="proposetitle"
         className="
           rounded-lg
           ring-gray-300 border-gray-300
           focus:border-primary focus:ring-primary
           "
         onChange={handleChange}
-        required
       />
     </>
   );
 };
 
-export default TextField;
+export default TextAreaField;

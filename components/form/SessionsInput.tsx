@@ -5,9 +5,11 @@ import FieldLabel from '../atomic/StrongText';
 const SessionsInput = ({
   handleChange,
   resetSessions,
+  deleteSession,
 }: {
   handleChange: any
   resetSessions: any
+  deleteSession: any
 }) => {
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const handleCheckBox = () => {
@@ -35,6 +37,7 @@ const SessionsInput = ({
         isRecurring={isRecurring}
         handleChange={handleChange}
         resetSessions={resetSessions}
+        deleteSession={deleteSession}
       />
     </>
   );

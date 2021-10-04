@@ -14,6 +14,7 @@ const DateTime = ({
   handleDelete,
   displaySessionLabel,
   sessionNumber,
+  deleteSessionData,
 }: {
   count: number,
   sessionNumber: number,
@@ -21,6 +22,7 @@ const DateTime = ({
   handleChange:any,
   handleDelete?:any,
   displaySessionLabel: boolean
+  deleteSessionData: any
 }) => {
   const year = DT.local().get('year');
   const times = [
@@ -118,9 +120,12 @@ const DateTime = ({
   }, []);
   return (
     <div className={`
-      flex flex-row gap-3 items-start sm:flex-nowrap flex-wrap sm:items-center py-4
+      flex flex-row gap-3 sm:flex-nowrap flex-wrap items-center py-4
     `}>
-      {sessionNumber}
+      {/* @todo */}
+      {displaySessionLabel ? (<div className="text-xs text-inter font-medium text-gray-400">
+        Session {count + 1}
+      </div>) : <></>}
       <select name="date" id="" className="
         text-xs
         rounded-lg
@@ -130,8 +135,9 @@ const DateTime = ({
       "
       onChange={(e) => {
         onlyValidMonthsAndDates({value: e.target.value, target: 'date'});
-        handleChange(sessionNumber, e);
+        handleChange(count, e);
       }}
+      required
       >
         <option value="" disabled selected>D</option>
         {dates.map((d, k) => {
@@ -147,8 +153,9 @@ const DateTime = ({
       "
       onChange={(e) => {
         onlyValidMonthsAndDates({value: e.target.value, target: 'month'});
-        handleChange(sessionNumber, e);
+        handleChange(count, e);
       }}
+      required
       >
         <option value="" disabled selected>M</option>
         {months.map((m, k) => {
@@ -163,8 +170,9 @@ const DateTime = ({
         font-inter font-medium text-primary
       "
       onChange={(e) => {
-        handleChange(sessionNumber, e);
+        handleChange(count, e);
       }}
+      required
       >
         <option value="" disabled selected>T</option>
         {times.map((t, k) => {
@@ -176,7 +184,10 @@ const DateTime = ({
         <Image
           src={deleteIcon}
           data-key={count}
-          onClick={() => handleDelete(count)}
+          onClick={() => {
+            handleDelete(count);
+            deleteSessionData(count);
+          }}
           height={'20px'}
           width={'15px'}
         />
