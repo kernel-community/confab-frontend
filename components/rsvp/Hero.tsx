@@ -6,15 +6,15 @@ const Hero = ({
 }) => {
   return (
     <div className="
-        w-full h-52 relative
+        w-full h-64 relative
         rounded-t-lg
         bg-gradient-to-r from-yellow-200 via-green-200 to-green-300
       ">
       <div className="
-          absolute bottom-5 left-8
+          absolute bottom-5 left-5
           font-inter
           font-bold text-4xl
-          sm:font-extrabold sm:text-6xl
+          sm:font-bold sm:text-6xl
           text-gray-800
           px-3
         ">
