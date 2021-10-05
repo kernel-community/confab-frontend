@@ -8,8 +8,19 @@ const Propose: NextPage = () => {
     <Main>
       <NextSeo
         title="Propose"
+        description="KERNEL Conversations is a home for conversations taking place in the Kernel network. Propose a new Conversation in KERNEL network."
         openGraph={{
-          title: 'Propose',
+          url: 'https://convo.kernel.community',
+          title: 'Convo | Propose',
+          description: 'Propose a new Conversation in KERNEL network',
+          images: [
+            {
+              url: 'https://confab-frontend.vercel.app/images/banner.jpg',
+              alt: 'KERNEL squares and circles',
+              type: 'image/jpeg',
+            },
+          ],
+          site_name: 'KERNEL Convo',
         }}
       />
       <div className="flex flex-col">
