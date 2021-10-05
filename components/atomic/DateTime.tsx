@@ -138,8 +138,9 @@ const DateTime = ({
         handleChange(count, e);
       }}
       required
+      defaultValue="D"
       >
-        <option value="" disabled selected>D</option>
+        <option value="D" disabled>D</option>
         {dates.map((d, k) => {
           return (<option key={k}>{d}</option>);
         })}
@@ -156,8 +157,9 @@ const DateTime = ({
         handleChange(count, e);
       }}
       required
+      defaultValue="M"
       >
-        <option value="" disabled selected>M</option>
+        <option value="M" disabled>M</option>
         {months.map((m, k) => {
           return (<option key={k} value={k+1}>{m}</option>);
         })}
@@ -173,8 +175,9 @@ const DateTime = ({
         handleChange(count, e);
       }}
       required
+      defaultValue="T"
       >
-        <option value="" disabled selected>T</option>
+        <option value="T" disabled>T</option>
         {times.map((t, k) => {
           return (<option key={k} value={`[${t.h}, ${t.m}]`}>{t.t}</option>);
         })}
