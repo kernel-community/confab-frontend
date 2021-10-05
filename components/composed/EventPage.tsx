@@ -41,8 +41,8 @@ const EventPage = ({
         title={eventDetails.title}
         openGraph={{
           url: 'https://convo.kernel.community',
-          title: 'Convo | ' + eventDetails.title,
-          description: 'RSVP to ' + eventDetails.title,
+          title: 'Convo | RSVP',
+          description: 'A home for conversations taking place in the Kernel network',
           images: [
             {
               url: 'https://confab-frontend.vercel.app/images/banner.jpg',
