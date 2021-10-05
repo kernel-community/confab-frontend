@@ -14,7 +14,7 @@ function MyApp({Component, pageProps}: AppProps) {
           description: 'A home for conversations taking place in the Kernel network',
           images: [
             {
-              url: 'https://convo.kernel.community/images/banner.jpg',
+              url: 'https://confab-frontend.vercel.app/images/banner.jpg',
               alt: 'KERNEL squares and circles',
               type: 'image/jpeg',
             },
