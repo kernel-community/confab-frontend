@@ -5,7 +5,7 @@ import {NextSeo} from 'next-seo';
 
 const Propose: NextPage = () => {
   return (
-    <Main>
+    <>
       <NextSeo
         title="Propose"
         description="KERNEL Conversations is a home for conversations taking place in the Kernel network. Propose a new Conversation in KERNEL network."
@@ -23,22 +23,24 @@ const Propose: NextPage = () => {
           site_name: 'KERNEL Convo',
         }}
       />
-      <div className="flex flex-col">
-        <div className="
+      <Main>
+        <div className="flex flex-col">
+          <div className="
             font-inter mx-auto font-bold sm:text-3xl text-xl
             text-primary mt-10 mb-10
           ">
             Propose a Conversation
+          </div>
+          <div className="border border-primary-muted my-4 mx-20 border-opacity-50">
+          </div>
         </div>
-        <div className="border border-primary-muted my-4 mx-20 border-opacity-50">
+        <div>
+          <ProposeForm
+            className="py-12 lg:px-24 px-10"
+          />
         </div>
-      </div>
-      <div>
-        <ProposeForm
-          className="py-12 lg:px-24 px-10"
-        />
-      </div>
-    </Main>
+      </Main>
+    </>
   );
 };
 export default Propose;

@@ -37,7 +37,22 @@ const EventPage = ({
   }, [eventDetails]);
   return (
     <>
-      <NextSeo title={eventDetails.title} />
+      <NextSeo
+        title={eventDetails.title}
+        openGraph={{
+          url: 'https://convo.kernel.community',
+          title: 'Convo | ' + eventDetails.title,
+          description: 'RSVP to ' + eventDetails.title,
+          images: [
+            {
+              url: 'https://confab-frontend.vercel.app/images/banner.jpg',
+              alt: 'KERNEL squares and circles',
+              type: 'image/jpeg',
+            },
+          ],
+          site_name: 'KERNEL Convo',
+        }}
+      />
       {loading ? <Spinner /> : (
       <>
         <Hero
