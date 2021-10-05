@@ -6,7 +6,12 @@ import {NextSeo} from 'next-seo';
 const Propose: NextPage = () => {
   return (
     <Main>
-      <NextSeo title="Propose" />
+      <NextSeo
+        title="Propose"
+        openGraph={{
+          title: 'Propose',
+        }}
+      />
       <div className="flex flex-col">
         <div className="
             font-inter mx-auto font-bold sm:text-3xl text-xl

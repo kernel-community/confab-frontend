@@ -10,7 +10,6 @@ function MyApp({Component, pageProps}: AppProps) {
         description="This example uses more of the available config options."
         openGraph={{
           url: 'https://convo.kernel.community',
-          // title: 'KERNEL Convo',
           description: 'A home for conversations taking place in the Kernel network',
           images: [
             {
