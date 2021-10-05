@@ -4,6 +4,8 @@ import RsvpSection from '../rsvp/RsvpSection';
 import {useState, useEffect} from 'react';
 import Spinner from './Spinner';
 import {ClientEvent} from '../../types';
+import {NextSeo} from 'next-seo';
+
 const EventPage = ({
   event,
 }: {
@@ -35,6 +37,7 @@ const EventPage = ({
   }, [eventDetails]);
   return (
     <>
+      <NextSeo title={eventDetails.title} />
       {loading ? <Spinner /> : (
       <>
         <Hero
