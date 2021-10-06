@@ -1,16 +1,18 @@
-const e = process.env.ENV;
-let serverUrl: string;
-let slackChannel: string;
-let gCalendar: string;
+import {ClientInputSession} from '../types';
+import {DateTime} from 'luxon';
 
-if (e == 'prod') {
-  serverUrl = process.env.PROD_SERVER_URL || '';
-  slackChannel = 'conversations';
-  gCalendar = 'conversations';
-} else if (e=='dev') {
-  serverUrl = process.env.DEV_SERVER_URL || '';
-  slackChannel = 'testing';
-  gCalendar = 'testing';
-}
-
-export {serverUrl, gCalendar, slackChannel};
+export const sessionDatesValidity = (sessions: ClientInputSession[]): boolean => {
+  let validity: boolean = true;
+  sessions.forEach((session) => {
+    const dt = DateTime.fromObject({
+      month: session.month,
+      day: session.date,
+      year: session.year,
+      hour: session.time![0] || 0,
+      minute: session.time![1] || 0,
+    });
+    const isPast: boolean = DateTime.local() > dt;
+    validity = validity && (dt.isValid && !isPast);
+  });
+  return validity;
+};

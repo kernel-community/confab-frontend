@@ -6,10 +6,12 @@ const SessionsInput = ({
   handleChange,
   resetSessions,
   deleteSession,
+  danger,
 }: {
   handleChange: any
   resetSessions: any
   deleteSession: any
+  danger?: boolean
 }) => {
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const handleCheckBox = () => {
@@ -38,6 +40,7 @@ const SessionsInput = ({
         handleChange={handleChange}
         resetSessions={resetSessions}
         deleteSession={deleteSession}
+        danger={danger}
       />
     </>
   );

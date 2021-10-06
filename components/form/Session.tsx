@@ -9,11 +9,13 @@ const DateTimeWrapper = ({
   handleChange,
   resetSessions,
   deleteSessionData,
+  danger,
 }: {
   isRecurring: boolean
   handleChange: any
   resetSessions: any
   deleteSessionData: any
+  danger?: boolean
 },
 ) => {
   const [count, setCount] = useState<number>(0);
@@ -84,6 +86,10 @@ const DateTimeWrapper = ({
       >
             + Add Session
       </div>):<></>}
+      {danger ? (
+      <div className="font-medium text-xs text-red-400">
+        Date invalid or in the past
+      </div>) : <></>}
     </div>
   );
 };
@@ -93,11 +99,13 @@ const Session = ({
   handleChange,
   resetSessions,
   deleteSession,
+  danger,
 } : {
   isRecurring: boolean
   handleChange: any
   resetSessions: any
   deleteSession: any
+  danger?: boolean
 }) => {
   return (
     <>
@@ -113,11 +121,17 @@ const Session = ({
         <div className="font-light text-xs">
         All sessions default to duration of&nbsp;
           <span className="font-semibold">
-          1 hour 30 minutes
+          1 hour
           </span>
         </div>
       </FieldLabel>
-      <DateTimeWrapper isRecurring={isRecurring} handleChange={handleChange} resetSessions={resetSessions} deleteSessionData={deleteSession} />
+      <DateTimeWrapper
+        isRecurring={isRecurring}
+        handleChange={handleChange}
+        resetSessions={resetSessions}
+        deleteSessionData={deleteSession}
+        danger = {danger}
+      />
     </>
   );
 };

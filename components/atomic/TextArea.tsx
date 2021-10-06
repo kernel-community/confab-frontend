@@ -4,10 +4,12 @@ const TextAreaField = ({
   name,
   fieldName,
   handleChange,
+  infoText,
 }: {
-  name: string,
-  fieldName: string,
+  name: string
+  fieldName: string
   handleChange: any
+  infoText?: string
 }) => {
   return (
     <>
@@ -15,6 +17,9 @@ const TextAreaField = ({
         styles="my-auto"
       >
         {fieldName}
+        <div className="font-light text-xs">
+          {infoText}
+        </div>
       </FieldLabel>
       <textarea
         name={`${name}`}

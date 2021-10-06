@@ -2,10 +2,12 @@ const Button = ({
   handleClick,
   disabled,
   buttonText,
+  displayLoading,
 }: {
-  handleClick:any
+  handleClick: any
   disabled?: boolean
   buttonText: string
+  displayLoading?: boolean
 }) => {
   return (
     <>
@@ -29,7 +31,7 @@ const Button = ({
         disabled={disabled}
       >
         <div className="flex flex-row items-center justify-center gap-4">
-          {disabled ?(<span className="bg-highlight rounded-full h-2 w-2 animate-ping">
+          {displayLoading ?(<span className="bg-highlight rounded-full h-2 w-2 animate-ping">
           </span>):<></>}
           <div>
             {buttonText}

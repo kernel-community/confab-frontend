@@ -111,6 +111,10 @@ const DateTime = ({
         if (value == '2') {
           const d: number = leapYear(year) ? 29 : 28;
           setDates(Array.from({length: d}, (v, k)=>k+1));
+        } else if (value == '1' || value == '3' || value == '5' || value == '7' || value == '8' || value == '10' || value == '12') {
+          setDates(Array.from({length: 31}, (v, k)=>k+1));
+        } else {
+          setDates(Array.from({length: 30}, (v, k)=>k+1));
         }
         break;
     }
@@ -124,7 +128,7 @@ const DateTime = ({
     `}>
       {/* @todo */}
       {displaySessionLabel ? (<div className="text-xs text-inter font-medium text-gray-400">
-        Session {count + 1}
+        Session {sessionNumber}
       </div>) : <></>}
       <select name="date" id="" className="
         text-xs
@@ -138,8 +142,9 @@ const DateTime = ({
         handleChange(count, e);
       }}
       required
+      defaultValue="D"
       >
-        <option value="" disabled selected>D</option>
+        <option value="D" disabled>D</option>
         {dates.map((d, k) => {
           return (<option key={k}>{d}</option>);
         })}
@@ -156,8 +161,9 @@ const DateTime = ({
         handleChange(count, e);
       }}
       required
+      defaultValue="M"
       >
-        <option value="" disabled selected>M</option>
+        <option value="M" disabled>M</option>
         {months.map((m, k) => {
           return (<option key={k} value={k+1}>{m}</option>);
         })}
@@ -173,8 +179,9 @@ const DateTime = ({
         handleChange(count, e);
       }}
       required
+      defaultValue="T"
       >
-        <option value="" disabled selected>T</option>
+        <option value="T" disabled>T</option>
         {times.map((t, k) => {
           return (<option key={k} value={`[${t.h}, ${t.m}]`}>{t.t}</option>);
         })}

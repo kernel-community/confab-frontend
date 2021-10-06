@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import type {ClientInputSession, ClientInputEvent, ServerEvent} from '../../types';
-import {serverUrl, gCalendar as gcalCalendar, slackChannel} from '../../utils';
+import {serverUrl, gCalendar as gcalCalendar, slackChannel} from '../../utils/env';
 import {DateTime} from 'luxon';
 
 const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSession[]): ServerEvent[] => {
@@ -16,22 +16,22 @@ const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSessi
       zone: event.timezone,
     });
     const endDateTime = startDateTime.plus({
-      hours: 1, minutes: 30,
+      hours: 1,
     });
     payload.push({
-      title: event.title!,
+      title: event.eventType == 3 ? '' : event.title!,
       descriptionText: event.descriptionText!,
       descriptionHtml: event.descriptionHtml!,
       location: event.location!,
       series: sessions.length > 1 ? true : false,
       proposerEmail: event.proposerEmail!,
       proposerName: event.proposerName!,
-      startDateTime: startDateTime.toISO(),
-      endDateTime: endDateTime.toISO(),
-      limit: 0,
+      startDateTime: event.eventType == 3 ? DateTime.local().toISO() : startDateTime.toISO(),
+      endDateTime: event.eventType == 3 ? DateTime.local().toISO() : endDateTime.toISO(),
+      limit: Number(event.limit) || 0,
       postOnSlack: true,
       slackChannel,
-      createGcalEvent: true,
+      createGcalEvent: event.eventType == 3 ? false : true,
       gcalCalendar,
       typeId: event.eventType!,
     });
@@ -53,6 +53,5 @@ export default async function submitEvent(
     body: JSON.stringify({data: payload}),
     headers: {'Content-type': 'application/json'},
   })).json());
-  console.log(r);
   res.status(200).json({r});
 }

@@ -4,6 +4,8 @@ import RsvpSection from '../rsvp/RsvpSection';
 import {useState, useEffect} from 'react';
 import Spinner from './Spinner';
 import {ClientEvent} from '../../types';
+import {NextSeo} from 'next-seo';
+
 const EventPage = ({
   event,
 }: {
@@ -35,11 +37,27 @@ const EventPage = ({
   }, [eventDetails]);
   return (
     <>
+      <NextSeo
+        title={eventDetails.title}
+        openGraph={{
+          url: 'https://convo.kernel.community',
+          title: 'Convo | RSVP',
+          description: 'A home for conversations taking place in the Kernel network',
+          images: [
+            {
+              url: 'https://confab-frontend.vercel.app/images/banner.jpg',
+              alt: 'KERNEL squares and circles',
+              type: 'image/jpeg',
+            },
+          ],
+          site_name: 'KERNEL Convo',
+        }}
+      />
       {loading ? <Spinner /> : (
       <>
         <Hero
           title={eventDetails.title}
-          type={eventDetails.type}
+          type={eventDetails.type!}
         />
         <div className="grid grid-cols-1 lg:grid-cols-3">
           <Description

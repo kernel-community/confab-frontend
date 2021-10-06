@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {serverUrl} from '../../utils';
+import {serverUrl} from '../../utils/env';
 
 export default async function rsvp(
     req: NextApiRequest,
