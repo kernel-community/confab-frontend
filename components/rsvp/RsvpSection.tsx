@@ -197,7 +197,8 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
             sessions.map((session, key) => {
               return <Session
                 active={(
-                  session.noLimit ||
+                  ((session.noLimit) &&
+                  !isPast(session.startDateTime!)) ||
                   ((session.availableSeats! > 0) &&
                     !isPast(session.startDateTime!))
                 )}
