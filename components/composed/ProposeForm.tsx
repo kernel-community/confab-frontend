@@ -7,7 +7,7 @@ import EventType from '../form/EventType';
 import Button from '../atomic/Button';
 import {useEffect, useState} from 'react';
 import {DateTime} from 'luxon';
-// import {useRouter} from 'next/router';
+import {useRouter} from 'next/router';
 import {noSpecialChars, onlyURL, onlyEmail} from '../../utils/regex';
 import {sessionDatesValidity} from '../../utils';
 import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
@@ -17,7 +17,7 @@ const ProposeForm = ({
 }: {
   className: string
 }) => {
-  // const router = useRouter();
+  const router = useRouter();
   const [eventDetails, setEventDetails] = useState<Event>({
     title: '',
     descriptionHtml: '',
@@ -162,39 +162,37 @@ const ProposeForm = ({
   };
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    console.log(sessionDatesValidity(sessionDetails));
-    // setLoading(true);
-    // setDisableSubmit(true);
-    // let r : {
-    //   ok?: string
-    //   data?: {
-    //     id: number
-    //     type: string
-    //     emoji: string
-    //     hash:string
-    //   }
-    // } = {};
-    // try {
-    //   r = (await(await fetch('/api/submitEvent', {
-    //     body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
-    //     method: 'POST',
-    //     headers: {'Content-type': 'application/json'},
-    //   })).json()).r;
-    // } catch (err) {
-    //   console.log('oMG i made a boo boo');
-    //   router.push({
-    //     pathname: '/submission',
-    //     query: {ok: false},
-    //   });
-    // }
-    // router.push({
-    //   pathname: '/submission',
-    //   query: {
-    //     ok: r.ok,
-    //     eventHash: r.data?.hash,
-    //     type: r.data?.type,
-    //   },
-    // });
+    setLoading(true);
+    setDisableSubmit(true);
+    let r : {
+      ok?: string
+      data?: {
+        id: number
+        type: string
+        emoji: string
+        hash:string
+      }
+    } = {};
+    try {
+      r = (await(await fetch('/api/submitEvent', {
+        body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+      })).json()).r;
+    } catch (err) {
+      router.push({
+        pathname: '/submission',
+        query: {ok: false},
+      });
+    }
+    router.push({
+      pathname: '/submission',
+      query: {
+        ok: r.ok,
+        eventHash: r.data?.hash,
+        type: r.data?.type,
+      },
+    });
     setLoading(false);
     setDisableSubmit(false);
   };

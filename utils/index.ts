@@ -12,8 +12,6 @@ export const sessionDatesValidity = (sessions: ClientInputSession[]): boolean =>
       minute: session.time![1] || 0,
     });
     const isPast: boolean = DateTime.local() > dt;
-    console.log('valide?', dt.isValid);
-    console.log('ispast?', isPast);
     validity = validity && (dt.isValid && !isPast);
   });
   return validity;
