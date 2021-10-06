@@ -57,7 +57,7 @@ const EventPage = ({
       <>
         <Hero
           title={eventDetails.title}
-          type={eventDetails.type}
+          type={eventDetails.type!}
         />
         <div className="grid grid-cols-1 lg:grid-cols-3">
           <Description

@@ -29,7 +29,7 @@ export type Session = {
 export type ClientEvent = {
   title?: string,
   description?: string,
-  type?: string,
+  type?: 'Junto' | 'Build Guild',
   proposerName?: string,
   sessionCount?: number,
   sessions?: Session[]
@@ -63,7 +63,7 @@ export type ServerEvent = {
   }
   type?: {
     id: number
-    type: string
+    type: 'Junto' | 'Build Guild'
     emoji: string
   }
   RSVP?: {
