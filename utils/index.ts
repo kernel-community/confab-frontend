@@ -11,6 +11,10 @@ if (e == 'prod') {
   serverUrl = process.env.DEV_SERVER_URL || '';
   slackChannel = 'testing';
   gCalendar = 'testing';
+} else if (e=='staging') {
+  serverUrl = process.env.PROD_SERVER_URL || '';
+  slackChannel = 'testing';
+  gCalendar= 'testing';
 }
 
 export {serverUrl, gCalendar, slackChannel};

@@ -19,19 +19,19 @@ const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSessi
       hours: 1, minutes: 30,
     });
     payload.push({
-      title: event.title!,
+      title: event.eventType == 3 ? '' : event.title!,
       descriptionText: event.descriptionText!,
       descriptionHtml: event.descriptionHtml!,
       location: event.location!,
       series: sessions.length > 1 ? true : false,
       proposerEmail: event.proposerEmail!,
       proposerName: event.proposerName!,
-      startDateTime: startDateTime.toISO(),
-      endDateTime: endDateTime.toISO(),
+      startDateTime: event.eventType == 3 ? DateTime.local().toISO() : startDateTime.toISO(),
+      endDateTime: event.eventType == 3 ? DateTime.local().toISO() : endDateTime.toISO(),
       limit: 0,
       postOnSlack: true,
       slackChannel,
-      createGcalEvent: true,
+      createGcalEvent: event.eventType == 3 ? false : true,
       gcalCalendar,
       typeId: event.eventType!,
     });
@@ -53,6 +53,5 @@ export default async function submitEvent(
     body: JSON.stringify({data: payload}),
     headers: {'Content-type': 'application/json'},
   })).json());
-  console.log(r);
   res.status(200).json({r});
 }

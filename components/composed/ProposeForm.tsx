@@ -7,6 +7,7 @@ import EventType from '../form/EventType';
 import Button from '../atomic/Button';
 import {useEffect, useState} from 'react';
 import {DateTime} from 'luxon';
+import {useRouter} from 'next/router';
 
 import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
 
@@ -15,6 +16,7 @@ const ProposeForm = ({
 }: {
   className: string
 }) => {
+  const router = useRouter();
   const [eventDetails, setEventDetails] = useState<Event>({
     title: '',
     descriptionHtml: '',
@@ -131,42 +133,68 @@ const ProposeForm = ({
     e.preventDefault();
     setLoading(true);
     setDisableSubmit(true);
+    let r : {
+      ok?: string
+      data?: {
+        id: number
+        type: string
+        emoji: string
+        hash:string
+      }
+    } = {};
     try {
-      (await(await fetch('/api/submitEvent', {
+      r = (await(await fetch('/api/submitEvent', {
         body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
         method: 'POST',
         headers: {'Content-type': 'application/json'},
-      })).json()).data;
+      })).json()).r;
+      console.log(r);
     } catch (err) {
       console.log('oMG i made a boo boo');
       // @todo
-      // display error component / page
+      router.push({
+        pathname: '/submission',
+        query: {ok: false},
+      });
     }
     // @todo
     // display success component / page
+    router.push({
+      pathname: '/submission',
+      query: {
+        ok: r.ok,
+        eventHash: r.data?.hash,
+        type: r.data?.type,
+      },
+    });
     setLoading(false);
     setDisableSubmit(false);
   };
   return (
     <div className={className}>
       <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
-        <Text
-          name="title"
-          fieldName= "Title"
-          handleChange={handleInput.bind(this)}
-          danger={titleValidation.state}
-          dangerReason={titleValidation.reason}
-        />
-        {/* <Description
-          handleChange={handleDescriptionInput.bind(this)}
-        /> */}
         <EventType
           handleChange={handleInput.bind(this)}
         />
+        {
+          !isOffer ? (
+            <Text
+              name="title"
+              fieldName= "Title"
+              handleChange={handleInput.bind(this)}
+              danger={titleValidation.state}
+              dangerReason={titleValidation.reason}
+            />):
+          <></>
+        }
+        {/* <Description
+          handleChange={handleDescriptionInput.bind(this)}
+        /> */}
         <TextArea
           name="description"
-          fieldName="Description"
+          fieldName={isOffer ? `What is it that you'd like to offer?`: `Description`}
           handleChange={handleInput.bind(this)}
+          infoText={isOffer ? `eg., "Learned smart contracts in 6 months, secured a job in DeFi. Part time gymnast on the side. Loving the intersection of crypto and community. Happy to talk governance, smart contract security, and exploring different types of movement!"` : ``}
         />
         {
           !isOffer ? (
@@ -179,7 +207,7 @@ const ProposeForm = ({
         }
         <Text
           name="location"
-          fieldName= "Location"
+          fieldName={isOffer ? `Link to Scheduler`: `Location`}
           handleChange={handleInput.bind(this)}
           danger={locationValidation.state}
           dangerReason={locationValidation.reason}

@@ -124,7 +124,7 @@ const DateTime = ({
     `}>
       {/* @todo */}
       {displaySessionLabel ? (<div className="text-xs text-inter font-medium text-gray-400">
-        Session {count + 1}
+        Session {sessionNumber}
       </div>) : <></>}
       <select name="date" id="" className="
         text-xs

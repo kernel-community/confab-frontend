@@ -7,6 +7,7 @@ function MyApp({Component, pageProps}: AppProps) {
     <>
       <NextSeo
         titleTemplate="Convo | %s"
+        defaultTitle="KERNEL Convo"
         description="A home for conversations taking place in the Kernel network"
         openGraph={{
           url: 'https://convo.kernel.community',
