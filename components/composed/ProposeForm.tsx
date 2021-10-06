@@ -30,9 +30,12 @@ const ProposeForm = ({
     timezone: DateTime.local().zoneName,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
-    date: 0,
-    month: 0,
-    time: [],
+    date: DateTime.local().plus({days: 1}).get('day'),
+    month: DateTime.local().get('month'),
+    time: [
+      DateTime.local().plus({days: 1}).get('hour'),
+      DateTime.local().get('minute'),
+    ],
     year: DateTime.local().get('year'),
     count: 0,
   }]);
@@ -85,11 +88,14 @@ const ProposeForm = ({
         return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
       } else {
         let session: Session = {
-          date: 0,
-          month: 0,
-          time: [],
+          date: DateTime.local().get('day'),
+          month: DateTime.local().get('month'),
+          time: [
+            DateTime.local().plus({hours: 1}).get('hour'),
+            DateTime.local().get('minute'),
+          ],
           year: DateTime.local().get('year'),
-          count,
+          count: 0,
         };
         session = Object.assign(session, {[e.target.name]: JSON.parse(e.target.value)});
         return currentSessions.concat([session]);
