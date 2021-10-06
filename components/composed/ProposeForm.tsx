@@ -30,12 +30,9 @@ const ProposeForm = ({
     timezone: DateTime.local().zoneName,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
-    date: DateTime.local().plus({days: 1}).get('day'),
-    month: DateTime.local().get('month'),
-    time: [
-      DateTime.local().plus({days: 1}).get('hour'),
-      DateTime.local().get('minute'),
-    ],
+    date: 0,
+    month: 0,
+    time: [],
     year: DateTime.local().get('year'),
     count: 0,
   }]);
@@ -63,11 +60,7 @@ const ProposeForm = ({
     ) {
       disable = true;
     }
-    if (!sessionDatesValidity(sessionDetails)) {
-      disable = true;
-    }
     setDisableSubmit(disable);
-    setDateTimesValidation(!sessionDatesValidity(sessionDetails));
   }, [
     eventDetails.title,
     eventDetails.location,
@@ -77,9 +70,9 @@ const ProposeForm = ({
     locationValidation,
     emailValidation,
     limitValidation,
-    sessionDetails,
   ]);
   const handleSessionsInput = (count: number, e: any) => {
+    setDateTimesValidation(false);
     setSessionDetails((currentSessions) => {
       const currentSession = currentSessions.find((s) => s.count == count);
       if (currentSession) {
@@ -88,14 +81,11 @@ const ProposeForm = ({
         return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
       } else {
         let session: Session = {
-          date: DateTime.local().get('day'),
-          month: DateTime.local().get('month'),
-          time: [
-            DateTime.local().plus({hours: 1}).get('hour'),
-            DateTime.local().get('minute'),
-          ],
+          date: 0,
+          month: 0,
+          time: [],
           year: DateTime.local().get('year'),
-          count: 0,
+          count,
         };
         session = Object.assign(session, {[e.target.name]: JSON.parse(e.target.value)});
         return currentSessions.concat([session]);
@@ -135,7 +125,7 @@ const ProposeForm = ({
         break;
       case 'limit':
         if (Number(value) > 90 || Number(value) < 0) {
-          setLimitValidation({state: true, reason: 'High limit'});
+          setLimitValidation({state: true, reason: 'Positive integers less than 90 only :)'});
         } else {
           setLimitValidation({state: false, reason: ``});
         }
@@ -168,6 +158,10 @@ const ProposeForm = ({
   };
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
+    if (!sessionDatesValidity(sessionDetails)) {
+      setDateTimesValidation(true);
+      return;
+    }
     setLoading(true);
     setDisableSubmit(true);
     let r : {
