@@ -111,6 +111,10 @@ const DateTime = ({
         if (value == '2') {
           const d: number = leapYear(year) ? 29 : 28;
           setDates(Array.from({length: d}, (v, k)=>k+1));
+        } else if (value == '1' || value == '3' || value == '5' || value == '7' || value == '8' || value == '10' || value == '12') {
+          setDates(Array.from({length: 31}, (v, k)=>k+1));
+        } else {
+          setDates(Array.from({length: 30}, (v, k)=>k+1));
         }
         break;
     }

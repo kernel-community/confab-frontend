@@ -1,14 +1,15 @@
 /* eslint-disable no-invalid-this */
 import Text from '../atomic/Text';
 import SessionsInput from '../form/SessionsInput';
-// import Description from '../atomic/RichText';
 import TextArea from '../atomic/TextArea';
+import NumberComponent from '../atomic/Number';
 import EventType from '../form/EventType';
 import Button from '../atomic/Button';
 import {useEffect, useState} from 'react';
 import {DateTime} from 'luxon';
-import {useRouter} from 'next/router';
-
+// import {useRouter} from 'next/router';
+import {noSpecialChars, onlyURL, onlyEmail} from '../../utils/regex';
+import {sessionDatesValidity} from '../../utils';
 import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
 
 const ProposeForm = ({
@@ -16,7 +17,7 @@ const ProposeForm = ({
 }: {
   className: string
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [eventDetails, setEventDetails] = useState<Event>({
     title: '',
     descriptionHtml: '',
@@ -25,6 +26,7 @@ const ProposeForm = ({
     location: '',
     proposerName: '',
     proposerEmail: '',
+    limit: 0,
     timezone: DateTime.local().zoneName,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
@@ -40,16 +42,40 @@ const ProposeForm = ({
   const [titleValidation, setTitleValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [locationValidation, setLocationValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [emailValidation, setEmailValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
-  // const handleDescriptionInput = (content: string, text: string) => {
-  //   setEventDetails(Object.assign(eventDetails, {
-  //     descriptionHtml: content,
-  //     descriptionText: text,
-  //   }));
-  // };
+  const [limitValidation, setLimitValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
+  const [dateTimesValidation, setDateTimesValidation]=useState<boolean>(false);
   useEffect(() => {
-    if (titleValidation.state || locationValidation.state || emailValidation.state) setDisableSubmit(true);
-    else setDisableSubmit(false);
-  }, [titleValidation, locationValidation, emailValidation]);
+    let disable: boolean = false;
+    if (
+      eventDetails.title?.length == 0 ||
+      eventDetails.location?.length == 0 ||
+      eventDetails.proposerEmail?.length == 0 ||
+      eventDetails.proposerName?.length == 0
+    ) {
+      disable = true;
+    }
+    if (
+      titleValidation.state || locationValidation.state ||
+      emailValidation.state || limitValidation.state
+    ) {
+      disable = true;
+    }
+    if (!sessionDatesValidity(sessionDetails)) {
+      disable = true;
+    }
+    setDisableSubmit(disable);
+    setDateTimesValidation(!sessionDatesValidity(sessionDetails));
+  }, [
+    eventDetails.title,
+    eventDetails.location,
+    eventDetails.proposerEmail,
+    eventDetails.proposerName,
+    titleValidation,
+    locationValidation,
+    emailValidation,
+    limitValidation,
+    sessionDetails,
+  ]);
   const handleSessionsInput = (count: number, e: any) => {
     setSessionDetails((currentSessions) => {
       const currentSession = currentSessions.find((s) => s.count == count);
@@ -79,9 +105,6 @@ const ProposeForm = ({
     }
   };
   const validateFields = (field: string, value: string) => {
-    const noSpecialChars = /[&\/\\#,+()$~%.'":*?<>@^{}]/g;
-    const onlyURL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
-    const onlyEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     switch (field) {
       case 'title':
         if (noSpecialChars.test(value.toLowerCase())) {
@@ -104,16 +127,24 @@ const ProposeForm = ({
           setEmailValidation({state: true, reason: 'Not a valid email'});
         }
         break;
+      case 'limit':
+        if (Number(value) > 90 || Number(value) < 0) {
+          setLimitValidation({state: true, reason: 'High limit'});
+        } else {
+          setLimitValidation({state: false, reason: ``});
+        }
+        break;
     }
   };
   const handleInput = (e: any) => {
-    const target: 'title' | 'eventType' | 'location' | 'proposerName' | 'proposerEmail' | 'description' = e.target.name;
+    const target: 'title' | 'eventType' | 'location' | 'proposerName' | 'proposerEmail' | 'description' | 'limit' = e.target.name;
     switch (target) {
       case 'title':
       case 'eventType':
         if (e.target.value == 3) setIsOffer(true);
         else setIsOffer(false);
       case 'location':
+      case 'limit':
       case 'proposerName':
       case 'proposerEmail':
         setEventDetails(Object.assign(eventDetails, {
@@ -131,42 +162,39 @@ const ProposeForm = ({
   };
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setDisableSubmit(true);
-    let r : {
-      ok?: string
-      data?: {
-        id: number
-        type: string
-        emoji: string
-        hash:string
-      }
-    } = {};
-    try {
-      r = (await(await fetch('/api/submitEvent', {
-        body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
-        method: 'POST',
-        headers: {'Content-type': 'application/json'},
-      })).json()).r;
-      console.log(r);
-    } catch (err) {
-      console.log('oMG i made a boo boo');
-      // @todo
-      router.push({
-        pathname: '/submission',
-        query: {ok: false},
-      });
-    }
-    // @todo
-    // display success component / page
-    router.push({
-      pathname: '/submission',
-      query: {
-        ok: r.ok,
-        eventHash: r.data?.hash,
-        type: r.data?.type,
-      },
-    });
+    console.log(sessionDatesValidity(sessionDetails));
+    // setLoading(true);
+    // setDisableSubmit(true);
+    // let r : {
+    //   ok?: string
+    //   data?: {
+    //     id: number
+    //     type: string
+    //     emoji: string
+    //     hash:string
+    //   }
+    // } = {};
+    // try {
+    //   r = (await(await fetch('/api/submitEvent', {
+    //     body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
+    //     method: 'POST',
+    //     headers: {'Content-type': 'application/json'},
+    //   })).json()).r;
+    // } catch (err) {
+    //   console.log('oMG i made a boo boo');
+    //   router.push({
+    //     pathname: '/submission',
+    //     query: {ok: false},
+    //   });
+    // }
+    // router.push({
+    //   pathname: '/submission',
+    //   query: {
+    //     ok: r.ok,
+    //     eventHash: r.data?.hash,
+    //     type: r.data?.type,
+    //   },
+    // });
     setLoading(false);
     setDisableSubmit(false);
   };
@@ -174,22 +202,19 @@ const ProposeForm = ({
     <div className={className}>
       <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
         <EventType
-          handleChange={handleInput.bind(this)}
+          handleChange={handleInput}
         />
         {
           !isOffer ? (
             <Text
               name="title"
-              fieldName= "Title"
-              handleChange={handleInput.bind(this)}
+              fieldName= "Title *"
+              handleChange={handleInput}
               danger={titleValidation.state}
               dangerReason={titleValidation.reason}
             />):
           <></>
         }
-        {/* <Description
-          handleChange={handleDescriptionInput.bind(this)}
-        /> */}
         <TextArea
           name="description"
           fieldName={isOffer ? `What is it that you'd like to offer?`: `Description`}
@@ -198,30 +223,43 @@ const ProposeForm = ({
         />
         {
           !isOffer ? (
-          <SessionsInput
-            handleChange={handleSessionsInput.bind(this)}
-            resetSessions={resetSessions.bind(this)}
-            deleteSession={handleSessionDelete.bind(this)}
-          />):
+          <>
+            <SessionsInput
+              handleChange={handleSessionsInput}
+              resetSessions={resetSessions}
+              deleteSession={handleSessionDelete}
+              danger={dateTimesValidation}
+            />
+            <NumberComponent
+              name="limit"
+              fieldName="Set Limit"
+              infoText={`Enter maximum number of seats for your session(s). Enter 0 for no limit`}
+              handleChange={handleInput}
+              danger={limitValidation.state}
+              dangerReason={limitValidation.reason}
+              placeholder="0"
+            />
+          </>
+          ):
           <></>
         }
         <Text
           name="location"
-          fieldName={isOffer ? `Link to Scheduler`: `Location`}
-          handleChange={handleInput.bind(this)}
+          fieldName={isOffer ? `Link to Scheduler *`: `Location *`}
+          handleChange={handleInput}
           danger={locationValidation.state}
           dangerReason={locationValidation.reason}
           infoText={`Enter a valid URL or prefix with 'IRL: ' for IRL events`}
         />
         <Text
           name="proposerName"
-          fieldName= "Your Name"
-          handleChange={handleInput.bind(this)}
+          fieldName= "Your Name *"
+          handleChange={handleInput}
         />
         <Text
           name="proposerEmail"
-          fieldName= "Your Email"
-          handleChange={handleInput.bind(this)}
+          fieldName= "Your Email *"
+          handleChange={handleInput}
           danger={emailValidation.state}
           dangerReason={emailValidation.reason}
           infoText={`You will receive a google calendar event invite on this email`}
@@ -230,7 +268,7 @@ const ProposeForm = ({
         <div className="w-1/2 justify-self-end">
           <Button
             buttonText={`Submit →`}
-            handleClick={handleSubmit.bind(this)}
+            handleClick={handleSubmit}
             disabled={disableSubmit}
             displayLoading={loading}
           />

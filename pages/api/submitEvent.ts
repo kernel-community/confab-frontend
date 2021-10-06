@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import type {ClientInputSession, ClientInputEvent, ServerEvent} from '../../types';
-import {serverUrl, gCalendar as gcalCalendar, slackChannel} from '../../utils';
+import {serverUrl, gCalendar as gcalCalendar, slackChannel} from '../../utils/env';
 import {DateTime} from 'luxon';
 
 const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSession[]): ServerEvent[] => {
@@ -16,7 +16,7 @@ const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSessi
       zone: event.timezone,
     });
     const endDateTime = startDateTime.plus({
-      hours: 1, minutes: 30,
+      hours: 1,
     });
     payload.push({
       title: event.eventType == 3 ? '' : event.title!,
@@ -28,7 +28,7 @@ const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSessi
       proposerName: event.proposerName!,
       startDateTime: event.eventType == 3 ? DateTime.local().toISO() : startDateTime.toISO(),
       endDateTime: event.eventType == 3 ? DateTime.local().toISO() : endDateTime.toISO(),
-      limit: 0,
+      limit: Number(event.limit) || 0,
       postOnSlack: true,
       slackChannel,
       createGcalEvent: event.eventType == 3 ? false : true,

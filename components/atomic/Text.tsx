@@ -28,8 +28,7 @@ const TextField = ({
       <div className="flex flex-col">
         <input
           type="text"
-          name={`${name}`}
-          id="proposetitle"
+          name={name}
           className={`
           rounded-lg
           ${danger ? `

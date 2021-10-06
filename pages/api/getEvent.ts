@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {serverUrl} from '../../utils';
+import {serverUrl} from '../../utils/env';
 import {ServerEvent, ClientEvent, Session} from '../../types';
 
 const prepareSessions = (e: ServerEvent[]): Session[] => {
@@ -21,7 +21,6 @@ const prepareSessions = (e: ServerEvent[]): Session[] => {
 };
 
 const prepareResponse = (e: ServerEvent[]): ClientEvent => {
-  console.log(e);
   const firstInSeries = e[0];
   return {
     title: firstInSeries.title,
