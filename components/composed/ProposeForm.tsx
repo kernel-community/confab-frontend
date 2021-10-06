@@ -47,7 +47,7 @@ const ProposeForm = ({
   useEffect(() => {
     let disable: boolean = false;
     if (
-      eventDetails.title?.length == 0 ||
+      (eventDetails.title?.length == 0 && eventDetails.eventType != 3) ||
       eventDetails.location?.length == 0 ||
       eventDetails.proposerEmail?.length == 0 ||
       eventDetails.proposerName?.length == 0
@@ -158,7 +158,7 @@ const ProposeForm = ({
   };
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    if (!sessionDatesValidity(sessionDetails)) {
+    if (!sessionDatesValidity(sessionDetails) && eventDetails.eventType != 3) {
       setDateTimesValidation(true);
       return;
     }
@@ -168,7 +168,11 @@ const ProposeForm = ({
       ok?: string
       data?: {
         id: number
-        type: string
+        type: {
+          id: number
+          emoji: string
+          type: string
+        }
         emoji: string
         hash:string
       }
@@ -190,7 +194,8 @@ const ProposeForm = ({
       query: {
         ok: r.ok,
         eventHash: r.data?.hash,
-        type: r.data?.type,
+        type: r.data?.type.type,
+        typeId: r.data?.type.id,
       },
     });
     setLoading(false);
@@ -247,7 +252,12 @@ const ProposeForm = ({
           handleChange={handleInput}
           danger={locationValidation.state}
           dangerReason={locationValidation.reason}
-          infoText={`Enter a valid URL or prefix with 'IRL: ' for IRL events`}
+          infoText={
+            `Enter a valid URL
+            ${eventDetails.eventType != 3 ?
+              `or prefix with 'IRL: ' for IRL events` : ``}
+            `
+          }
         />
         <Text
           name="proposerName"
