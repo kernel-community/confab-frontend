@@ -7,9 +7,9 @@ import {useRouter} from 'next/router';
 
 const Submission = () => {
   const router = useRouter();
-  const {eventHash, ok, type} = router.query;
+  const {eventHash, ok, type, typeId} = router.query;
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText('yoyoyoyo');
+    await navigator.clipboard.writeText(`https://convo.kernel.community/rsvp/${eventHash}`);
     alert('event link copied to clipboard');
   };
   return (
@@ -33,8 +33,9 @@ const Submission = () => {
           <div className="mx-auto">
             {
               ok == 'true' ? (
-                <div className="flex flex-col gap-3 items-center">
-                  <button className="
+                Number(typeId) != 3 ? (
+                  <div className="flex flex-col gap-3 items-center">
+                    <button className="
                   text-lg font-inter
                   bg-transparent
                   border-2
@@ -47,29 +48,29 @@ const Submission = () => {
                   flex flex-row gap-3 items-center
                   font-medium
                 "
-                  onClick={copyToClipboard}
-                  >
+                    onClick={copyToClipboard}
+                    >
                     convo.kernel.community/rsvp/{eventHash}
-                    <Image
-                      src={copyVector}
-                      width='15px'
-                      height='15px'
-                    />
-                  </button>
-                  <Link href={`/rsvp/${eventHash}`}>
-                    <div
-                      className="
+                      <Image
+                        src={copyVector}
+                        width='15px'
+                        height='15px'
+                      />
+                    </button>
+                    <Link href={`/rsvp/${eventHash}`}>
+                      <div
+                        className="
                       font-inter
                       font-medium
                       text-primary
                       text-sm
                       cursor-pointer
                       "
-                    >
+                      >
                     Open RSVP page ↗
-                    </div>
-                  </Link>
-                </div>
+                      </div>
+                    </Link>
+                  </div>): <></>
               ) : (
                 <div>
                   Please try again or ping @kernel-stewards on #kernel-reception
