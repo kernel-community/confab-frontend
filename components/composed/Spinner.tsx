@@ -1,6 +1,6 @@
 const Spinner = () => {
   return (
-    <div className="p-32">
+    <div>
       <div
         className="
           mx-auto
