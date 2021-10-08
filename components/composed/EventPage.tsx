@@ -53,7 +53,7 @@ const EventPage = ({
           site_name: 'KERNEL Convo',
         }}
       />
-      {loading ? <Spinner /> : (
+      {loading ? <div className="p-32"><Spinner /></div> : (
       <>
         <Hero
           title={eventDetails.title}

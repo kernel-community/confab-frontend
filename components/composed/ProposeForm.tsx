@@ -8,8 +8,9 @@ import Button from '../atomic/Button';
 import {useEffect, useState} from 'react';
 import {DateTime} from 'luxon';
 import {useRouter} from 'next/router';
-import {noSpecialChars, onlyURL, onlyEmail} from '../../utils/regex';
+import {noSpecialChars, onlyURL} from '../../utils/regex';
 import {sessionDatesValidity} from '../../utils';
+import useAuth from '../../hooks/useAuth';
 import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
 
 const ProposeForm = ({
@@ -18,14 +19,16 @@ const ProposeForm = ({
   className: string
 }) => {
   const router = useRouter();
+  const {user} = useAuth({redirectTo: '/login'});
+
   const [eventDetails, setEventDetails] = useState<Event>({
     title: '',
     descriptionHtml: '',
     descriptionText: '',
     eventType: 1,
     location: '',
-    proposerName: '',
-    proposerEmail: '',
+    proposerEmail: user?.email,
+    proposerName: user?.email.match(/^([^@]*)@/) ? user.email.match(/^([^@]*)@/)[1] : 'Anonymous',
     limit: 0,
     timezone: DateTime.local().zoneName,
   });
@@ -41,7 +44,6 @@ const ProposeForm = ({
   const [isOffer, setIsOffer] = useState<boolean>(false);
   const [titleValidation, setTitleValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [locationValidation, setLocationValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
-  const [emailValidation, setEmailValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [limitValidation, setLimitValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [dateTimesValidation, setDateTimesValidation]=useState<boolean>(false);
   useEffect(() => {
@@ -55,8 +57,7 @@ const ProposeForm = ({
       disable = true;
     }
     if (
-      titleValidation.state || locationValidation.state ||
-      emailValidation.state || limitValidation.state
+      titleValidation.state || locationValidation.state || limitValidation.state
     ) {
       disable = true;
     }
@@ -64,11 +65,8 @@ const ProposeForm = ({
   }, [
     eventDetails.title,
     eventDetails.location,
-    eventDetails.proposerEmail,
-    eventDetails.proposerName,
     titleValidation,
     locationValidation,
-    emailValidation,
     limitValidation,
   ]);
   const handleSessionsInput = (count: number, e: any) => {
@@ -116,13 +114,6 @@ const ProposeForm = ({
           setLocationValidation({state: true, reason: 'Not a valid URL'});
         }
         break;
-      case 'proposerEmail':
-        if (onlyEmail.test(value.toLowerCase())) {
-          setEmailValidation({state: false, reason: ``});
-        } else {
-          setEmailValidation({state: true, reason: 'Not a valid email'});
-        }
-        break;
       case 'limit':
         if (Number(value) > 90 || Number(value) < 0) {
           setLimitValidation({state: true, reason: 'Positive integers less than 90 only :)'});
@@ -133,7 +124,7 @@ const ProposeForm = ({
     }
   };
   const handleInput = (e: any) => {
-    const target: 'title' | 'eventType' | 'location' | 'proposerName' | 'proposerEmail' | 'description' | 'limit' = e.target.name;
+    const target: 'title' | 'eventType' | 'location' | 'description' | 'limit' = e.target.name;
     switch (target) {
       case 'title':
       case 'eventType':
@@ -141,8 +132,6 @@ const ProposeForm = ({
         else setIsOffer(false);
       case 'location':
       case 'limit':
-      case 'proposerName':
-      case 'proposerEmail':
         setEventDetails(Object.assign(eventDetails, {
           [target]: e.target.value,
         }));
@@ -258,19 +247,6 @@ const ProposeForm = ({
               `or prefix with 'IRL: ' for IRL events` : ``}
             `
           }
-        />
-        <Text
-          name="proposerName"
-          fieldName= "Your Name *"
-          handleChange={handleInput}
-        />
-        <Text
-          name="proposerEmail"
-          fieldName= "Your Email *"
-          handleChange={handleInput}
-          danger={emailValidation.state}
-          dangerReason={emailValidation.reason}
-          infoText={`You will receive a google calendar event invite on this email`}
         />
         <div></div>
         <div className="w-1/2 justify-self-end">

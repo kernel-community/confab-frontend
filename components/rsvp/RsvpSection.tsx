@@ -82,7 +82,7 @@ const Session = ({
       <div
         className="flex-1 flex flex-row gap-4 my-2 mx-1 font-inter text-skin-muted"
       >
-        <div className="flex-1 text-base uppercase text-left my-auto">
+        <div className="flex-1 text-sm uppercase text-left my-auto">
           {date}&nbsp;{time}
         </div>
 
