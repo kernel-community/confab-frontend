@@ -146,13 +146,18 @@ const RsvpForAllButton = ({
   );
 };
 
-const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
+const SessionsWrapper = ({
+  sessions,
+  email,
+}: {
+  sessions: ClientSession[]
+  email?: string
+}) => {
   const [showSessions, setShowSessions] = useState<boolean>(true);
   const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);
-  const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [done, setDone] = useState(false);
-  const handleSessionSelect = (id:number, checked: boolean) => {
+  const handleSessionSelect = (id: number, checked: boolean) => {
     switch (checked) {
       case true:
         setToRsvp([...toRsvp, id]);
@@ -236,22 +241,6 @@ const SessionsWrapper = ({sessions}: {sessions: ClientSession[]}) => {
         ):
          (
            <>
-             <input
-               type="text"
-               name="email"
-               id="email"
-               className={`
-            rounded-lg
-            ring-gray-300 border-gray-300
-            focus:border-primary focus:ring-primary
-            ${loading? `bg-gray-300` : ``}
-          `}
-               placeholder="email"
-               onChange={(e)=>{
-                 setEmail(e.target.value);
-               }}
-               disabled={loading}
-             />
              <Button
                handleClick={handleSubmit.bind(this)}
                disabled={loading}
@@ -268,10 +257,12 @@ const RsvpSection = ({
   proposerName,
   sessionsCount,
   sessions,
+  email,
 }: {
   proposerName: string,
   sessionsCount: number,
-  sessions: ClientSession[]
+  sessions: ClientSession[],
+  email?: string
 }) => {
   return (
     <div
@@ -306,6 +297,7 @@ const RsvpSection = ({
       </div>
       <SessionsWrapper
         sessions={sessions}
+        email={email}
       />
 
     </div>

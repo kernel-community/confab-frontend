@@ -8,8 +8,10 @@ import {NextSeo} from 'next-seo';
 
 const EventPage = ({
   event,
+  userEmail,
 }: {
   event?: string | string[] | undefined
+  userEmail?:string
 }) => {
   // call api here, pass data to children
   const [loading, setLoading] = useState<boolean>(false);
@@ -67,6 +69,7 @@ const EventPage = ({
             proposerName={eventDetails.proposerName!}
             sessionsCount={eventDetails.sessionCount!}
             sessions={eventDetails.sessions!}
+            email={userEmail}
           />) : <></>}
         </div>
       </>
