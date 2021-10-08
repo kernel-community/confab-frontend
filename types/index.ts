@@ -1,3 +1,10 @@
+export type User = {
+  email: string,
+  username?: string,
+  name?: string,
+  block?:string
+}
+
 export type ClientInputSession = {
   date?: number
   month?: number
