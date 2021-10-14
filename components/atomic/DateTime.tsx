@@ -26,6 +26,9 @@ const DateTime = ({
 }) => {
   const year = DT.local().get('year');
   const times = [
+    {t: '4:00 AM', h: 4, m: 0},
+    {t: '4:30 AM', h: 4, m: 30},
+
     {t: '7:00 AM', h: 7, m: 0},
     {t: '7:30 AM', h: 7, m: 30},
 

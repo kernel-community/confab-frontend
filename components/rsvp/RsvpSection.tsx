@@ -23,7 +23,7 @@ const getDateTimeString = (
   const time = DateTime.fromISO(date, {zone});
   switch (option) {
     case 'date':
-      return time.toFormat('d LLL,');
+      return time.toFormat('d LLL');
       break;
     case 'time':
       return time.toFormat('hh:mm a');
@@ -83,7 +83,10 @@ const Session = ({
         className="flex-1 flex flex-row gap-4 my-2 mx-1 font-inter text-skin-muted"
       >
         <div className="flex-1 text-sm uppercase text-left my-auto">
-          {date}&nbsp;{time}
+          {date}
+          <div className='text-xs'>
+            {time}
+          </div>
         </div>
 
         {noLimit ?
@@ -127,6 +130,7 @@ const RsvpForAllButton = ({
           hover:bg-primary-lighter cursor-pointer
           flex flex-row w-full items-center gap-1 justify-items-start
           uppercase
+          text-sm
         "
     >
       <input

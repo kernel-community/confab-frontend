@@ -2,7 +2,10 @@ import {serialize, parse} from 'cookie';
 import {NextApiRequest, NextApiResponse} from 'next';
 
 const TOKEN_NAME = 'api_token';
-const MAX_AGE = 60 * 60 * 8;
+
+// 60 seconds in 1 minute, 60 minutes in 1 hour, 24 hours in a day
+// 6 days total
+const MAX_AGE = 60 * 60 * 24 * 6;
 
 function createCookie(
     name:any, data:any, options = {},
