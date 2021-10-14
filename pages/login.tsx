@@ -6,7 +6,6 @@ import useAuth from '../hooks/useAuth';
 import {useState} from 'react';
 import Spinner from '../components/composed/Spinner';
 import {NextSeo} from 'next-seo';
-import FieldLabel from '../components/atomic/StrongText';
 
 const Login: NextPage = () => {
   const router = useRouter();
