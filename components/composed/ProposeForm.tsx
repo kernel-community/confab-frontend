@@ -192,7 +192,7 @@ const ProposeForm = ({
   };
   return (
     <div className={className}>
-      <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
+      <div className="grid xl:grid-cols-2 gap-4 grid-cols-1">
         <EventType
           handleChange={handleInput}
         />

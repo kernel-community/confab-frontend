@@ -36,7 +36,7 @@ const Propose: NextPage = () => {
         </div>
         <div>
           <ProposeForm
-            className="py-12 lg:px-24 px-10"
+            className="py-12 xl:px-24 px-10"
           />
         </div>
       </Main>
