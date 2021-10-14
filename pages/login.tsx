@@ -6,6 +6,7 @@ import useAuth from '../hooks/useAuth';
 import {useState} from 'react';
 import Spinner from '../components/composed/Spinner';
 import {NextSeo} from 'next-seo';
+import FieldLabel from '../components/atomic/StrongText';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -46,6 +47,9 @@ const Login: NextPage = () => {
             KERNEL Conversations
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <div className='text-xs uppercase font-inter font-medium text-primary'>
+                Sign in / Sign up
+              </div>
               <input
                 name="email"
                 type="email"
