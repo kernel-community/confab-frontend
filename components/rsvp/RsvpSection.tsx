@@ -5,6 +5,7 @@ import personVector from '../../public/vectors/person.png';
 import circlesVector from '../../public/vectors/circles.png';
 import FieldLabel from '../atomic/StrongText';
 import Button from '../atomic/Button';
+import Text from '../atomic/Text';
 import {useState} from 'react';
 import {Session as ClientSession} from '../../types';
 import {DateTime} from 'luxon';
@@ -114,41 +115,41 @@ const Session = ({
   );
 };
 
-const RsvpForAllButton = ({
-  handleClick,
-}: {
-  handleClick: any
-}) => {
-  return (
-    <label
-      className="
-          bg-primary-light border-2
-          border-primary
-          rounded-xl
-          py-1
-          font-inter text-primary
-          hover:bg-primary-lighter cursor-pointer
-          flex flex-row w-full items-center gap-1 justify-items-start
-          uppercase
-          text-sm
-        "
-    >
-      <input
-        type="checkbox"
-        onChange={(e) => handleClick(e.target.checked)}
-        className="
-          p-2 m-4 rounded-sm
-          text-primary border-gray-300
-          cursor-pointer
-          focus:border-primary focus:ring-primary
-        "
-      />
-      <div className="flex-1">
-        RSVP for Entire Series
-      </div>
-    </label>
-  );
-};
+// const RsvpForAllButton = ({
+//   handleClick,
+// }: {
+//   handleClick: any
+// }) => {
+//   return (
+//     <label
+//       className="
+//           bg-primary-light border-2
+//           border-primary
+//           rounded-xl
+//           py-1
+//           font-inter text-primary
+//           hover:bg-primary-lighter cursor-pointer
+//           flex flex-row w-full items-center gap-1 justify-items-start
+//           uppercase
+//           text-sm
+//         "
+//     >
+//       <input
+//         type="checkbox"
+//         onChange={(e) => handleClick(e.target.checked)}
+//         className="
+//           p-2 m-4 rounded-sm
+//           text-primary border-gray-300
+//           cursor-pointer
+//           focus:border-primary focus:ring-primary
+//         "
+//       />
+//       <div className="flex-1">
+//         RSVP for Entire Series
+//       </div>
+//     </label>
+//   );
+// };
 
 const SessionsWrapper = ({
   sessions,
@@ -157,10 +158,15 @@ const SessionsWrapper = ({
   sessions: ClientSession[]
   email?: string
 }) => {
-  const [showSessions, setShowSessions] = useState<boolean>(true);
+  const showSessions: boolean = true;
+  // const [showSessions, setShowSessions] = useState<boolean>(true);
   const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [done, setDone] = useState(false);
+  const [rsvpEmail, setRsvpEmail] = useState(email);
+  const handleRsvpEmail = (e: any) => {
+    setRsvpEmail(e.target.value);
+  };
   const handleSessionSelect = (id: number, checked: boolean) => {
     switch (checked) {
       case true:
@@ -172,22 +178,22 @@ const SessionsWrapper = ({
       default: '';
     }
   };
-  const handleAllSessionsSelect = (checked: boolean) => {
-    setShowSessions(!showSessions);
-    switch (checked) {
-      case true:
-        setToRsvp(sessions.map((s) => s.id));
-        break;
-      case false:
-        setToRsvp([]);
-        break;
-      default: '';
-    }
-  };
+  // const handleAllSessionsSelect = (checked: boolean) => {
+  //   setShowSessions(!showSessions);
+  //   switch (checked) {
+  //     case true:
+  //       setToRsvp(sessions.map((s) => s.id));
+  //       break;
+  //     case false:
+  //       setToRsvp([]);
+  //       break;
+  //     default: '';
+  //   }
+  // };
   const handleSubmit = async () => {
     setLoading(true);
     (await (await fetch('/api/rsvp', {
-      body: JSON.stringify({rsvp: {email, events: toRsvp}}),
+      body: JSON.stringify({rsvp: {email: rsvpEmail, events: toRsvp}}),
       method: 'POST',
       headers: {'Content-type': 'application/json'},
     })).json()).data;
@@ -199,9 +205,9 @@ const SessionsWrapper = ({
       <div
         className="flex flex-col gap-3 mt-3"
       >
-        {sessions.length > 1 ? (<RsvpForAllButton
+        {/* {sessions.length > 1 ? (<RsvpForAllButton
           handleClick={handleAllSessionsSelect.bind(this)}
-        />): <></>}
+        />): <></>} */}
         {showSessions ? (
             sessions.map((session, key) => {
               return <Session
@@ -245,9 +251,15 @@ const SessionsWrapper = ({
         ):
          (
            <>
+             {rsvpEmail?.length! == 0 ? <Text
+               name="email"
+               placeholder='email'
+               handleChange={handleRsvpEmail}
+             ></Text>: <></>}
              <Button
                handleClick={handleSubmit.bind(this)}
                disabled={loading}
+               displayLoading={loading}
                buttonText={`RSVP →`}
              />
            </>)}

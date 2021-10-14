@@ -5,7 +5,7 @@ import useAuth from '../../hooks/useAuth';
 
 const Post = () => {
   const router = useRouter();
-  const {user} = useAuth({redirectTo: '/login'});
+  const {user} = useAuth({});
 
   const {
     eventHash,
@@ -14,7 +14,7 @@ const Post = () => {
     <Main>
       <EventPage
         event={eventHash}
-        userEmail={user?.email}
+        userEmail={user?.email || ''}
       />
     </Main>
   );

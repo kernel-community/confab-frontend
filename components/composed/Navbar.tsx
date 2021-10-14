@@ -8,7 +8,7 @@ import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
   const router = useRouter();
-  const {user} = useAuth({redirectTo: '/login'});
+  const {user} = useAuth({});
 
   return (
     <>

@@ -7,13 +7,15 @@ const TextField = ({
   infoText,
   danger,
   dangerReason,
+  placeholder,
 }: {
   name: string
-  fieldName: string
+  fieldName?: string
   handleChange: any
   infoText?: string
   danger?: boolean
   dangerReason?:string
+  placeholder?:string
 }) => {
   return (
     <>
@@ -39,6 +41,7 @@ const TextField = ({
           `}
           onChange={handleChange}
           required
+          placeholder={placeholder}
         />
         <div className="font-medium text-xs text-red-400">
           {dangerReason}
