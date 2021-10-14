@@ -30,7 +30,7 @@ const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSessi
       endDateTime: event.eventType == 3 ? DateTime.local().toISO() : endDateTime.toISO(),
       limit: Number(event.limit) || 0,
       postOnSlack: true,
-      slackChannel,
+      slackChannel: slackChannel[event.eventType - 1],
       createGcalEvent: event.eventType == 3 ? false : true,
       gcalCalendar,
       typeId: event.eventType!,
