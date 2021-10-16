@@ -251,7 +251,7 @@ const SessionsWrapper = ({
         ):
          (
            <>
-             {rsvpEmail?.length! == 0 ? <Text
+             {email?.length! == 0 ? <Text
                name="email"
                placeholder='email'
                handleChange={handleRsvpEmail}
