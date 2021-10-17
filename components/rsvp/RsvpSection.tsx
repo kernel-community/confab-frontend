@@ -6,7 +6,7 @@ import circlesVector from '../../public/vectors/circles.png';
 import FieldLabel from '../atomic/StrongText';
 import Button from '../atomic/Button';
 import Text from '../atomic/Text';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Session as ClientSession} from '../../types';
 import {DateTime} from 'luxon';
 
@@ -161,9 +161,14 @@ const SessionsWrapper = ({
   const showSessions: boolean = true;
   // const [showSessions, setShowSessions] = useState<boolean>(true);
   const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [done, setDone] = useState(false);
   const [rsvpEmail, setRsvpEmail] = useState(email);
+  useEffect(() => {
+    if (toRsvp.length > 0) setDisableSubmit(false);
+    else setDisableSubmit(true);
+  }, [toRsvp]);
   const handleRsvpEmail = (e: any) => {
     setRsvpEmail(e.target.value);
   };
@@ -258,7 +263,7 @@ const SessionsWrapper = ({
              ></Text>: <></>}
              <Button
                handleClick={handleSubmit.bind(this)}
-               disabled={loading}
+               disabled={loading || disableSubmit}
                displayLoading={loading}
                buttonText={`RSVP →`}
              />
