@@ -16,7 +16,7 @@ const Hero = ({
           absolute bottom-5 left-5
           font-inter
           font-bold text-4xl
-          sm:font-bold sm:text-6xl
+          sm:font-bold sm:text-4xl
           text-gray-800
           px-3
         ">
