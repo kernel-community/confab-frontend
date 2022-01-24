@@ -6,10 +6,7 @@ export type User = {
 }
 
 export type ClientInputSession = {
-  date?: number
-  month?: number
-  year?: number
-  time?: number[]
+  dateTime?: string
   count?:number
 }
 

@@ -1,14 +1,12 @@
 import Image from 'next/image';
 import proposeIcon from '../../public/vectors/propose.png';
-import personIcon from '../../public/vectors/person.png';
+// import personIcon from '../../public/vectors/person.png';
 import homeIcon from '../../public/vectors/home.png';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
-import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
   const router = useRouter();
-  const {user} = useAuth({});
 
   return (
     <>
@@ -25,7 +23,7 @@ const Navbar = () => {
           Convo
         </div>
         <div className="flex-grow flex flex-row gap-8 items-center justify-center">
-          <Link href={user ? `/` : `/login`}>
+          <Link href="/">
             <div className={`
         flex flex-row items-center gap-1 py-5
         cursor-pointer
@@ -37,7 +35,7 @@ const Navbar = () => {
           Home
             </div>
           </Link>
-          <Link href={user ? `/propose` : `/login`}>
+          <Link href="/propose">
             <div className={`
         flex flex-row items-center gap-1 py-5
         cursor-pointer
@@ -50,7 +48,7 @@ const Navbar = () => {
             </div>
           </Link>
         </div>
-        {user ? (
+        {/* {user ? (
           <Link href="/dashboard">
             <div className={`
             flex flex-row items-center gap-1 py-5
@@ -70,7 +68,7 @@ const Navbar = () => {
             Login
           </div>
         </Link>
-        )}
+        )} */}
 
       </div>
 

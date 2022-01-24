@@ -56,14 +56,14 @@ const Session = ({
       className={`
         ${active?
           `
-            bg-primary-muted 
+            bg-primary-muted
             hover:bg-primary-dark cursor-pointer
           ` :
           'bg-gray-200 text-gray-500 cursor-not-allowed'}
         border-0
         rounded-xl
         text-center
-        font-inter 
+        font-inter
         flex flex-row items-center justify-left
         gap-1
       `}
@@ -158,6 +158,7 @@ const SessionsWrapper = ({
   sessions: ClientSession[]
   email?: string
 }) => {
+  console.log('email', email);
   const showSessions: boolean = true;
   // const [showSessions, setShowSessions] = useState<boolean>(true);
   const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);
@@ -256,7 +257,7 @@ const SessionsWrapper = ({
         ):
          (
            <>
-             {email?.length! == 0 ? <Text
+             {!email ? <Text
                name="email"
                placeholder='email'
                handleChange={handleRsvpEmail}

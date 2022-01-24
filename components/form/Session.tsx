@@ -68,7 +68,7 @@ const DateTimeWrapper = ({
   };
 
   return (
-    <div className="flex flex-col items-start gap-4">
+    <div className="flex flex-col space-between gap-4">
       <div className="divide-y-2 divide-gray-200">
         {sessions}
       </div>

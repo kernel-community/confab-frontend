@@ -10,33 +10,31 @@ import {DateTime} from 'luxon';
 import {useRouter} from 'next/router';
 import {noSpecialChars, onlyURL} from '../../utils/regex';
 import {sessionDatesValidity} from '../../utils';
-import useAuth from '../../hooks/useAuth';
+import {DateTime as DT} from 'luxon';
 import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
 
-const ProposeForm = ({
+const Propose = ({
   className,
+  eventType
 }: {
-  className: string
+  className: string,
+  eventType: number
 }) => {
   const router = useRouter();
-  const {user} = useAuth({redirectTo: '/login'});
 
   const [eventDetails, setEventDetails] = useState<Event>({
     title: '',
     descriptionHtml: '',
     descriptionText: '',
-    eventType: 1,
+    eventType,
     location: '',
-    proposerEmail: user?.email,
-    proposerName: user?.email.match(/^([^@]*)@/) ? user.email.match(/^([^@]*)@/)[1] : 'Anonymous',
+    proposerEmail: '',
+    proposerName: 'Anonymous',
     limit: 0,
     timezone: DateTime.local().zoneName,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
-    date: 0,
-    month: 0,
-    time: [],
-    year: DateTime.local().get('year'),
+    dateTime: new Date().toISOString(),
     count: 0,
   }]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -49,7 +47,7 @@ const ProposeForm = ({
   useEffect(() => {
     let disable: boolean = false;
     if (
-      (eventDetails.title?.length == 0 && eventDetails.eventType != 3) ||
+      (eventDetails.title?.length == 0) ||
       eventDetails.location?.length == 0 ||
       eventDetails.proposerEmail?.length == 0 ||
       eventDetails.proposerName?.length == 0
@@ -69,23 +67,20 @@ const ProposeForm = ({
     locationValidation,
     limitValidation,
   ]);
-  const handleSessionsInput = (count: number, e: any) => {
+  const handleSessionsInput = (count: number, e: DT) => {
     setDateTimesValidation(false);
     setSessionDetails((currentSessions) => {
       const currentSession = currentSessions.find((s) => s.count == count);
       if (currentSession) {
         let session: Session = currentSession;
-        session = Object.assign(session, {[e.target.name]: JSON.parse(e.target.value)});
+        session = Object.assign(session, {dateTime: e.toISO()});
         return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
       } else {
         let session: Session = {
-          date: 0,
-          month: 0,
-          time: [],
-          year: DateTime.local().get('year'),
+          dateTime: e.toISO(),
           count,
         };
-        session = Object.assign(session, {[e.target.name]: JSON.parse(e.target.value)});
+        session = Object.assign(session, {dateTime: e.toISO()});
         return currentSessions.concat([session]);
       }
     });
@@ -124,13 +119,12 @@ const ProposeForm = ({
     }
   };
   const handleInput = (e: any) => {
-    const target: 'title' | 'eventType' | 'location' | 'description' | 'limit' = e.target.name;
+    const target: 'title' | 'location' | 'description' | 'limit' | 'proposerEmail' | 'proposerName'= e.target.name;
     switch (target) {
       case 'title':
-      case 'eventType':
-        if (e.target.value == 3) setIsOffer(true);
-        else setIsOffer(false);
       case 'location':
+      case 'proposerEmail':
+      case 'proposerName':
       case 'limit':
         setEventDetails(Object.assign(eventDetails, {
           [target]: e.target.value,
@@ -147,6 +141,7 @@ const ProposeForm = ({
   };
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
+    console.log("sessionDetails", sessionDetails);
     if (!sessionDatesValidity(sessionDetails) && eventDetails.eventType != 3) {
       setDateTimesValidation(true);
       return;
@@ -166,36 +161,37 @@ const ProposeForm = ({
         hash:string
       }
     } = {};
-    try {
-      r = (await(await fetch('/api/submitEvent', {
-        body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
-        method: 'POST',
-        headers: {'Content-type': 'application/json'},
-      })).json()).r;
-    } catch (err) {
-      router.push({
-        pathname: '/submission',
-        query: {ok: false},
-      });
-    }
-    router.push({
-      pathname: '/submission',
-      query: {
-        ok: r.ok,
-        eventHash: r.data?.hash,
-        type: r.data?.type.type,
-        typeId: r.data?.type.id,
-      },
-    });
+    // try {
+    //   r = (await(await fetch('/api/submitEvent', {
+    //     body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
+    //     method: 'POST',
+    //     headers: {'Content-type': 'application/json'},
+    //   })).json()).r;
+    // } catch (err) {
+    //   router.push({
+    //     pathname: '/submission',
+    //     query: {ok: false},
+    //   });
+    // }
+    // router.push({
+    //   pathname: '/submission',
+    //   query: {
+    //     ok: r.ok,
+    //     eventHash: r.data?.hash,
+    //     type: r.data?.type.type,
+    //     typeId: r.data?.type.id,
+    //   },
+    // });
+    console.log({event: eventDetails, sessions: sessionDetails});
     setLoading(false);
     setDisableSubmit(false);
   };
   return (
     <div className={className}>
       <div className="grid xl:grid-cols-2 gap-4 grid-cols-1">
-        <EventType
+        {/* <EventType
           handleChange={handleInput}
-        />
+        /> */}
         {
           !isOffer ? (
             <Text
@@ -248,6 +244,21 @@ const ProposeForm = ({
             `
           }
         />
+        <Text
+          name="proposerEmail"
+          fieldName="Email"
+          handleChange={handleInput}
+          infoText={
+            `
+              We need your email to send you google calendar invites & a reminder email before the start of an event
+            `
+          }
+        />
+        <Text
+          name="proposerName"
+          fieldName="Name"
+          handleChange={handleInput}
+        />
         <div></div>
         <div className="w-1/2 justify-self-end">
           <Button
@@ -264,4 +275,4 @@ const ProposeForm = ({
   );
 };
 
-export default ProposeForm;
+export default Propose;
