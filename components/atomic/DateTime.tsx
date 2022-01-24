@@ -1,17 +1,15 @@
 import Image from 'next/image';
 import deleteIcon from '../../public/vectors/delete.png';
 import DefaultDatePicker from 'react-datepicker';
-import { useState } from 'react';
+import {useState} from 'react';
 import {DateTime as DT} from 'luxon';
-import Number from './Number';
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 
 const DateTime = ({
   count,
   displayDelete,
   handleChange,
   handleDelete,
-  displaySessionLabel,
   sessionNumber,
   deleteSessionData,
 }: {
@@ -20,7 +18,6 @@ const DateTime = ({
   displayDelete: boolean,
   handleChange:any,
   handleDelete?:any,
-  displaySessionLabel: boolean
   deleteSessionData: any
 }) => {
   const [startDate, setStartDate] = useState();
@@ -32,12 +29,12 @@ const DateTime = ({
         <div className="text-xs text-inter font-medium text-gray-400 flex-none">
           Session {sessionNumber}
         </div>
-          <DefaultDatePicker
+        <DefaultDatePicker
           selected={startDate}
           onChange={(date: any) => {
-              setStartDate(date);
-              handleChange(count, DT.fromJSDate(date));
-            }
+            setStartDate(date);
+            handleChange(count, DT.fromJSDate(date));
+          }
           }
           shouldCloseOnSelect
           showTimeSelect={true}
@@ -50,19 +47,18 @@ const DateTime = ({
         />
       </div>
       <div>
-      <div className="text-xs text-inter font-medium text-gray-400 flex-none">
+        <div className="text-xs text-inter font-medium text-gray-400 flex-none">
           Duration (in hours)
         </div>
         <input
           type="number"
           name="duration"
           onChange={handleChange}
-          placeholder={"placeholder"}
+          placeholder={'placeholder'}
           required
           className='rounded-lg'
         />
       </div>
-
 
 
       {/* <select className="rounded-lg ring-gray-300 border-gray-300

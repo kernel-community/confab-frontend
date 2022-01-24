@@ -18,6 +18,7 @@ const Propose = ({
 }: {
   className: string,
 }) => {
+  const router = useRouter();
   const [eventDetails, setEventDetails] = useState<Event>({
     title: '',
     descriptionHtml: '',
@@ -36,7 +37,6 @@ const Propose = ({
   }]);
   const [loading, setLoading] = useState<boolean>(false);
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
-  const [isOffer, setIsOffer] = useState<boolean>(false);
   const [titleValidation, setTitleValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [locationValidation, setLocationValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [limitValidation, setLimitValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
@@ -74,7 +74,7 @@ const Propose = ({
           session = Object.assign(session, {startDateTime: e.toISO()});
         } else {
           const duration = countOrEvent.target.value;
-          console.log("caught duration", duration);
+          console.log('caught duration', duration);
         }
         return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
       } else {
@@ -86,7 +86,7 @@ const Propose = ({
           session = Object.assign(session, {startDateTime: e.toISO()});
         } else {
           const duration = countOrEvent.target.value;
-          console.log("caught duration", duration);
+          console.log('caught duration', duration);
         }
         return currentSessions.concat([session]);
       }
@@ -149,8 +149,6 @@ const Propose = ({
   };
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    console.log({event: eventDetails, sessions: sessionDetails});
-
     if (!sessionDatesValidity(sessionDetails) && eventDetails.eventType != 3) {
       setDateTimesValidation(true);
       return;
@@ -170,27 +168,27 @@ const Propose = ({
         hash:string
       }
     } = {};
-    // try {
-    //   r = (await(await fetch('/api/submitEvent', {
-    //     body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
-    //     method: 'POST',
-    //     headers: {'Content-type': 'application/json'},
-    //   })).json()).r;
-    // } catch (err) {
-    //   router.push({
-    //     pathname: '/submission',
-    //     query: {ok: false},
-    //   });
-    // }
-    // router.push({
-    //   pathname: '/submission',
-    //   query: {
-    //     ok: r.ok,
-    //     eventHash: r.data?.hash,
-    //     type: r.data?.type.type,
-    //     typeId: r.data?.type.id,
-    //   },
-    // });
+    try {
+      r = (await(await fetch('/api/submitEvent', {
+        body: JSON.stringify({event: eventDetails, sessions: sessionDetails}),
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+      })).json()).r;
+    } catch (err) {
+      router.push({
+        pathname: '/submission',
+        query: {ok: false},
+      });
+    }
+    router.push({
+      pathname: '/submission',
+      query: {
+        ok: r.ok,
+        eventHash: r.data?.hash,
+        type: r.data?.type.type,
+        typeId: r.data?.type.id,
+      },
+    });
     setLoading(false);
     setDisableSubmit(false);
   };
@@ -200,56 +198,35 @@ const Propose = ({
         <EventType
           handleChange={handleInput}
         />
-        {
-          !isOffer ? (
-            <Text
-              name="title"
-              fieldName= "Title *"
-              handleChange={handleInput}
-              danger={titleValidation.state}
-              dangerReason={titleValidation.reason}
-            />):
-          <></>
-        }
         <TextArea
           name="description"
-          fieldName={isOffer ? `What is it that you'd like to offer?`: `Description`}
+          fieldName="Description"
           handleChange={handleInput.bind(this)}
-          infoText={isOffer ? `eg., "Learned smart contracts in 6 months, secured a job in DeFi. Part time gymnast on the side. Loving the intersection of crypto and community. Happy to talk governance, smart contract security, and exploring different types of movement!"` : ``}
         />
-        {
-          !isOffer ? (
-          <>
-            <SessionsInput
-              handleChange={handleSessionsInput}
-              resetSessions={resetSessions}
-              deleteSession={handleSessionDelete}
-              danger={dateTimesValidation}
-            />
-            <NumberComponent
-              name="limit"
-              fieldName="Set Limit"
-              infoText={`Enter maximum number of seats for your session(s). Enter 0 for no limit`}
-              handleChange={handleInput}
-              danger={limitValidation.state}
-              dangerReason={limitValidation.reason}
-              placeholder="0"
-            />
-          </>
-          ):
-          <></>
-        }
+
+        <SessionsInput
+          handleChange={handleSessionsInput}
+          resetSessions={resetSessions}
+          deleteSession={handleSessionDelete}
+          danger={dateTimesValidation}
+        />
+        <NumberComponent
+          name="limit"
+          fieldName="Set Limit"
+          infoText={`Enter maximum number of seats for your session(s). Enter 0 for no limit`}
+          handleChange={handleInput}
+          danger={limitValidation.state}
+          dangerReason={limitValidation.reason}
+          placeholder="0"
+        />
         <Text
           name="location"
-          fieldName={isOffer ? `Link to Scheduler *`: `Location *`}
+          fieldName="Location *"
           handleChange={handleInput}
           danger={locationValidation.state}
           dangerReason={locationValidation.reason}
           infoText={
-            `Enter a valid URL
-            ${eventDetails.eventType != 3 ?
-              `or prefix with 'IRL: ' for IRL events` : ``}
-            `
+            `Enter a valid URL or prefix with 'IRL: ' for IRL events`
           }
         />
         <Text

@@ -26,7 +26,6 @@ const DateTimeWrapper = ({
       sessionNumber={1}
       handleChange={handleChange}
       displayDelete={false}
-      displaySessionLabel={isRecurring}
       deleteSessionData={deleteSessionData}
     />,
   ]);
@@ -38,7 +37,6 @@ const DateTimeWrapper = ({
         sessionNumber={1}
         handleChange={handleChange}
         displayDelete={false}
-        displaySessionLabel={isRecurring}
         deleteSessionData={deleteSessionData}
       />,
     ]);
@@ -59,7 +57,6 @@ const DateTimeWrapper = ({
               handleDelete={
                 deleteSession.bind(this)
               }
-              displaySessionLabel={true}
               deleteSessionData={deleteSessionData}
             />,
         ),
