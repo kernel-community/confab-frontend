@@ -15,18 +15,14 @@ import type {ClientInputSession as Session, ClientInputEvent as Event} from '../
 
 const Propose = ({
   className,
-  eventType
 }: {
   className: string,
-  eventType: number
 }) => {
-  const router = useRouter();
-
   const [eventDetails, setEventDetails] = useState<Event>({
     title: '',
     descriptionHtml: '',
     descriptionText: '',
-    eventType,
+    eventType: 1, // default to junto
     location: '',
     proposerEmail: '',
     proposerName: 'Anonymous',
@@ -34,7 +30,8 @@ const Propose = ({
     timezone: DateTime.local().zoneName,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
-    dateTime: new Date().toISOString(),
+    startDateTime: new Date().toISOString(),
+    endDateTime: new Date().toISOString(),
     count: 0,
   }]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -47,7 +44,7 @@ const Propose = ({
   useEffect(() => {
     let disable: boolean = false;
     if (
-      (eventDetails.title?.length == 0) ||
+      eventDetails.title?.length == 0 ||
       eventDetails.location?.length == 0 ||
       eventDetails.proposerEmail?.length == 0 ||
       eventDetails.proposerName?.length == 0
@@ -67,20 +64,30 @@ const Propose = ({
     locationValidation,
     limitValidation,
   ]);
-  const handleSessionsInput = (count: number, e: DT) => {
+  const handleSessionsInput = (countOrEvent: any, e: DT) => {
     setDateTimesValidation(false);
     setSessionDetails((currentSessions) => {
-      const currentSession = currentSessions.find((s) => s.count == count);
+      const currentSession = currentSessions.find((s) => s.count == countOrEvent);
       if (currentSession) {
         let session: Session = currentSession;
-        session = Object.assign(session, {dateTime: e.toISO()});
+        if (e) {
+          session = Object.assign(session, {startDateTime: e.toISO()});
+        } else {
+          const duration = countOrEvent.target.value;
+          console.log("caught duration", duration);
+        }
         return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
       } else {
         let session: Session = {
-          dateTime: e.toISO(),
-          count,
+          startDateTime: e ? e.toISO() : undefined,
+          count: countOrEvent,
         };
-        session = Object.assign(session, {dateTime: e.toISO()});
+        if (e) {
+          session = Object.assign(session, {startDateTime: e.toISO()});
+        } else {
+          const duration = countOrEvent.target.value;
+          console.log("caught duration", duration);
+        }
         return currentSessions.concat([session]);
       }
     });
@@ -119,13 +126,14 @@ const Propose = ({
     }
   };
   const handleInput = (e: any) => {
-    const target: 'title' | 'location' | 'description' | 'limit' | 'proposerEmail' | 'proposerName'= e.target.name;
+    const target: 'title' | 'location' | 'description' | 'limit' | 'proposerEmail' | 'proposerName' | 'eventType' = e.target.name;
     switch (target) {
       case 'title':
       case 'location':
       case 'proposerEmail':
       case 'proposerName':
       case 'limit':
+      case 'eventType':
         setEventDetails(Object.assign(eventDetails, {
           [target]: e.target.value,
         }));
@@ -141,7 +149,8 @@ const Propose = ({
   };
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    console.log("sessionDetails", sessionDetails);
+    console.log({event: eventDetails, sessions: sessionDetails});
+
     if (!sessionDatesValidity(sessionDetails) && eventDetails.eventType != 3) {
       setDateTimesValidation(true);
       return;
@@ -182,16 +191,15 @@ const Propose = ({
     //     typeId: r.data?.type.id,
     //   },
     // });
-    console.log({event: eventDetails, sessions: sessionDetails});
     setLoading(false);
     setDisableSubmit(false);
   };
   return (
     <div className={className}>
       <div className="grid xl:grid-cols-2 gap-4 grid-cols-1">
-        {/* <EventType
+        <EventType
           handleChange={handleInput}
-        /> */}
+        />
         {
           !isOffer ? (
             <Text
