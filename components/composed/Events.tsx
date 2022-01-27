@@ -3,6 +3,7 @@ import {Card} from '../../layouts/Card';
 import {HorizontalScroll} from '../../layouts/HorizontalScroll';
 import {useEffect, useState} from 'react';
 import {ServerEvent} from '../../types';
+import Link from 'next/link';
 export const Events = ({
   type,
 }: {
@@ -31,26 +32,33 @@ export const Events = ({
       <Title text={title} className='mb-3'/>
       <HorizontalScroll>
         {!loading && events.length > 0 && events.map((u, k) =>
-          <Card key={k}>
+          <Link
+            href={`/rsvp/${u.hash}`}
+            key={k}
+          >
             <div>
-              {u.title}
-            </div>
-            <div>
-              {u.descriptionText}
-            </div>
-            <div>
-              {u.startDateTime}
-            </div>
-            <div>
-              {u.RSVP}
-            </div>
-            <div>
+              <Card >
+                <div>
+                  {u.title}
+                </div>
+                <div>
+                  {u.descriptionText}
+                </div>
+                <div>
+                  {u.startDateTime}
+                </div>
+                <div>
+                  {u.RSVP}
+                </div>
+                <div>
               limit {u.limit}
-            </div>
-            <div>
+                </div>
+                <div>
               hash: {u.hash}
+                </div>
+              </Card>
             </div>
-          </Card>,
+          </Link>,
         )}
         {
           !loading && events.length==0 &&
