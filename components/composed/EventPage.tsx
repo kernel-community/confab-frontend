@@ -38,7 +38,7 @@ const EventPage = ({
     if (eventDetails.title) setLoading(false);
   }, [eventDetails]);
   return (
-    (!loading && <>
+    <>
       <NextSeo
         title={eventDetails.title}
         openGraph={{
@@ -73,7 +73,7 @@ const EventPage = ({
         </div>
       </>
       )}
-    </>)
+    </>
   );
 };
 
