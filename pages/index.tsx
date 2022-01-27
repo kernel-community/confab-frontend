@@ -1,8 +1,8 @@
 import type {NextPage} from 'next';
 import Main from '../layouts/Main';
-import {Events} from '../components/composed/Events';
+// import {Events} from '../components/composed/Events';
 import {NextSeo} from 'next-seo';
-
+import BigFatBanner from '../components/composed/BigFatBanner';
 const Home: NextPage = () => {
   return (
     <>
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
         }}
       />
       <Main>
-        <Events
+        {/* <Events
           type='live'
         />
         <Events
@@ -31,7 +31,8 @@ const Home: NextPage = () => {
         />
         <Events
           type='past'
-        />
+        /> */}
+        <BigFatBanner text='Coming Soon'></BigFatBanner>
       </Main>
     </>
   );
