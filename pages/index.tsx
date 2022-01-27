@@ -1,14 +1,20 @@
 import type {NextPage} from 'next';
 import Main from '../layouts/Main';
-import BigFatBanner from '../components/composed/BigFatBanner';
+import {Events} from '../components/composed/Events';
 
-const Test: NextPage = () => {
+const Home: NextPage = () => {
   return (
     <Main>
-      <BigFatBanner
-        text="Coming Soon!"
+      <Events
+        type='live'
+      />
+      <Events
+        type='upcoming'
+      />
+      <Events
+        type='past'
       />
     </Main>
   );
 };
-export default Test;
+export default Home;
