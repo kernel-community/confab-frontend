@@ -7,9 +7,16 @@ import Document from '@tiptap/extension-document';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 import Heading from '@tiptap/extension-heading';
+import BulletList from '@tiptap/extension-bullet-list';
+import OrderedList from '@tiptap/extension-ordered-list';
+import ListItem from '@tiptap/extension-list-item';
 
 import {useCallback} from 'react';
-export const TipTap = () => {
+export const TipTap = ({
+  handleChange,
+}: {
+  handleChange: any
+}) => {
   const editor = useEditor({
     extensions: [
       Document,
@@ -24,6 +31,9 @@ export const TipTap = () => {
       Heading.configure({
         levels: [2, 3],
       }),
+      BulletList,
+      OrderedList,
+      ListItem,
     ],
     content: `
       <p>
@@ -32,11 +42,11 @@ export const TipTap = () => {
     `,
     editorProps: {
       attributes: {
-        class: `prose mb-3 focus:outline-none`,
+        class: `prose focus:outline-none prose-stone leading-0.5`,
       },
     },
+    onUpdate: handleChange,
   });
-  // if (!editor) return null;
 
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes('link').href;
@@ -65,7 +75,7 @@ export const TipTap = () => {
         <button
           onClick={() => editor?.chain().focus().toggleHeading({level: 2}).run()}
           className={
-            `${editor?.isActive('heading', {level: 2}) ? 'is-active' : ''}` + ` ` + `border-2 border-black rounded-lg mx-1 px-2`
+            `${editor?.isActive('heading', {level: 2}) ? 'is-active' : ''}` + ` ` + `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
           }
         >
           h1
@@ -73,7 +83,7 @@ export const TipTap = () => {
         <button
           onClick={() => editor?.chain().focus().toggleHeading({level: 3}).run()}
           className={
-            `${editor?.isActive('heading', {level: 3}) ? 'is-active' : ''}` + ` ` + `border-2 border-black rounded-lg mx-1 px-2`
+            `${editor?.isActive('heading', {level: 3}) ? 'is-active' : ''}` + ` ` + `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
           }
         >
           h2
@@ -83,7 +93,7 @@ export const TipTap = () => {
           className={
             `${editor?.isActive('bold') ? 'is-active' : ''}` +
           ` ` +
-          `border-2 border-black rounded-lg mx-1 px-2`
+          `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
           }
         >
           bold
@@ -93,7 +103,7 @@ export const TipTap = () => {
           className={
             `${editor?.isActive('italic') ? 'is-active' : ''}` +
           ` ` +
-          `border-2 border-black rounded-lg mx-1 px-2`
+          `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
           }
         >
           italic
@@ -103,7 +113,7 @@ export const TipTap = () => {
           className={
             `${editor?.isActive('italic') ? 'is-active' : ''}` +
           ` ` +
-          `border-2 border-black rounded-lg mx-1 px-2`
+          `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
           }
         >
           set link

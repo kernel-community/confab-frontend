@@ -41,7 +41,7 @@ const Propose = ({
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
   const [titleValidation, setTitleValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [locationValidation, setLocationValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
-  const [limitValidation, setLimitValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
+  // const [limitValidation, setLimitValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
   const [dateTimesValidation, setDateTimesValidation]=useState<boolean>(false);
   useEffect(() => {
     let disable: boolean = false;
@@ -54,7 +54,8 @@ const Propose = ({
       disable = true;
     }
     if (
-      titleValidation.state || locationValidation.state || limitValidation.state
+      titleValidation.state || locationValidation.state
+      // || limitValidation.state
     ) {
       disable = true;
     }
@@ -64,7 +65,7 @@ const Propose = ({
     eventDetails.location,
     titleValidation,
     locationValidation,
-    limitValidation,
+    // limitValidation,
   ]);
   const handleSessionsInput = (type: 'dateTime' | 'duration', count: number, e: any) => {
     switch (type) {
@@ -134,11 +135,11 @@ const Propose = ({
         }
         break;
       case 'limit':
-        if (Number(value) > 90 || Number(value) < 0) {
-          setLimitValidation({state: true, reason: 'Positive integers less than 90 only :)'});
-        } else {
-          setLimitValidation({state: false, reason: ``});
-        }
+        // if (Number(value) > 90 || Number(value) < 0) {
+        //   setLimitValidation({state: true, reason: 'Positive integers less than 90 only :)'});
+        // } else {
+        //   setLimitValidation({state: false, reason: ``});
+        // }
         break;
     }
   };
@@ -164,7 +165,14 @@ const Propose = ({
       default: return;
     }
   };
+  const handleDescription = (e: any) => {
+    setEventDetails(Object.assign(eventDetails, {
+      'descriptionText': e.editor.getText(),
+      'descriptionHtml': e.editor.getHTML(),
+    }));
+  };
   const handleSubmit = async (e: SubmitEvent) => {
+    console.log({event: eventDetails, sessions: sessionDetails});
     e.preventDefault();
     if (!sessionDatesValidity(sessionDetails) && eventDetails.eventType != 3) {
       setDateTimesValidation(true);
@@ -225,7 +233,7 @@ const Propose = ({
           Description
         </FieldLabel>
 
-        <TipTap />
+        <TipTap handleChange={handleDescription}/>
 
         <SessionsInput
           handleChange={handleSessionsInput}
@@ -238,8 +246,8 @@ const Propose = ({
           fieldName="Set Limit"
           infoText={`Enter maximum number of seats for your session(s). Enter 0 for no limit`}
           handleChange={handleInput}
-          danger={limitValidation.state}
-          dangerReason={limitValidation.reason}
+          // danger={limitValidation.state}
+          // dangerReason={limitValidation.reason}
           placeholder="0"
         />
         <Text
