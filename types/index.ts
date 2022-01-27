@@ -74,5 +74,5 @@ export type ServerEvent = {
   RSVP?: {
     eventId: number
     attendees: string[]
-  }[]
+  }[] & number
 }
