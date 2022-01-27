@@ -3,15 +3,15 @@ let serverUrl: string;
 let slackChannel: string[];
 let gCalendar: string;
 
-if (e == 'prod') {
+if (e === 'prod') {
   serverUrl = process.env.PROD_SERVER_URL || '';
   slackChannel = ['conversations', 'conversations', 'offers'];
   gCalendar = 'conversations';
-} else if (e=='dev') {
+} else if (e==='dev') {
   serverUrl = process.env.DEV_SERVER_URL || '';
   slackChannel = ['testing', 'testing', 'testing2'];
   gCalendar = 'testing';
-} else if (e=='staging') {
+} else if (e==='staging') {
   serverUrl = process.env.PROD_SERVER_URL || '';
   slackChannel = ['testing', 'testing', 'testing2'];
   gCalendar= 'testing';
