@@ -115,12 +115,6 @@ const Session = ({
             {Intl.DateTimeFormat().resolvedOptions().timeZone}
           </span>)
         </div>
-        <div className="font-light text-xs">
-        All sessions default to duration of&nbsp;
-          <span className="font-semibold">
-          1 hour
-          </span>
-        </div>
       </FieldLabel>
       <DateTimeWrapper
         isRecurring={isRecurring}
