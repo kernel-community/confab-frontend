@@ -2,15 +2,18 @@ import type {NextPage} from 'next';
 import Main from '../layouts/Main';
 import ProposeForm from '../components/composed/Propose';
 import {NextSeo} from 'next-seo';
+import {useRouter} from 'next/router';
 
 const Propose: NextPage = () => {
+  const router = useRouter();
+  const url = router.asPath;
   return (
     <>
       <NextSeo
         title="Propose"
         description="KERNEL Conversations is a home for conversations taking place in the Kernel network. Propose a new Conversation in KERNEL network."
         openGraph={{
-          url: 'https://convo.kernel.community',
+          url: `https://convo.kernel.community${url}`,
           title: 'Convo | Propose',
           description: 'Propose a new Conversation in KERNEL network',
           images: [

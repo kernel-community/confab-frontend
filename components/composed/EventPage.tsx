@@ -5,12 +5,15 @@ import {useState, useEffect} from 'react';
 import Spinner from './Spinner';
 import {ClientEvent} from '../../types';
 import {NextSeo} from 'next-seo';
+import {useRouter} from 'next/router';
 
 const EventPage = ({
   event,
 }: {
   event?: string | string[] | undefined
 }) => {
+  const router = useRouter();
+  const url = router.asPath;
   const [loading, setLoading] = useState<boolean>(false);
   const [eventDetails, setEventDetails] = useState<ClientEvent>({
     title: '',
@@ -35,12 +38,12 @@ const EventPage = ({
     if (eventDetails.title) setLoading(false);
   }, [eventDetails]);
   return (
-    <>
+    (!loading && <>
       <NextSeo
         title={eventDetails.title}
         openGraph={{
-          url: 'https://convo.kernel.community',
-          title: 'Convo | RSVP',
+          url: `https://convo.kernel.community${url}`,
+          title: `${eventDetails.title}`,
           description: 'A home for conversations taking place in the Kernel network',
           images: [
             {
@@ -70,7 +73,7 @@ const EventPage = ({
         </div>
       </>
       )}
-    </>
+    </>)
   );
 };
 
