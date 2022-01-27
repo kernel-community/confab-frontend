@@ -18,14 +18,14 @@ const Footer = () => {
           </a>
         </span>
       </div>
-      <div className="text-xs flex flex-row gap-3 justify-center italic">
+      {/* <div className="text-xs flex flex-row gap-3 justify-center italic">
         <span>
           If this looks like something you&apos;d like to work on (we need tons of help)&nbsp;
           <a href="mailto:angela@kernel.community" className="underline">
           please get in touch!
           </a>
         </span>
-      </div>
+      </div> */}
     </div>
   );
 };
