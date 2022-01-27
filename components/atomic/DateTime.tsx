@@ -33,9 +33,8 @@ const DateTime = ({
           selected={startDate}
           onChange={(date: any) => {
             setStartDate(date);
-            handleChange(count, DT.fromJSDate(date));
-          }
-          }
+            handleChange('dateTime', count, DT.fromJSDate(date));
+          }}
           shouldCloseOnSelect
           showTimeSelect={true}
           placeholderText="Select date & time"
@@ -53,8 +52,8 @@ const DateTime = ({
         <input
           type="number"
           name="duration"
-          onChange={handleChange}
-          placeholder={'placeholder'}
+          onChange={(e) => handleChange('duration', count, e)}
+          placeholder={'Duration (in hours)'}
           required
           className='rounded-lg'
         />

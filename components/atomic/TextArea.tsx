@@ -12,7 +12,7 @@ const TextAreaField = ({
   infoText?: string
 }) => {
   return (
-    <>
+    <span className='border-4'>
       <FieldLabel
         styles="my-auto"
       >
@@ -30,7 +30,7 @@ const TextAreaField = ({
           "
         onChange={handleChange}
       />
-    </>
+    </span>
   );
 };
 

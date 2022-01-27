@@ -5,13 +5,15 @@ import TextArea from '../atomic/TextArea';
 import NumberComponent from '../atomic/Number';
 import EventType from '../form/EventType';
 import Button from '../atomic/Button';
-import {useEffect, useState} from 'react';
-import {DateTime} from 'luxon';
+import {ReactElement, useEffect, useState} from 'react';
+// import {DateTime} from 'luxon';
 import {useRouter} from 'next/router';
 import {noSpecialChars, onlyURL} from '../../utils/regex';
 import {sessionDatesValidity} from '../../utils';
 import {DateTime as DT} from 'luxon';
 import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
+import {TipTap} from '../atomic/TipTap';
+import FieldLabel from '../atomic/StrongText';
 
 const Propose = ({
   className,
@@ -28,11 +30,11 @@ const Propose = ({
     proposerEmail: '',
     proposerName: 'Anonymous',
     limit: 0,
-    timezone: DateTime.local().zoneName,
+    timezone: DT.local().zoneName,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
-    startDateTime: new Date().toISOString(),
-    endDateTime: new Date().toISOString(),
+    startDateTime: DT.now().toISO(),
+    endDateTime: DT.now().toISO(),
     count: 0,
   }]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,33 +66,48 @@ const Propose = ({
     locationValidation,
     limitValidation,
   ]);
-  const handleSessionsInput = (countOrEvent: any, e: DT) => {
-    setDateTimesValidation(false);
-    setSessionDetails((currentSessions) => {
-      const currentSession = currentSessions.find((s) => s.count == countOrEvent);
-      if (currentSession) {
-        let session: Session = currentSession;
-        if (e) {
-          session = Object.assign(session, {startDateTime: e.toISO()});
-        } else {
-          const duration = countOrEvent.target.value;
-          console.log('caught duration', duration);
-        }
-        return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
-      } else {
-        let session: Session = {
-          startDateTime: e ? e.toISO() : undefined,
-          count: countOrEvent,
-        };
-        if (e) {
-          session = Object.assign(session, {startDateTime: e.toISO()});
-        } else {
-          const duration = countOrEvent.target.value;
-          console.log('caught duration', duration);
-        }
-        return currentSessions.concat([session]);
-      }
-    });
+  const handleSessionsInput = (type: 'dateTime' | 'duration', count: number, e: any) => {
+    switch (type) {
+      case 'dateTime':
+        setDateTimesValidation(false);
+        setSessionDetails((currentSessions) => {
+          const currentSession = currentSessions.find((s) => s.count === count);
+          if (currentSession) {
+            let session: Session = currentSession;
+            session = Object.assign(session, {startDateTime: e.toISO()});
+            return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
+          } else {
+            let session: Session = {
+              startDateTime: e ? e.toISO() : undefined,
+              count,
+            };
+            session = Object.assign(session, {startDateTime: e.toISO()});
+            return currentSessions.concat([session]);
+          }
+        });
+        break;
+      case 'duration':
+        setSessionDetails((currentSessions) => {
+          const currentSession = currentSessions.find((s) => s.count === count);
+          const hours = Number(e.target.value);
+
+          if (currentSession) {
+            let session: Session = currentSession;
+            const startDateTime = session.startDateTime ? DT.fromISO(session.startDateTime).toISO() : DT.now().toISO();
+            const endDateTime = DT.fromISO(startDateTime).plus({hours}).toISO();
+            session = Object.assign(session, {endDateTime});
+            return currentSessions.map((c) => [session].find((s) => s!.count == c.count) || c);
+          } else {
+            const session: Session = {
+              startDateTime: DT.now().toISO(),
+              endDateTime: DT.now().plus({hours}).toISO(),
+              count,
+            };
+            return currentSessions.concat([session]);
+          }
+        });
+        break;
+    }
   };
   const handleSessionDelete = (count: number) => {
     setSessionDetails((sessions) => sessions.filter((s) => s.count != count));
@@ -198,11 +215,17 @@ const Propose = ({
         <EventType
           handleChange={handleInput}
         />
-        <TextArea
-          name="description"
-          fieldName="Description"
-          handleChange={handleInput.bind(this)}
+        <Text
+          name="title"
+          fieldName="Title"
+          handleChange={handleInput}
         />
+
+        <FieldLabel styles='my-auto'>
+          Description
+        </FieldLabel>
+
+        <TipTap />
 
         <SessionsInput
           handleChange={handleSessionsInput}
