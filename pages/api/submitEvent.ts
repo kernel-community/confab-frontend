@@ -9,10 +9,10 @@ const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSessi
     const startDateTime = s.startDateTime;
     const endDateTime = s.endDateTime;
     payload.push({
-      title: event.eventType == 3 ? '' : event.title!,
-      descriptionText: event.descriptionText!,
-      descriptionHtml: event.descriptionHtml!,
-      location: event.location!,
+      title: event.title ?? '',
+      descriptionText: event.descriptionText ?? '',
+      descriptionHtml: event.descriptionHtml ?? '',
+      location: event.location ?? '',
       series: sessions.length > 1 ? true : false,
       proposerEmail: event.proposerEmail!,
       proposerName: event.proposerName!,
