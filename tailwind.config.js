@@ -5,22 +5,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        transparent: 'transparent',
-        black: '#000',
-        white: '#fff',
-        primary: {
+        'transparent': 'transparent',
+        'black': '#000',
+        'white': '#fff',
+        'kernel-purple': '#212144',
+        'primary': {
           DEFAULT: '#005A64',
           muted: '#71A2A8',
           light: '#C2D8DA',
           lighter: '#D4E4E6',
           dark: '#003940',
         },
-        secondary: {
+        'secondary': {
           DEFAULT: '#00ACB2',
           light: '#87E4DB',
         },
-        highlight: '#CBF0C1',
-        skin: {
+        'highlight': '#CBF0C1',
+        'skin': {
           muted: '#FAFCFC',
           DEFAULT: '#E5EEEF',
         },
@@ -31,6 +32,8 @@ module.exports = {
         'roboto': ['Roboto', 'sans-serif'],
         'noto': ['Noto Sans'],
         'alegreya': ['Alegreya Sans SC', 'sans-serif'],
+        'primary': ['Nanum Myeongjo', 'serif'],
+        'secondary': ['Futura'],
       },
       fontSize: {
         'xxs': '0.69rem',
