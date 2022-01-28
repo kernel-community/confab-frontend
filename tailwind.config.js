@@ -32,11 +32,15 @@ module.exports = {
         'roboto': ['Roboto', 'sans-serif'],
         'noto': ['Noto Sans'],
         'alegreya': ['Alegreya Sans SC', 'sans-serif'],
-        'primary': ['Nanum Myeongjo', 'serif'],
+        'heading': ['Nanum Myeongjo', 'serif'],
         'secondary': ['Futura'],
+        'primary': ['Libre Franklin'],
       },
       fontSize: {
         'xxs': '0.69rem',
+      },
+      boxShadow: {
+        'kernel': '0 30px 41px rgba(33, 33, 68, 0.24)',
       },
     },
   },
