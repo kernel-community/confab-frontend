@@ -5,10 +5,11 @@ export const Navbar = () => {
   return (
     <>
       <div className={`
-    w-full flex flex-row gap-8 justify-center items-center bg-kernel-purple
-    font-secondary text-sm text-gray-300
-    px-3
-    `}>
+        w-full flex flex-row gap-8 justify-center items-center bg-kernel-purple
+        font-secondary text-sm text-gray-300
+        px-3
+        shadow-kernel
+      `}>
         <Branding />
         <div className="flex-grow flex flex-row gap-8 items-center justify-center">
           <Item text='home' href='/'/>
