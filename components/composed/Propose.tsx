@@ -16,7 +16,7 @@ import FieldLabel from '../atomic/StrongText';
 const Propose = ({
   className,
 }: {
-  className: string,
+  className?: string,
 }) => {
   const router = useRouter();
   const [eventDetails, setEventDetails] = useState<Event>({

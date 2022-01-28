@@ -3,6 +3,7 @@ import Main from '../layouts/Main';
 import ProposeForm from '../components/composed/Propose';
 import {NextSeo} from 'next-seo';
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 
 const Propose: NextPage = () => {
   const router = useRouter();
@@ -27,20 +28,27 @@ const Propose: NextPage = () => {
         }}
       />
       <Main>
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center">
           <div className="
-            font-inter mx-auto font-bold sm:text-3xl text-xl
-            text-primary mt-10 mb-10
+            font-heading
+            font-extrabold
+            mx-auto
+            sm:text-5xl
+            text-5xl
+            text-gray-800
           ">
             Propose a Conversation
+            <Link href="/about">
+              <div className='text-base font-bold mt-2 underline cursor-pointer'>
+              what is a junto / guild?
+              </div>
+            </Link>
           </div>
-          <div className="border border-primary-muted my-4 mx-20 border-opacity-50">
+          <div className="border border-gray-800 my-12 mx-15 border-opacity-50">
           </div>
         </div>
-        <div>
-          <ProposeForm
-            className="py-12 xl:px-24 px-10"
-          />
+        <div className='md:px-24'>
+          <ProposeForm />
         </div>
       </Main>
     </>
