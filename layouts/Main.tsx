@@ -4,7 +4,7 @@ import Footer from '../components/composed/Footer';
 import Image from 'next/image';
 import linesVector from 'public/images/lines.png';
 
-const linesBgOn=['/rsvp', '/'];
+const linesBgOn=['/', '/rsvp'];
 
 const Main = ({children}: {children: any}) => {
   const {pathname} = useRouter();
@@ -20,9 +20,7 @@ const Main = ({children}: {children: any}) => {
           flex-1
           container
           mx-auto
-          sm:px-20
           sm:my-24
-          px-5
           my-12
         ">
         {children}
@@ -36,7 +34,10 @@ const Main = ({children}: {children: any}) => {
         lg:absolute
         lg:-top-24
         lg:-left-52
-        lg:z-0'>
+        lg:z-0
+        lg:opacity-30
+        '
+        >
           <Image src={linesVector} width={383} height={412}/>
         </div>
         <div className='
@@ -45,7 +46,9 @@ const Main = ({children}: {children: any}) => {
         lg:absolute
         lg:-top-12
         lg:-right-52
-        lg:z-0'>
+        lg:z-0
+        lg:opacity-30
+        '>
           <Image src={linesVector} width={442} height={476}/>
         </div>
       </>
