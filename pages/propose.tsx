@@ -28,14 +28,14 @@ const Propose: NextPage = () => {
         }}
       />
       <Main>
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center items-center">
           <div className="
             font-heading
             font-extrabold
             mx-auto
             sm:text-5xl
             text-5xl
-            text-gray-800
+            text-primary
           ">
             Propose a Conversation
             <Link href="/about">
@@ -44,10 +44,10 @@ const Propose: NextPage = () => {
               </div>
             </Link>
           </div>
-          <div className="border border-gray-800 my-12 mx-15 border-opacity-50">
+          <div className="border border-primary my-12 lg:w-9/12 w-full">
           </div>
         </div>
-        <div className='md:px-24'>
+        <div className='lg:px-56'>
           <ProposeForm />
         </div>
       </Main>

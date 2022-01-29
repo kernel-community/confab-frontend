@@ -72,12 +72,15 @@ const DateTimeWrapper = ({
       {isRecurring ? (
       <div
         className="
-              my-auto bg-primary-lighter py-1.5 px-2.5
+              py-1.5
               rounded-lg
+              border-2 border-primary
               text-sm text-primary
-              font-inter font-light
-              justify-self-start
+              font-secondary
               cursor-pointer
+              w-40
+              uppercase
+              flex flex-col items-center
             "
         onClick={addSession}
       >
@@ -105,16 +108,16 @@ const Session = ({
   danger?: boolean
 }) => {
   return (
-    <>
+    <div>
       <FieldLabel>
-        Date & Time
-        <div className="font-light text-xs">
+        Date & Time&nbsp;
+        <span className="text-sm font-primary lowercase font-light">
         Time is in your current timezone
           (
-          <span className="font-semibold">
+          <span className="underline">
             {Intl.DateTimeFormat().resolvedOptions().timeZone}
           </span>)
-        </div>
+        </span>
       </FieldLabel>
       <DateTimeWrapper
         isRecurring={isRecurring}
@@ -123,7 +126,7 @@ const Session = ({
         deleteSessionData={deleteSession}
         danger = {danger}
       />
-    </>
+    </div>
   );
 };
 

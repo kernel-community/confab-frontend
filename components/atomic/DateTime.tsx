@@ -26,9 +26,9 @@ const DateTime = ({
       flex flex-row gap-2 sm:flex-nowrap items-center py-4
     `}>
       <div>
-        <div className="text-xs text-inter font-medium text-gray-400 flex-none">
+        {/* <div className="text-xs text-primary font-light lowercase">
           Session {sessionNumber}
-        </div>
+        </div> */}
         <DefaultDatePicker
           selected={startDate}
           onChange={(date: any) => {
@@ -37,39 +37,31 @@ const DateTime = ({
           }}
           shouldCloseOnSelect
           showTimeSelect={true}
-          placeholderText="Select date & time"
+          placeholderText="date & time"
           dateFormat="MM/d, h:mm aa"
           className={`
-            rounded-lg
+            rounded-lg focus:border-primary focus:ring-primary
+            font-primary
           `}
           minDate={new Date()}
         />
       </div>
       <div>
-        <div className="text-xs text-inter font-medium text-gray-400 flex-none">
+        {/* <div className="text-xs text-primary font-light lowercase">
           Duration (in hours)
-        </div>
+        </div> */}
         <input
           type="number"
           name="duration"
           onChange={(e) => handleChange('duration', count, e)}
-          placeholder={'Duration (in hours)'}
+          placeholder={'duration (in hours)'}
           required
-          className='rounded-lg'
+          className='rounded-lg focus:border-primary focus:ring-primary font-primary'
         />
       </div>
 
-
-      {/* <select className="rounded-lg ring-gray-300 border-gray-300
-            focus:border-primary focus:ring-primary">
-        <option value="1">1</option>
-        <option value="1.5">1.5</option>
-        <option value="2">2</option>
-        <option value="2">2.5</option>
-      </select> */}
-
       {(displayDelete ?
-      <div className="cursor-pointer justify-self-center flex-none">
+      <div className="cursor-pointer">
         <Image
           src={deleteIcon}
           data-key={count}
@@ -77,8 +69,8 @@ const DateTime = ({
             handleDelete(count);
             deleteSessionData(count);
           }}
-          height={'20px'}
-          width={'15px'}
+          height={'25px'}
+          width={'25px'}
         />
       </div>: <div></div>)}
     </div>

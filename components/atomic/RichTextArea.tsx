@@ -12,7 +12,7 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 
 import {useCallback} from 'react';
-export const TipTap = ({
+export const RichTextArea = ({
   handleChange,
 }: {
   handleChange: any
@@ -70,12 +70,12 @@ export const TipTap = ({
         .run();
   }, [editor]);
   return (
-    <div className='rounded-lg ring-gray-300 border-gray-800 bg-white p-3'>
-      <div className='mb-3'>
+    <div className='rounded-lg border-primary-muted border-2 p-3'>
+      <div className='pb-2 border-b-2'>
         <button
           onClick={() => editor?.chain().focus().toggleHeading({level: 2}).run()}
           className={
-            `${editor?.isActive('heading', {level: 2}) ? 'is-active' : ''}` + ` ` + `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
+            `${editor?.isActive('heading', {level: 2}) ? 'bg-primary text-primary-muted' : 'bg-white text-primary'}` + ` ` + `border-2 border-gray-800 rounded-lg mx-1 px-2 font-secondary text-sm uppercase`
           }
         >
           h1
@@ -83,7 +83,7 @@ export const TipTap = ({
         <button
           onClick={() => editor?.chain().focus().toggleHeading({level: 3}).run()}
           className={
-            `${editor?.isActive('heading', {level: 3}) ? 'is-active' : ''}` + ` ` + `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
+            `${editor?.isActive('heading', {level: 3}) ? 'bg-primary text-primary-muted' : 'bg-white text-primary'}` + ` ` + `border-2 border-gray-800 rounded-lg mx-1 px-2 font-secondary text-sm uppercase`
           }
         >
           h2
@@ -91,9 +91,7 @@ export const TipTap = ({
         <button
           onClick={() => editor?.chain().focus().toggleBold().run()}
           className={
-            `${editor?.isActive('bold') ? 'is-active' : ''}` +
-          ` ` +
-          `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
+            `${editor?.isActive('bold') ? 'bg-primary text-primary-muted' : 'bg-white text-primary'}` + ` ` + `border-2 border-gray-800 rounded-lg mx-1 px-2 font-secondary text-sm uppercase`
           }
         >
           bold
@@ -101,9 +99,7 @@ export const TipTap = ({
         <button
           onClick={() => editor?.chain().focus().toggleItalic().run()}
           className={
-            `${editor?.isActive('italic') ? 'is-active' : ''}` +
-          ` ` +
-          `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
+            `${editor?.isActive('italic') ? 'bg-primary text-primary-muted' : 'bg-white text-primary'}` + ` ` + `border-2 border-gray-800 rounded-lg mx-1 px-2 font-secondary text-sm uppercase`
           }
         >
           italic
@@ -111,9 +107,7 @@ export const TipTap = ({
         <button
           onClick={setLink}
           className={
-            `${editor?.isActive('italic') ? 'is-active' : ''}` +
-          ` ` +
-          `border-2 border-primary rounded-lg mx-1 px-2 text-gray-800`
+            `${editor?.isActive('link') ? 'bg-primary text-primary-muted' : 'bg-white text-primary'}` + ` ` + `border-2 border-gray-800 rounded-lg mx-1 px-2 font-secondary text-sm uppercase`
           }
         >
           set link

@@ -9,6 +9,7 @@ export const Navbar = () => {
         font-secondary text-sm text-gray-300
         px-3
         shadow-kernel
+        z-10
       `}>
         <Branding />
         <div className="flex-grow flex flex-row gap-8 items-center justify-center">

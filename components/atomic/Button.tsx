@@ -10,22 +10,24 @@ const Button = ({
   displayLoading?: boolean
 }) => {
   return (
-    <>
+    <div>
       <button
         className={`
         ${disabled? `
-          bg-gray-400 
-          text-gray-600 
+          bg-gray-400
+          text-gray-600
           cursor-not-allowed` :
-          `bg-primary
+          `
+          bg-kernel-purple
           text-gray-200
-          hover:bg-primary-dark
-        `}
-        font-nato
+          hover:shadow-kernel
+          `}
+        font-secondary
         py-2
+        px-16
         rounded-lg
         text-lg
-        w-full
+        uppercase
       `}
         onClick={handleClick}
         disabled={disabled}
@@ -39,7 +41,7 @@ const Button = ({
         </div>
 
       </button>
-    </>
+    </div>
   );
 };
 export default Button;
