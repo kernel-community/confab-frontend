@@ -1,13 +1,11 @@
 /* eslint-disable new-cap */
-/* eslint-disable no-invalid-this */
 import Image from 'next/image';
-import personVector from '../../public/vectors/person.png';
-import circlesVector from '../../public/vectors/circles.png';
-import FieldLabel from '../atomic/StrongText';
-import Button from '../atomic/Button';
-import Text from '../atomic/Text';
+import cross from 'public/vectors/cross.png';
+import FieldLabel from 'components/atomic/StrongText';
+import Button from 'components/atomic/Button';
+import Text from 'components/atomic/Text';
 import {useEffect, useState} from 'react';
-import {Session as ClientSession} from '../../types';
+import {Session as ClientSession} from 'types';
 import {DateTime} from 'luxon';
 
 const isPast = (date: string): boolean => {
@@ -41,6 +39,7 @@ const Session = ({
   availableSeats,
   totalSeats,
   noLimit,
+  isChecked,
 }: {
   active: boolean
   handleClick: any
@@ -50,44 +49,49 @@ const Session = ({
   availableSeats?: number
   totalSeats?: number
   noLimit?:boolean
+  isChecked: boolean
 }) => {
   return (
     <label
       className={`
         ${active?
           `
-            bg-primary-muted
-            hover:bg-primary-dark cursor-pointer
+            cursor-pointer
           ` :
-          'bg-gray-200 text-gray-500 cursor-not-allowed'}
-        border-0
-        rounded-xl
-        text-center
-        font-inter
+          'cursor-not-allowed'}
         flex flex-row items-center justify-left
         gap-1
       `}
     >
-      <input
+      {active && <input
         onChange={(e) => handleClick(data, e.target.checked)}
         disabled={!active}
         type="checkbox"
         className={`
-          ${!active? `text-gray-500` : ``}
-          p-2 m-4 rounded-md
+          mr-4 rounded-md
           text-primary border-gray-300
           cursor-pointer
-          focus:border-primary focus:ring-primary
+          focus:border-0 focus:ring-0
         `}
-      />
+        defaultChecked={isChecked}
+      />}
+      {!active &&
+      <div className='mr-4'>
+        <Image src={cross} width={18} height={17}/>
+      </div>
+      }
       <div
-        className="flex-1 flex flex-row gap-4 my-2 mx-1 font-inter text-skin-muted"
+        className={`
+        flex-1
+        flex
+        flex-row
+        gap-4
+        font-secondary
+        ${active? `text-primary` : `text-gray-400`}
+        `}
       >
-        <div className="flex-1 text-sm uppercase text-left my-auto">
-          {date}
-          <div className='text-xs'>
-            {time}
-          </div>
+        <div className="flex-1 text-base uppercase text-left my-auto">
+          {date}, {time}
         </div>
 
         {noLimit ?
@@ -102,9 +106,7 @@ const Session = ({
             gap-0 my-auto mr-4
           "
           >
-            <div
-              className={`${!active? 'text-primary-muted': ''}`}
-            >
+            <div>
               {availableSeats}/{totalSeats}
             </div>
             <span className="text-xs">Seats</span>
@@ -115,86 +117,53 @@ const Session = ({
   );
 };
 
-// const RsvpForAllButton = ({
-//   handleClick,
-// }: {
-//   handleClick: any
-// }) => {
-//   return (
-//     <label
-//       className="
-//           bg-primary-light border-2
-//           border-primary
-//           rounded-xl
-//           py-1
-//           font-inter text-primary
-//           hover:bg-primary-lighter cursor-pointer
-//           flex flex-row w-full items-center gap-1 justify-items-start
-//           uppercase
-//           text-sm
-//         "
-//     >
-//       <input
-//         type="checkbox"
-//         onChange={(e) => handleClick(e.target.checked)}
-//         className="
-//           p-2 m-4 rounded-sm
-//           text-primary border-gray-300
-//           cursor-pointer
-//           focus:border-primary focus:ring-primary
-//         "
-//       />
-//       <div className="flex-1">
-//         RSVP for Entire Series
-//       </div>
-//     </label>
-//   );
-// };
-
 const SessionsWrapper = ({
   sessions,
-  email,
 }: {
   sessions: ClientSession[]
-  email?: string
 }) => {
-  const showSessions: boolean = true;
-  // const [showSessions, setShowSessions] = useState<boolean>(true);
-  const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);
+  const [toRsvp, setToRsvp] = useState<(number | undefined)[]>(sessions.map((s) => s.id));
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [done, setDone] = useState(false);
-  const [rsvpEmail, setRsvpEmail] = useState(email);
+  const [rsvpEmail, setRsvpEmail] = useState<string|undefined>(undefined);
+  const [sortedSessions, setSortedSessions]=useState<ClientSession[]>(sessions);
+  useEffect(() => {
+    const activeSessions:ClientSession[] = [];
+    const inactiveSessions:ClientSession[] = [];
+    sessions.forEach((s) => {
+      const active = ((s.noLimit) &&
+      !isPast(s.startDateTime!)) ||
+      ((s.availableSeats! > 0) &&
+        !isPast(s.startDateTime!));
+
+      if (active) activeSessions.push(s);
+      if (!active) inactiveSessions.push(s);
+    });
+    setSortedSessions([...activeSessions, ...inactiveSessions]);
+  }, [sessions]);
+
   useEffect(() => {
     if (toRsvp.length > 0) setDisableSubmit(false);
     else setDisableSubmit(true);
   }, [toRsvp]);
+
   const handleRsvpEmail = (e: any) => {
     setRsvpEmail(e.target.value);
   };
+
   const handleSessionSelect = (id: number, checked: boolean) => {
     switch (checked) {
       case true:
         setToRsvp([...toRsvp, id]);
         break;
       case false:
-        setToRsvp(toRsvp.filter((r) => r!=id));
+        setToRsvp(toRsvp.filter((r) => r !== id));
         break;
       default: '';
     }
   };
-  // const handleAllSessionsSelect = (checked: boolean) => {
-  //   setShowSessions(!showSessions);
-  //   switch (checked) {
-  //     case true:
-  //       setToRsvp(sessions.map((s) => s.id));
-  //       break;
-  //     case false:
-  //       setToRsvp([]);
-  //       break;
-  //     default: '';
-  //   }
-  // };
+
   const handleSubmit = async () => {
     setLoading(true);
     (await (await fetch('/api/rsvp', {
@@ -205,49 +174,43 @@ const SessionsWrapper = ({
     setLoading(false);
     setDone(true);
   };
+
   return (
     <>
       <div
         className="flex flex-col gap-3 mt-3"
       >
-        {/* {sessions.length > 1 ? (<RsvpForAllButton
-          handleClick={handleAllSessionsSelect.bind(this)}
-        />): <></>} */}
-        {showSessions ? (
-            sessions.map((session, key) => {
-              return <Session
-                active={(
-                  ((session.noLimit) &&
-                  !isPast(session.startDateTime!)) ||
-                  ((session.availableSeats! > 0) &&
-                    !isPast(session.startDateTime!))
-                )}
-                handleClick={handleSessionSelect.bind(this)}
-                key={key}
-                data={session.id!}
-                date={
-                  getDateTimeString(session.startDateTime!, 'date')
-                }
-                time={
-                  getDateTimeString(session.startDateTime!, 'time')
-                }
-                availableSeats={session.availableSeats!}
-                totalSeats={session.totalSeats!}
-                noLimit={session.noLimit}
-              />;
-            })
-      ) : <></>}
-        <div className="font-inter uppercase text-xxs text-primary">
+        {
+          sortedSessions.map((session, key) => {
+            const active = ((session.noLimit) &&
+            !isPast(session.startDateTime!)) ||
+            ((session.availableSeats! > 0) &&
+              !isPast(session.startDateTime!));
+            return <Session
+              active={active}
+              handleClick={handleSessionSelect}
+              key={key}
+              data={session.id!}
+              date={
+                getDateTimeString(session.startDateTime!, 'date')
+              }
+              time={
+                getDateTimeString(session.startDateTime!, 'time')
+              }
+              availableSeats={session.availableSeats!}
+              totalSeats={session.totalSeats!}
+              noLimit={session.noLimit}
+              isChecked={active}
+            />;
+          })}
+        <div className="text-sm font-secondary lowercase font-light">
         All Dates and Times are in your local timezone&nbsp;
           <span className="font-semibold">
             {Intl.DateTimeFormat().resolvedOptions().timeZone}
           </span>
         </div>
       </div>
-      <div className="
-        mt-6
-        flex flex-col gap-3
-      ">
+      <div className="mt-6">
         {done ?
         (
           <FieldLabel>
@@ -255,19 +218,20 @@ const SessionsWrapper = ({
           </FieldLabel>
         ):
          (
-           <>
-             {!email ? <Text
+           <div>
+             <Text
                name="email"
                placeholder='email'
                handleChange={handleRsvpEmail}
-             ></Text>: <></>}
+             ></Text>
              <Button
-               handleClick={handleSubmit.bind(this)}
+               handleClick={handleSubmit}
                disabled={loading || disableSubmit}
                displayLoading={loading}
                buttonText={`RSVP →`}
+               className='w-full mt-3'
              />
-           </>)}
+           </div>)}
       </div>
 
     </>
@@ -275,52 +239,17 @@ const SessionsWrapper = ({
 };
 
 const RsvpSection = ({
-  proposerName,
-  sessionsCount,
   sessions,
-  email,
 }: {
-  proposerName: string,
-  sessionsCount: number,
   sessions: ClientSession[],
-  email?: string
 }) => {
   return (
     <div
-      className="
-            sm:pl-2 sm:pr-6 pr-4 pl-4 py-12
-            flex flex-col gap-2
-          "
+      className="flex flex-col gap-2"
     >
-      <div
-        className="flex flex-row items-center gap-3"
-      >
-        <Image
-          src={personVector}
-        />
-        <FieldLabel>
-          {proposerName}
-        </FieldLabel>
-      </div>
-      <div
-        className="flex flex-row items-center gap-3"
-      >
-      </div>
-      <div
-        className="flex flex-row items-center gap-3"
-      >
-        <Image
-          src={circlesVector}
-        />
-        <FieldLabel>
-          {sessionsCount} Session{sessionsCount > 1 ? `s`:``}
-        </FieldLabel>
-      </div>
       <SessionsWrapper
         sessions={sessions}
-        email={email}
       />
-
     </div>
   );
 };

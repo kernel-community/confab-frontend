@@ -33,15 +33,24 @@ module.exports = {
         'noto': ['Noto Sans'],
         'alegreya': ['Alegreya Sans SC', 'sans-serif'],
         'heading': ['Nanum Myeongjo', 'serif'],
-        'secondary': ['Futura'],
-        'primary': ['Libre Franklin'],
-        'fancy': ['Licorice'],
+        'secondary': ['Futura', 'sans-serif'],
+        'primary': ['Libre Franklin', 'sans-serif'],
+        'fancy': ['Licorice', 'sans-serif'],
       },
       fontSize: {
         'xxs': '0.69rem',
       },
       boxShadow: {
         'kernel': '0 30px 41px rgba(33, 33, 68, 0.24)',
+      },
+    },
+    container: {
+      padding: {
+        'DEFAULT': '1rem',
+        'sm': '1rem',
+        'lg': '1rem',
+        'xl': '1rem',
+        '2xl': '14rem',
       },
     },
   },
