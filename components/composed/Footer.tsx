@@ -2,17 +2,17 @@ const Footer = () => {
   return (
     <div className={`
     w-full
-    bg-primary-light py-5
+    bg-kernel-purple py-5
     font-inter text-primary
     `}>
-      <div className="flex flex-row justify-center items-center font-semibold text-sm ">
-        <span>
+      <div className="flex flex-row justify-center items-center">
+        <span className="text-primary-muted font-secondary lowercase">
         Built at&nbsp;
           <a
             href="https://kernel.community/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-secondary"
+            className="text-secondary uppercase"
           >
         KERNEL
           </a>
