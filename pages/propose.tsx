@@ -47,7 +47,7 @@ const Propose: NextPage = () => {
           <div className="border border-primary my-12 lg:w-9/12 w-full">
           </div>
         </div>
-        <div className='lg:px-56'>
+        <div className='lg:px-32'>
           <ProposeForm />
         </div>
       </Main>
