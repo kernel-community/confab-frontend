@@ -8,7 +8,10 @@ const linesBgOn=['/rsvp', '/'];
 
 const Main = ({children}: {children: any}) => {
   const {pathname} = useRouter();
-  const displayLines = linesBgOn.find((path) => pathname.includes(path));
+  const displayLines = linesBgOn.find((path) => {
+    if (path === '/') return pathname === path;
+    return pathname.includes(path);
+  });
 
   return (
     <div className="flex flex-col min-h-screen relative overflow-hidden">
