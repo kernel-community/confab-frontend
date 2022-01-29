@@ -29,6 +29,7 @@ const Propose = ({
     proposerName: 'Anonymous',
     limit: 0,
     timezone: DT.local().zoneName,
+    postOnSlack: true,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
     startDateTime: DT.now().toISO(),
@@ -80,7 +81,7 @@ const Propose = ({
    */
   // handle input from all form objects
   const handleInput = (e: any) => {
-    const target: 'title' | 'location' | 'limit' | 'proposerEmail' | 'proposerName' | 'eventType' = e.target.name;
+    const target: 'title' | 'location' | 'limit' | 'proposerEmail' | 'proposerName' | 'eventType' | 'postOnSlack' = e.target.name;
     switch (target) {
       case 'title':
       case 'location':
@@ -93,6 +94,8 @@ const Propose = ({
         }));
         validateFields(target, e.target.value);
         break;
+      case 'postOnSlack':
+        setEventDetails((e) => Object.assign(e, {postOnSlack: !e.postOnSlack}));
       default: return;
     }
   };
@@ -127,7 +130,6 @@ const Propose = ({
         setSessionDetails((currentSessions) => {
           const currentSession = currentSessions.find((s) => s.count === count);
           const hours = Number(e.target.value);
-
           if (currentSession) {
             let session: Session = currentSession;
             const startDateTime = session.startDateTime ? DT.fromISO(session.startDateTime).toISO() : DT.now().toISO();
@@ -280,10 +282,30 @@ const Propose = ({
           name="proposerName"
           fieldName="Your Name"
           handleChange={handleInput}
-          // className='font-fancy text-5xl border-0 border-b-2'
         />
+        <div className='flex flex-row gap-10 items-center'>
+          <FieldLabel>
+              Would you like to post this Convo on Slack?
+            <div className="text-sm font-primary normal-case font-light">
+            If checked, a new message will be posted on KERNEL slack.
+            </div>
+          </FieldLabel>
+          <input
+            type="checkbox"
+            name="postOnSlack"
+            id="postOnSlack"
+            className="
+              p-2
+              rounded-sm
+              text-primary border-gray-300
+              cursor-pointer
+              focus:border-0 focus:ring-0
+            "
+            onChange={handleInput}
+            defaultChecked={eventDetails.postOnSlack}
+          />
+        </div>
         <div></div>
-        {/* <div className="w-1/2 justify-self-end"> */}
         <Button
           buttonText={`Submit →`}
           handleClick={handleSubmit}
@@ -291,7 +313,6 @@ const Propose = ({
           displayLoading={loading}
         />
       </div>
-      {/* </div> */}
     </div>
   );
 };

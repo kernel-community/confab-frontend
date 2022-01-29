@@ -21,6 +21,7 @@ export type ClientInputEvent = {
   proposerEmail?: string
   timezone?:string
   limit?: number
+  postOnSlack?:boolean
 }
 
 export type Session = {
