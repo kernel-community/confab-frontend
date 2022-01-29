@@ -18,10 +18,10 @@ const Number = ({
   placeholder?: string
 }) => {
   return (
-    <>
+    <div>
       <FieldLabel>
         {fieldName}
-        <div className="font-light text-xs">
+        <div className="text-sm font-primary lowercase font-light">
           {infoText}
         </div>
       </FieldLabel>
@@ -32,9 +32,9 @@ const Number = ({
           className={`
           rounded-lg
           ${danger ? `
-            ring-red-300 border-red-300 
+            ring-red-300 border-red-300
             focus:border-red-500 focus:ring-red-500` : `
-            ring-gray-300 border-gray-300 
+            ring-gray-300 border-gray-300
             focus:border-primary focus:ring-primary`}
           `}
           onChange={handleChange}
@@ -45,7 +45,7 @@ const Number = ({
           {dangerReason}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -10,11 +10,11 @@ module.exports = {
         'white': '#fff',
         'kernel-purple': '#212144',
         'primary': {
-          DEFAULT: '#005A64',
-          muted: '#71A2A8',
-          light: '#C2D8DA',
+          DEFAULT: '#1e293b',
+          muted: '#cbd5e1',
+          light: '#f1f5f9',
           lighter: '#D4E4E6',
-          dark: '#003940',
+          dark: '#0f172a',
         },
         'secondary': {
           DEFAULT: '#00ACB2',
@@ -35,6 +35,7 @@ module.exports = {
         'heading': ['Nanum Myeongjo', 'serif'],
         'secondary': ['Futura'],
         'primary': ['Libre Franklin'],
+        'fancy': ['Licorice'],
       },
       fontSize: {
         'xxs': '0.69rem',

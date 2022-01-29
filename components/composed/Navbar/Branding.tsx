@@ -6,14 +6,14 @@ export const Branding = () => {
     <Link href="/">
       <div className={`
         flex flex-row items-center gap-3 py-5
-        cursor-pointer
+        cursor-pointer uppercase
         `}>
         <Image
           src={kernelIcon}
           width={24}
           height={24}
         />
-          CONVO
+          kernel
       </div>
     </Link>
   );

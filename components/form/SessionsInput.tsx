@@ -1,3 +1,5 @@
+/* eslint-disable new-cap */
+
 import Session from './Session';
 import {useState} from 'react';
 import FieldLabel from '../atomic/StrongText';
@@ -18,23 +20,26 @@ const SessionsInput = ({
     setIsRecurring(!isRecurring);
   };
   return (
-    <>
-      <FieldLabel>
+    <div className='flex flex-col gap-4'>
+      <div className='flex flex-row gap-10 items-center'>
+        <FieldLabel>
         Is this a recurring conversation?
-      </FieldLabel>
-      <input
-        type="checkbox"
-        name="multisession"
-        id="proposemultisession"
-        className="
+        </FieldLabel>
+        <input
+          type="checkbox"
+          name="multisession"
+          id="proposemultisession"
+          className="
           p-2
           rounded-sm
           text-primary border-gray-300
           cursor-pointer
-          focus:border-primary focus:ring-primary
+          focus:border-0 focus:ring-0
         "
-        onChange={handleCheckBox}
-      />
+          onChange={handleCheckBox}
+        />
+      </div>
+
       <Session
         isRecurring={isRecurring}
         handleChange={handleChange}
@@ -42,7 +47,7 @@ const SessionsInput = ({
         deleteSession={deleteSession}
         danger={danger}
       />
-    </>
+    </div>
   );
 };
 export default SessionsInput;

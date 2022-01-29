@@ -10,7 +10,7 @@ export const Item = ({
         flex flex-row items-center gap-1 py-5
         cursor-pointer
         lowercase
-        ${pathname == href ? 'border-b-2 border-gray-300' : 'opacity-50'}
+        ${pathname == href ? 'border-b-2 border-primary-muted' : 'opacity-50'}
         `}>
         {text}
       </div>

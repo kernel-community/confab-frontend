@@ -10,7 +10,7 @@ import {noSpecialChars, onlyURL} from '../../utils/regex';
 import {sessionDatesValidity} from '../../utils';
 import {DateTime as DT} from 'luxon';
 import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
-import {TipTap} from '../atomic/TipTap';
+import {RichTextArea} from 'components/atomic/RichTextArea';
 import FieldLabel from '../atomic/StrongText';
 
 const Propose = ({
@@ -223,7 +223,7 @@ const Propose = ({
 
   return (
     <div className={className}>
-      <div className="grid xl:grid-cols-2 gap-4 grid-cols-1">
+      <div className="flex flex-col gap-14">
         <EventType
           handleChange={handleInput}
         />
@@ -234,13 +234,13 @@ const Propose = ({
           danger={titleValidation.state}
           dangerReason={titleValidation.reason}
         />
-
-        <FieldLabel styles='my-auto'>
+        <div>
+          <FieldLabel>
           Description
-        </FieldLabel>
+          </FieldLabel>
 
-        <TipTap handleChange={handleDescriptionInput}/>
-
+          <RichTextArea handleChange={handleDescriptionInput}/>
+        </div>
         <SessionsInput
           handleChange={handleSessionsInput}
           resetSessions={resetSessions}
@@ -278,19 +278,20 @@ const Propose = ({
         />
         <Text
           name="proposerName"
-          fieldName="Name"
+          fieldName="Your Name"
           handleChange={handleInput}
+          // className='font-fancy text-5xl border-0 border-b-2'
         />
         <div></div>
-        <div className="w-1/2 justify-self-end">
-          <Button
-            buttonText={`Submit →`}
-            handleClick={handleSubmit}
-            disabled={disableSubmit}
-            displayLoading={loading}
-          />
-        </div>
+        {/* <div className="w-1/2 justify-self-end"> */}
+        <Button
+          buttonText={`Submit →`}
+          handleClick={handleSubmit}
+          disabled={disableSubmit}
+          displayLoading={loading}
+        />
       </div>
+      {/* </div> */}
     </div>
   );
 };
