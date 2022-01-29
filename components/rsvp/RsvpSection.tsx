@@ -128,6 +128,7 @@ const SessionsWrapper = ({
   const [done, setDone] = useState(false);
   const [rsvpEmail, setRsvpEmail] = useState<string|undefined>(undefined);
   const [sortedSessions, setSortedSessions]=useState<ClientSession[]>(sessions);
+  const [atleastOne, setAtleastOne] = useState<boolean>(true);
   useEffect(() => {
     const activeSessions:ClientSession[] = [];
     const inactiveSessions:ClientSession[] = [];
@@ -140,6 +141,8 @@ const SessionsWrapper = ({
       if (active) activeSessions.push(s);
       if (!active) inactiveSessions.push(s);
     });
+    if (activeSessions.length > 0) setAtleastOne(true);
+    if (activeSessions.length === 0) setAtleastOne(false);
     setSortedSessions([...activeSessions, ...inactiveSessions]);
   }, [sessions]);
 
@@ -204,13 +207,13 @@ const SessionsWrapper = ({
             />;
           })}
         <div className="text-sm font-secondary lowercase font-light">
-        All Dates and Times are in your local timezone&nbsp;
+        in your local timezone&nbsp;
           <span className="font-semibold">
             {Intl.DateTimeFormat().resolvedOptions().timeZone}
           </span>
         </div>
       </div>
-      <div className="mt-6">
+      {atleastOne && <div className="mt-6">
         {done ?
         (
           <FieldLabel>
@@ -231,8 +234,11 @@ const SessionsWrapper = ({
                buttonText={`RSVP →`}
                className='w-full mt-3'
              />
-           </div>)}
+           </div>
+           )
+        }
       </div>
+      }
 
     </>
   );
