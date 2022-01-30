@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             .&nbsp;Make a Friend.
           </div>
         </div>
-        <div className='mt-12 px-12'>
+        <div className='mt-12 px-12 lg:px-32 xl:px-40 2xl:px-52'>
           <div>
             <Events
               type='today'

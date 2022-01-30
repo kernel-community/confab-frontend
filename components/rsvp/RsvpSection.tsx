@@ -123,7 +123,6 @@ const SessionsWrapper = ({
   sessions: ClientSession[]
 }) => {
   const [toRsvp, setToRsvp] = useState<(number | undefined)[]>(sessions.map((s) => s.id));
-  const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [done, setDone] = useState(false);
   const [rsvpEmail, setRsvpEmail] = useState<string|undefined>(undefined);
@@ -143,13 +142,10 @@ const SessionsWrapper = ({
     });
     if (activeSessions.length > 0) setAtleastOne(true);
     if (activeSessions.length === 0) setAtleastOne(false);
+    setToRsvp(activeSessions.map((a) => a.id));
     setSortedSessions([...activeSessions, ...inactiveSessions]);
   }, [sessions]);
 
-  useEffect(() => {
-    if (toRsvp.length > 0) setDisableSubmit(false);
-    else setDisableSubmit(true);
-  }, [toRsvp]);
 
   const handleRsvpEmail = (e: any) => {
     setRsvpEmail(e.target.value);
@@ -229,7 +225,7 @@ const SessionsWrapper = ({
              ></Text>
              <Button
                handleClick={handleSubmit}
-               disabled={loading || disableSubmit}
+               disabled={loading || toRsvp.length === 0 || toRsvp === undefined}
                displayLoading={loading}
                buttonText={`RSVP →`}
                className='w-full mt-3'
