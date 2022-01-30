@@ -6,7 +6,7 @@ import linesVector from 'public/images/lines.png';
 
 const linesBgOn=['/'];
 
-const Main = ({children}: {children: any}) => {
+const Main = ({children, className}: {children: any, className?:string}) => {
   const {pathname} = useRouter();
   const displayLines = linesBgOn.find((path) => {
     if (path === '/') return pathname === path;
@@ -16,12 +16,12 @@ const Main = ({children}: {children: any}) => {
   return (
     <div className="flex flex-col min-h-screen relative overflow-hidden selection:bg-highlight selection:text-primary">
       <Navbar />
-      <div className="
+      <div className={`
           flex-1
-          mx-auto
           sm:my-24
           my-12
-        ">
+          ${className}
+      `}>
         {children}
       </div>
       <Footer />
