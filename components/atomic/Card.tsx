@@ -77,23 +77,33 @@ export const Card = ({
         text-primary-muted
         p-4 flex flex-col
       `}>
-      <div className="flex flex-row justify-between w-full">
+      <div className="flex flex-row justify-between w-full gap-3">
         <div className="flex flex-col justify-start">
           <div className='font-secondary uppercase lg:text-base sm:text-sm text-xxs'>
             {type}
           </div>
-          <div className='font-heading lg:text-3xl sm:text-2xl text-base'>
+          <p className='
+            font-heading
+
+            lg:text-3xl
+            lg:max-h-9
+
+            sm:text-2xl
+            sm:max-h-8
+
+            text-base overflow-hidden
+          '>
             {title}
-          </div>
+          </p>
           <div className='font-primary lg:text-sm sm:text-xs text-xxs'>
             {by}
           </div>
         </div>
-        <div className="flex flex-col items-center font-secondary place-self-center">
-          <div className='lg:text-xl sm:text-base text-xxs'>
+        <div className="flex flex-col items-center font-secondary place-self-center shrink-0">
+          <div className='lg:text-lg sm:text-base text-xxs'>
             {prettyDate.date}, {prettyDate.month}
           </div>
-          <div className='lg:text-sm sm:text-xs text-xxs'>
+          <div className='2xl:text-sm sm:text-xs text-xxs'>
             {prettyDate.time}
           </div>
         </div>
@@ -111,10 +121,11 @@ export const Card = ({
         <div>
           {
             descriptionText &&
-          (
-          descriptionText?.length > 150 ?
-          descriptionText?.substring(0, 150)+'...' :
-          descriptionText)
+            (
+              descriptionText?.length > 150 ?
+              descriptionText?.substring(0, 150)+'...' :
+              descriptionText
+            )
           }
         </div>
       </div>
