@@ -2,7 +2,7 @@ import type {NextPage} from 'next';
 import Main from '../layouts/Main';
 import {Events} from '../components/composed/Events';
 import {NextSeo} from 'next-seo';
-
+import Link from 'next/link';
 const Home: NextPage = () => {
   return (
     <>
@@ -23,15 +23,47 @@ const Home: NextPage = () => {
         }}
       />
       <Main>
-        <Events
-          type='live'
-        />
-        <Events
-          type='upcoming'
-        />
-        <Events
-          type='past'
-        />
+        <div className='lg:pl-64 md:pl-32 pl-12'>
+          <div className="
+              font-heading
+              font-bold
+              lg:text-7xl text-5xl
+              text-primary
+              lg:py-5
+            ">
+            Convo.
+          </div>
+          <div
+            className="
+                font-secondary
+                text-lg
+                text-kernel
+                pt-12
+              "
+          >
+            <Link href='/propose'>
+              <span className='bg-highlight cursor-pointer'>
+                Start a Convo
+              </span>
+            </Link>
+            .&nbsp;Make a Friend.
+          </div>
+        </div>
+        <div className='mt-12 md:px-20 px-6'>
+          <div>
+            <Events
+              type='today'
+              title='upcoming'
+              highlight='today'
+            />
+          </div>
+          <div className='mt-12'>
+            <Events
+              type='week'
+              highlight='next 7 days'
+            />
+          </div>
+        </div>
       </Main>
     </>
   );

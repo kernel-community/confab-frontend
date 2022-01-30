@@ -12,7 +12,7 @@ const Hero = ({
             font-secondary
             uppercase
             text-lg
-            text-kernel-purple
+            text-kernel
           "
       >
         {type}

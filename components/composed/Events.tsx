@@ -1,22 +1,26 @@
 import {Title} from '../atomic/Title';
-import {Card} from '../../layouts/Card';
+import {Card} from '../atomic/Card';
 import {HorizontalScroll} from '../../layouts/HorizontalScroll';
 import {useEffect, useState} from 'react';
 import {ServerEvent} from '../../types';
 import Link from 'next/link';
+import {DateTime} from 'luxon';
 export const Events = ({
   type,
+  title,
+  highlight,
 }: {
-  type: string
+  type: string,
+  title?: string,
+  highlight?: string
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [events, setEvents] = useState<ServerEvent[]>([]);
-  const [title, setTitle] = useState<string>('');
   useEffect(() => {
     setLoading(true);
     (async () => {
       const r = (await (await fetch('api/getEvents', {
-        body: JSON.stringify({type}),
+        body: JSON.stringify({type, now: new Date()}),
         method: 'POST',
         headers: {'Content-type': 'application/json'},
       })).json()).data;
@@ -24,39 +28,27 @@ export const Events = ({
     })();
     setLoading(false);
   }, [type]);
-  useEffect(() => {
-    if (type) setTitle(type.charAt(0).toUpperCase() + type.slice(1));
-  }, [type]);
   return (
-    <div className='py-10 lg:ml-40 md:ml-20 ml-10'>
-      <Title text={title} className='mb-3'/>
-      <HorizontalScroll>
+    <div>
+      <Title text={title} highlight={highlight} className='mb-3'/>
+      <div className='sm:flex sm:flex-row sm:flex-wrap sm:gap-4'>
+        {/* <HorizontalScroll> */}
         {!loading && events.length > 0 && events.map((u, k) =>
           <Link
             href={`/rsvp/${u.hash}`}
             key={k}
           >
             <div>
-              <Card >
-                <div>
-                  {u.title}
-                </div>
-                <div>
-                  {u.descriptionText}
-                </div>
-                <div>
-                  {u.startDateTime}
-                </div>
-                <div>
-                  {u.RSVP}
-                </div>
-                <div>
-              limit {u.limit}
-                </div>
-                <div>
-              hash: {u.hash}
-                </div>
-              </Card>
+              <Card
+                title={u.title}
+                descriptionText={u.descriptionText?? ''}
+                startDateTime={u.startDateTime}
+                RSVP={u.RSVP}
+                limit={u.limit}
+                hash={u.hash}
+                type={u.type?.type.toLowerCase()|| 'junto' }
+                by={u.proposerName || 'anonymous'}
+              />
             </div>
           </Link>,
         )}
@@ -66,7 +58,8 @@ export const Events = ({
             No {title} events.
           </div>
         }
-      </HorizontalScroll>
+        {/* </HorizontalScroll> */}
+      </div>
     </div>
   );
 };

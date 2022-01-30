@@ -19,9 +19,9 @@ const Button = ({
           text-gray-600
           cursor-not-allowed` :
           `
-          bg-kernel-purple
+          bg-kernel
           text-gray-200
-          hover:shadow-kernel
+          hover:shadow-dark
           `}
         font-secondary
         py-2
@@ -29,6 +29,10 @@ const Button = ({
         rounded-lg
         text-lg
         uppercase
+        hover:shadow-xl
+        transition-shadow
+        duration-300
+        ease-in-out
         ${` ` + className}
       `}
       onClick={handleClick}
