@@ -33,7 +33,7 @@ const Post = () => {
     setLoading(false);
   }, [eventHash]);
   return (
-    <Main>
+    <Main className='mx-auto'>
       {loading?
       <div className="p-32"><Spinner /></div> :
       <EventPage
