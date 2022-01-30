@@ -1,10 +1,9 @@
 import {Title} from '../atomic/Title';
 import {Card} from '../atomic/Card';
-import {HorizontalScroll} from '../../layouts/HorizontalScroll';
+// import {HorizontalScroll} from '../../layouts/HorizontalScroll';
 import {useEffect, useState} from 'react';
 import {ServerEvent} from '../../types';
 import Link from 'next/link';
-import {DateTime} from 'luxon';
 export const Events = ({
   type,
   title,
