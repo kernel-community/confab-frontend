@@ -2,11 +2,12 @@ const Footer = () => {
   return (
     <div className={`
     w-full
-    bg-kernel-purple py-5
-    font-inter text-primary
+    bg-kernel py-5
+    font-secondary
+    text-primary-muted
     `}>
       <div className="flex flex-row justify-center items-center">
-        <span className="text-primary-muted font-secondary lowercase">
+        <span className="lowercase">
         Built at&nbsp;
           <a
             href="https://kernel.community/"
@@ -18,14 +19,14 @@ const Footer = () => {
           </a>
         </span>
       </div>
-      {/* <div className="text-xs flex flex-row gap-3 justify-center italic">
+      <div className="text-xs flex flex-row gap-3 justify-center italic font-primary font-thin">
         <span>
           If this looks like something you&apos;d like to work on (we need tons of help)&nbsp;
           <a href="mailto:angela@kernel.community" className="underline">
           please get in touch!
           </a>
         </span>
-      </div> */}
+      </div>
     </div>
   );
 };

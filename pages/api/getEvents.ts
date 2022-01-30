@@ -6,13 +6,13 @@ export default async function getEvents(
     req: NextApiRequest,
     res: NextApiResponse,
 ) {
-  const type = req.body['type'];
+  const {type, now} = req.body;
   let r: ServerEvent[] = [];
   if (!type) {
     console.log('[api: getEvents]: no type provided');
     res.status(200).json({data: []});
   }
-  r = (await (await fetch(`${serverUrl}/events?type=${type}`, {
+  r = (await (await fetch(`${serverUrl}/events?type=${type}&now=${now}`, {
     method: 'GET',
   })).json()).data;
   res.status(200).json({data: r});

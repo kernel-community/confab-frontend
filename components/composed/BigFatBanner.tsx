@@ -2,7 +2,7 @@ const BigFatBanner = ({text, helperText}: {text: string, helperText?:string}) =>
   return (
     <div className="
         rounded-lg
-        bg-gradient-to-r from-gray-700 via-gray-900 to-black
+        bg-gradient-to-r
       ">
       <div className="
           font-inter font-bold text-6xl p-32

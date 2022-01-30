@@ -4,7 +4,7 @@ import Footer from '../components/composed/Footer';
 import Image from 'next/image';
 import linesVector from 'public/images/lines.png';
 
-const linesBgOn=['/', '/rsvp'];
+const linesBgOn=['/'];
 
 const Main = ({children}: {children: any}) => {
   const {pathname} = useRouter();
@@ -14,11 +14,10 @@ const Main = ({children}: {children: any}) => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen relative overflow-hidden">
+    <div className="flex flex-col min-h-screen relative overflow-hidden selection:bg-highlight selection:text-primary">
       <Navbar />
       <div className="
           flex-1
-          container
           mx-auto
           sm:my-24
           my-12
@@ -35,7 +34,6 @@ const Main = ({children}: {children: any}) => {
         lg:-top-24
         lg:-left-52
         lg:z-0
-        lg:opacity-30
         '
         >
           <Image src={linesVector} width={383} height={412}/>
@@ -47,14 +45,12 @@ const Main = ({children}: {children: any}) => {
         lg:-top-12
         lg:-right-52
         lg:z-0
-        lg:opacity-30
         '>
           <Image src={linesVector} width={442} height={476}/>
         </div>
       </>
       }
     </div>
-
   );
 };
 

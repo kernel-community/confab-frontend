@@ -1,14 +1,20 @@
 module.exports = {
-  // purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  purge: false,
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    './pages/**/*.{js,jsx,ts,tsx}',
+    './components/**/*.{js,jsx,ts,tsx}',
+    './layouts/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
         'transparent': 'transparent',
         'black': '#000',
         'white': '#fff',
-        'kernel-purple': '#212144',
+        'kernel': {
+          DEFAULT: '#212144',
+          light: '#6666D1',
+          bright: '#3838B4',
+        },
         'primary': {
           DEFAULT: '#1e293b',
           muted: '#cbd5e1',
@@ -41,7 +47,7 @@ module.exports = {
         'xxs': '0.69rem',
       },
       boxShadow: {
-        'kernel': '0 30px 41px rgba(33, 33, 68, 0.24)',
+        'dark': '0 30px 41px rgba(33, 33, 68, 0.24)',
       },
     },
     container: {
@@ -53,9 +59,6 @@ module.exports = {
         '2xl': '12rem',
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require('@tailwindcss/forms'),

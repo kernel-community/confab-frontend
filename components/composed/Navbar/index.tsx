@@ -5,10 +5,10 @@ export const Navbar = () => {
   return (
     <>
       <div className={`
-        w-full flex flex-row gap-8 justify-center items-center bg-kernel-purple
+        w-full flex flex-row gap-8 justify-center items-center bg-kernel
         font-secondary text-sm text-gray-300
         px-3
-        shadow-kernel
+        shadow-dark
         z-10
       `}>
         <Branding />
