@@ -23,7 +23,11 @@ const Home: NextPage = () => {
         }}
       />
       <Main>
-        <div className='lg:pl-64 md:pl-32 pl-12'>
+        <div className='
+          lg:pl-64
+          md:pl-12
+          pl-12
+        '>
           <div className="
               font-heading
               font-bold
@@ -49,7 +53,7 @@ const Home: NextPage = () => {
             .&nbsp;Make a Friend.
           </div>
         </div>
-        <div className='mt-12 md:px-20 px-6'>
+        <div className='mt-12 px-12'>
           <div>
             <Events
               type='today'
