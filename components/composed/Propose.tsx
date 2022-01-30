@@ -1,18 +1,21 @@
 /* eslint-disable no-invalid-this */
-import Text from '../atomic/Text';
-import SessionsInput from '../form/SessionsInput';
-import NumberComponent from '../atomic/Number';
-import EventType from '../form/EventType';
-import Button from '../atomic/Button';
+import Text from 'components/atomic/Text';
+import SessionsInput from 'components/form/SessionsInput';
+import NumberComponent from 'components/atomic/Number';
+import EventType from 'components/form/EventType';
+import Button from 'components/atomic/Button';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
-import {noSpecialChars, onlyURL} from '../../utils/regex';
-import {sessionDatesValidity} from '../../utils';
+import {specialChars, onlyURL, onlyEmail} from 'utils/regex';
+import {sessionDatesValidity} from 'utils';
 import {DateTime as DT} from 'luxon';
-import type {ClientInputSession as Session, ClientInputEvent as Event} from '../../types';
+import type {ClientInputSession as Session, ClientInputEvent as Event} from 'types';
 import {RichTextArea} from 'components/atomic/RichTextArea';
-import FieldLabel from '../atomic/StrongText';
-
+import FieldLabel from 'components/atomic/StrongText';
+type validation = {
+  state: boolean,
+  reason: string
+}
 const Propose = ({
   className,
 }: {
@@ -28,7 +31,6 @@ const Propose = ({
     proposerEmail: '',
     proposerName: 'Anonymous',
     limit: 0,
-    timezone: DT.local().zoneName,
     postOnSlack: true,
   });
   const [sessionDetails, setSessionDetails] = useState<Session[]>([{
@@ -38,64 +40,103 @@ const Propose = ({
   }]);
   const [loading, setLoading] = useState<boolean>(false);
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
-  const [titleValidation, setTitleValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
-  const [locationValidation, setLocationValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
-  const [limitValidation, setLimitValidation] = useState<{state: boolean, reason?: string}>({state: false, reason: ``});
+  const [titleValidation, setTitleValidation] = useState<validation>({state: false, reason: ``});
+  const [locationValidation, setLocationValidation] = useState<validation>({state: false, reason: ``});
+  const [emailValidation, setEmailValidation] = useState<validation>({state: false, reason: ''});
+  const [limitValidation, setLimitValidation] = useState<validation>({state: false, reason: ``});
   const [dateTimesValidation, setDateTimesValidation]=useState<boolean>(false);
-
-  /**
-   * Validate fields
-   */
-  //
-  const validateFields = (field: string, value: string) => {
-    switch (field) {
-      case 'title':
-        setTitleValidation({state: false, reason: ``});
-        if (noSpecialChars.test(value.toLowerCase())) {
-          setTitleValidation({state: true, reason: 'No special characters'});
-        } else {
-          setTitleValidation({state: false, reason: ``});
-        }
-        break;
-      case 'location':
-        setLocationValidation({state: false, reason: ``});
-        if (onlyURL.test(value.toLowerCase()) || value.toLowerCase().startsWith('irl')) {
-          setLocationValidation({state: false, reason: ``});
-        } else {
-          setLocationValidation({state: true, reason: 'Not a valid URL'});
-        }
-        break;
-      case 'limit':
-        setLimitValidation({state: false, reason: ``});
-        if (Number(value) > 90 || Number(value) < 0) {
-          setLimitValidation({state: true, reason: 'Positive integers less than 90 only :)'});
-        } else {
-          setLimitValidation({state: false, reason: ``});
-        }
-        break;
-    }
-  };
 
   /**
    * Handle all inputs
    */
   // handle input from all form objects
   const handleInput = (e: any) => {
+    e.persist();
     const target: 'title' | 'location' | 'limit' | 'proposerEmail' | 'proposerName' | 'eventType' | 'postOnSlack' = e.target.name;
+    const value = e.target.value;
     switch (target) {
       case 'title':
+        const containsSpecialChars = specialChars.test(value);
+        // const lengthGreaterThanAllowed = value.length > 150;
+        if (containsSpecialChars) {
+          setTitleValidation({
+            state: true,
+            reason: 'some special characters are restricted',
+          });
+        } else {
+          setTitleValidation({
+            state: false,
+            reason: '',
+          });
+        }
+        setEventDetails(Object.assign(eventDetails, {
+          [target]: value,
+        }));
+        break;
       case 'location':
+        const isURL = onlyURL.test(value);
+        if (!isURL && !value.toLowerCase().startsWith('irl')) {
+          setLocationValidation({
+            state: true,
+            reason: 'Not a valid URL. For IRL events, prefix with `IRL`',
+          });
+        } else {
+          setLocationValidation({
+            state: false,
+            reason: '',
+          });
+        }
+        setEventDetails(Object.assign(eventDetails, {
+          [target]: value,
+        }));
+        break;
       case 'proposerEmail':
+        const isEmail = onlyEmail.test(value);
+        if (!isEmail) {
+          setEmailValidation({
+            state: true,
+            reason: 'Please enter a valid email',
+          });
+        } else {
+          setEmailValidation({
+            state: false,
+            reason: '',
+          });
+        }
+        setEventDetails(Object.assign(eventDetails, {
+          [target]: value,
+        }));
+        break;
       case 'proposerName':
+        setEventDetails(Object.assign(eventDetails, {
+          [target]: value,
+        }));
+        break;
       case 'limit':
+        const isInvalidLimit = Number(value) > 90 || Number(value) < 0;
+        if (isInvalidLimit) {
+          setLimitValidation({
+            state: true,
+            reason: 'invalid limit',
+          });
+        } else {
+          setLimitValidation({
+            state: false,
+            reason: '',
+          });
+        }
+        setEventDetails(Object.assign(eventDetails, {
+          [target]: value,
+        }));
+        break;
       case 'eventType':
         setEventDetails(Object.assign(eventDetails, {
-          [target]: e.target.value,
+          [target]: value,
         }));
-        validateFields(target, e.target.value);
         break;
       case 'postOnSlack':
         setEventDetails((e) => Object.assign(e, {postOnSlack: !e.postOnSlack}));
+        break;
       default: return;
     }
   };
@@ -108,6 +149,7 @@ const Propose = ({
   };
   // handle single / multiple sessions (date time + duration) input
   const handleSessionsInput = (type: 'dateTime' | 'duration', count: number, e: any) => {
+    setDateTimesValidation(false);
     switch (type) {
       case 'dateTime':
         setSessionDetails((currentSessions) => {
@@ -216,12 +258,24 @@ const Propose = ({
    */
   //
   useEffect(() => {
-    let disable = false;
-    setDisableSubmit(disable);
-    if (eventDetails.title?.length === 0 || eventDetails.location?.length === 0 || eventDetails.proposerEmail?.length === 0) disable = true;
-    if (limitValidation.state || titleValidation.state || locationValidation.state) disable = true;
-    setDisableSubmit(disable);
-  }, [limitValidation.state, titleValidation.state, locationValidation.state, eventDetails.title, eventDetails.location, eventDetails.proposerEmail]);
+    if (
+      (
+        eventDetails.title?.length === 0 ||
+        eventDetails.location?.length === 0 ||
+        eventDetails.proposerEmail?.length === 0
+      ) ||
+      (
+        limitValidation.state ||
+        titleValidation.state ||
+        locationValidation.state ||
+        emailValidation.state
+      )
+    ) {
+      setDisableSubmit(true);
+    } else {
+      setDisableSubmit(false);
+    }
+  }, [limitValidation.state, titleValidation.state, locationValidation.state, eventDetails.title, eventDetails.location, eventDetails.proposerEmail, emailValidation.state]);
 
   return (
     <div className={className}>
@@ -277,6 +331,8 @@ const Propose = ({
               We need your email to send you google calendar invites & a reminder email before the start of an event
             `
           }
+          danger={emailValidation.state}
+          dangerReason={emailValidation.reason}
         />
         <Text
           name="proposerName"
@@ -305,7 +361,8 @@ const Propose = ({
             defaultChecked={eventDetails.postOnSlack}
           />
         </div>
-        <div></div>
+        {dateTimesValidation && <div className='font-primary lowercase text-sm text-red-400'>There was an error in submission. Please check all the fields.</div>}
+        {!dateTimesValidation && <div></div>}
         <Button
           buttonText={`Submit →`}
           handleClick={handleSubmit}
