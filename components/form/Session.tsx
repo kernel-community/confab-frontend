@@ -87,7 +87,7 @@ const DateTimeWrapper = ({
             + Add Session
       </div>):<></>}
       {danger ? (
-      <div className="font-medium text-xs text-red-400">
+      <div className="font-primary lowercase text-sm text-red-400">
         Date invalid or in the past
       </div>) : <></>}
     </div>

@@ -46,7 +46,7 @@ const TextField = ({
           required
           placeholder={placeholder}
         />
-        <div className="font-medium text-xs text-red-400">
+        <div className="font-primary lowercase text-sm text-red-400">
           {dangerReason}
         </div>
       </div>

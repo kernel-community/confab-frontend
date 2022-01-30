@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import type {ClientInputSession, ClientInputEvent, ServerEvent} from '../../types';
-import {serverUrl, gCalendar as gcalCalendar, slackChannel} from '../../utils/env';
+import type {ClientInputSession, ClientInputEvent, ServerEvent} from 'types';
+import {serverUrl, gCalendar as gcalCalendar, slackChannel} from 'utils/env';
 import {DateTime} from 'luxon';
 
 const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSession[]): ServerEvent[] => {
