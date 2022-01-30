@@ -1,8 +1,8 @@
 /* eslint-disable no-invalid-this */
 /* eslint-disable new-cap */
-import FieldLabel from '../atomic/StrongText';
+import FieldLabel from 'components/atomic/StrongText';
 import {ReactElement, useState, useEffect} from 'react';
-import DateTime from '../atomic/DateTime';
+import DateTime from 'components/atomic/DateTime';
 
 const DateTimeWrapper = ({
   isRecurring,

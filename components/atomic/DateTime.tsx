@@ -23,7 +23,7 @@ const DateTime = ({
   const [startDate, setStartDate] = useState();
   return (
     <div className={`
-      flex flex-row gap-2 sm:flex-nowrap items-center py-4
+      flex flex-row gap-2 items-center py-4 flex-wrap sm:flex-nowrap
     `}>
       <div>
         {/* <div className="text-xs text-primary font-light lowercase">
