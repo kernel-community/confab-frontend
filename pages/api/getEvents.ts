@@ -6,13 +6,15 @@ export default async function getEvents(
     req: NextApiRequest,
     res: NextApiResponse,
 ) {
-  const {type, now} = req.body;
+  const {type, now, take = 6, skip} = req.body;
   let r: ServerEvent[] = [];
   if (!type) {
     console.log('[api: getEvents]: no type provided');
     res.status(200).json({data: []});
   }
-  r = (await (await fetch(`${serverUrl}/events?type=${type}&now=${now}`, {
+  let url = `${serverUrl}/events?type=${type}&now=${now}&take=${take}`;
+  if (skip) url += `&skip=${skip}`;
+  r = (await (await fetch(url, {
     method: 'GET',
   })).json()).data;
   res.status(200).json({data: r});
