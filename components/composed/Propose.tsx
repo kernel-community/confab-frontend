@@ -353,9 +353,9 @@ const Propose = ({
             className="
               p-2
               rounded-sm
-              text-primary border-gray-300
+              text-primary border-gray-500
               cursor-pointer
-              focus:border-0 focus:ring-0
+              focus:border-2 focus:border-primary focus:ring-2 focus:ring-primary
             "
             onChange={handleInput}
             defaultChecked={eventDetails.postOnSlack}
