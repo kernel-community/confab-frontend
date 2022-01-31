@@ -19,7 +19,7 @@ const Footer = () => {
           </a>
         </span>
       </div>
-      <div className="text-xs flex flex-row gap-3 justify-center italic font-primary font-thin p-4">
+      <div className="text-xs flex flex-row gap-3 justify-center italic font-primary font-thin px-4">
         <span>
           If this looks like something you&apos;d like to work on (we need tons of help)&nbsp;
           <a href="mailto:angela@kernel.community" className="underline">
