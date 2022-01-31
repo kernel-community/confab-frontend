@@ -1,6 +1,6 @@
 import type {NextPage} from 'next';
-import Main from '../layouts/Main';
-import {Events} from '../components/composed/Events';
+import Main from 'layouts/Main';
+import {Events} from 'components/composed/Events';
 import {NextSeo} from 'next-seo';
 import Link from 'next/link';
 const Home: NextPage = () => {
@@ -46,8 +46,10 @@ const Home: NextPage = () => {
               "
           >
             <Link href='/propose'>
-              <span className='bg-highlight cursor-pointer'>
+              <span className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-highlight relative inline-block cur'>
+                <span className='relative text-primary underline decoration-dotted'>
                 Start a Convo
+                </span>
               </span>
             </Link>
             .&nbsp;Make a Friend.

@@ -32,11 +32,9 @@ export const Card = ({
   const [seats, setSeats] = useState<{
     available: number,
     total: number,
-    noLimit: boolean
   }>({
     available: 0,
     total: 0,
-    noLimit: true,
   });
   useEffect(() => {
     if (!startDateTime) return;
@@ -50,13 +48,12 @@ export const Card = ({
   useEffect(() => {
     if (limit === 0) {
       setSeats({
-        available: 0, total: 0, noLimit: true,
+        available: 0, total: 0,
       });
     };
     setSeats({
       available: Number(limit) - Number(RSVP),
       total: Number(limit),
-      noLimit: false,
     });
   }, [RSVP, limit]);
   return (
@@ -79,22 +76,19 @@ export const Card = ({
       `}>
       <div className="flex flex-row justify-between w-full gap-3">
         <div className="flex flex-col justify-start">
-          <div className='font-secondary uppercase lg:text-base sm:text-sm text-xxs'>
+          <div className='font-secondary uppercase lg:text-sm sm:text-xs text-xxs'>
             {type}
           </div>
-          <p className='
+          <div className='
             font-heading
-
-            lg:text-3xl
-            lg:max-h-9
-
-            sm:text-2xl
-            sm:max-h-8
-
-            text-base overflow-hidden
+            lg:text-2xl
+            sm:text-xl
+            text-base
           '>
-            {title}
-          </p>
+            {
+              title.replace(/\s/g, '').length < 45 ? title : title.substring(0, 45) + '...'
+            }
+          </div>
           <div className='font-primary lg:text-sm sm:text-xs text-xxs'>
             {by}
           </div>
@@ -109,28 +103,29 @@ export const Card = ({
         </div>
       </div>
       <div className='
-        grow
         flex
         flex-row
+        grow
         items-center
         font-primary
         text-xxs
         sm:text-sm
         lg:text-base
-        py-3'>
+        my-4
+      '>
         <div>
           {
             descriptionText &&
             (
-              descriptionText?.length > 150 ?
-              descriptionText?.substring(0, 150)+'...' :
+              descriptionText?.length > 100 ?
+              descriptionText?.substring(0, 80)+'...' :
               descriptionText
             )
           }
         </div>
       </div>
       {
-        !seats.noLimit &&
+        seats.available > 0 &&
         <div className='font-primary font-thin lg:text-base text-sm'>
           <span>
             {seats.available} / {seats.total}
@@ -140,6 +135,7 @@ export const Card = ({
           </span>
         </div>
       }
+      {seats.available <= 0 && <div></div>}
     </div>
   );
 };
