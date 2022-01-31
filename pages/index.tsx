@@ -47,12 +47,14 @@ const Home: NextPage = () => {
           >
             <Link href='/propose'>
               <span className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-highlight relative inline-block cursor-pointer'>
-                <span className='relative text-primary underline decoration-dotted'>
-                Start a Convo
+                <span className='relative text-primary'>
+                  <span className='underline decoration-dotted'>
+                    Start a Convo
+                  </span>.
                 </span>
               </span>
             </Link>
-            .&nbsp;Make a Friend.
+            &nbsp;Make a Friend.
           </div>
         </div>
         <div className='mt-12 px-12 lg:px-32 xl:px-40 2xl:px-52'>
