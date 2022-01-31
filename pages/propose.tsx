@@ -3,7 +3,7 @@ import Main from '../layouts/Main';
 import ProposeForm from '../components/composed/Propose';
 import {NextSeo} from 'next-seo';
 import {useRouter} from 'next/router';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 const Propose: NextPage = () => {
   const router = useRouter();
