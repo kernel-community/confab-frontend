@@ -71,7 +71,7 @@ const Session = ({
           mr-4 rounded-md
           text-primary border-gray-300
           cursor-pointer
-          focus:border-0 focus:ring-0
+          focus:border-2 focus:border-primary focus:ring-2 focus:ring-primary
         `}
         defaultChecked={isChecked}
       />}
