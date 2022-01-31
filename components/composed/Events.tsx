@@ -20,7 +20,7 @@ export const Events = ({
   take?: number,
   skip?: number
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [events, setEvents] = useState<ServerEvent[]>([]);
   useEffect(() => {
     setLoading(true);
@@ -35,7 +35,8 @@ export const Events = ({
         method: 'POST',
         headers: {'Content-type': 'application/json'},
       })).json()).data;
-      setEvents(r);
+      setEvents(r.filter((e: any) => typesToInclude.includes(e.type?.id!)),
+      );
     })();
     setLoading(false);
   }, [type]);
@@ -45,31 +46,32 @@ export const Events = ({
       <div className='sm:flex sm:flex-row sm:flex-wrap sm:gap-4'>
         {/* <HorizontalScroll> */}
         {!loading && events.length > 0 &&
-        events.filter((e) => typesToInclude.includes(e.type?.id!))
-            .map((u, k) =>
-              <Link
-                href={`/rsvp/${u.hash}`}
-                key={k}
-              >
-                <div>
-                  <Card
-                    title={u.title}
-                    descriptionText={u.descriptionText?? ''}
-                    startDateTime={u.startDateTime}
-                    RSVP={u.RSVP}
-                    limit={u.limit}
-                    hash={u.hash}
-                    type={u.type?.type.toLowerCase()|| 'junto' }
-                    by={u.proposerName || 'anonymous'}
-                  />
-                </div>
-              </Link>,
-            )}
+        events.map((u, k) =>
+          <Link
+            href={`/rsvp/${u.hash}`}
+            key={k}
+          >
+            <div>
+              <Card
+                title={u.title}
+                descriptionText={u.descriptionText?? ''}
+                startDateTime={u.startDateTime}
+                RSVP={u.RSVP}
+                limit={u.limit}
+                hash={u.hash}
+                type={u.type?.type.toLowerCase()|| 'junto' }
+                by={u.proposerName || 'anonymous'}
+              />
+            </div>
+          </Link>,
+        )}
         {
-          !loading && events.length==0 &&
-          <div>
-            No {title} events.
-          </div>
+          // @todo
+          !loading && events.length===0 && <div></div>
+        }
+        {
+          // @todo
+          loading && <div></div>
         }
         {/* </HorizontalScroll> */}
       </div>
