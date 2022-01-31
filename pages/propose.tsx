@@ -27,7 +27,7 @@ const Propose: NextPage = () => {
           site_name: 'KERNEL Convo',
         }}
       />
-      <Main className="mx-auto">
+      <Main className="mx-auto px-4">
         <div className="flex flex-col justify-center items-center">
           <div className="
             font-heading
