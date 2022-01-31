@@ -41,7 +41,7 @@ const EventPage = ({
           <Article
             html={event.description}
           />
-          <div className='font-fancy text-5xl text-kernel pt-24'>
+          <div className='font-fancy md:text-5xl text-4xl text-kernel pt-24'>
             {event.proposerName}
           </div>
         </div>

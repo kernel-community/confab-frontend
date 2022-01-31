@@ -20,7 +20,9 @@ const Hero = ({
       <div className="
           font-heading
           font-bold
-          sm:text-6xl text-4xl
+          xl:text-5xl
+          lg:text-4xl
+          text-3xl
           text-primary
           py-5
         ">
