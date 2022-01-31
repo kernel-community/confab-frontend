@@ -22,7 +22,7 @@ export const Navbar = () => {
           <Item text='home' href='/'/>
           <Item text='all' href='/all'/>
           <Item text='archive' href='/archive'/>
-          <Item text='about' href='/about'/>
+          {/* <Item text='about' href='/about'/> */}
         </div>
         <Item text='propose' href='/propose'/>
       </div>
@@ -65,7 +65,7 @@ export const Navbar = () => {
           <Item text='all' href='/all'/>
           <Item text='archive' href='/archive'/>
           <Item text='propose' href='/propose'/>
-          <Item text='about' href='/about'/>
+          {/* <Item text='about' href='/about'/> */}
         </div>
       </div>
     </>

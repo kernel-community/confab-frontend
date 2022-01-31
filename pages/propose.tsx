@@ -38,11 +38,11 @@ const Propose: NextPage = () => {
             text-primary
           ">
             Propose a Conversation
-            <Link href="/about">
+            {/* <Link href="/about">
               <div className='text-base font-bold mt-2 underline cursor-pointer'>
               what is a junto / guild?
               </div>
-            </Link>
+            </Link> */}
           </div>
           <div className="border border-primary my-12 lg:w-9/12 w-full">
           </div>
