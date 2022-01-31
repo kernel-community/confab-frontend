@@ -11,7 +11,7 @@ const Hero = ({
         className="
             font-secondary
             uppercase
-            text-lg
+            sm:text-lg text-base
             text-kernel
           "
       >
@@ -20,14 +20,14 @@ const Hero = ({
       <div className="
           font-heading
           font-bold
-          text-6xl
+          sm:text-6xl text-4xl
           text-primary
           py-5
         ">
         {title}
       </div>
       {proposer &&
-      <div className="font-secondary text-xl">
+      <div className="font-secondary sm:text-xl text-lg">
         by&nbsp;{proposer}
       </div>}
     </div>
