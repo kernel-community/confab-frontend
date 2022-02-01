@@ -26,9 +26,9 @@ const Archive: NextPage = () => {
       />
       <Main>
         <div className='
-          lg:pl-64
-          md:pl-12
-          pl-6
+          lg:px-32
+          md:px-12
+          px-6
         '>
           <div className="
               font-heading

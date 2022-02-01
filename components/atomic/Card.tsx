@@ -60,8 +60,8 @@ export const Card = ({
   }, [RSVP, limit]);
   return (
     <div className={`
-        lg:w-80
-        lg:h-80
+        lg:w-72
+        lg:h-62
         sm:w-64
         sm:h-64
         m-4 sm:m-0
