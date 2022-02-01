@@ -1,47 +1,48 @@
 import {useRouter} from 'next/router';
 import Main from 'layouts/Main';
 import EventPage from 'components/composed/EventPage';
-import {useState, useEffect} from 'react';
-import {ClientEvent} from 'types';
-import Spinner from 'components/composed/Spinner';
+import {useQuery} from 'react-query';
 
 const Post = () => {
-  const router = useRouter();
-
+  const {query} = useRouter();
   const {
     eventHash,
-  } = router.query;
-  const [loading, setLoading] = useState<boolean>(false);
-  const [eventDetails, setEventDetails] = useState<ClientEvent>({
-    title: '',
-    description: '',
-    proposerName: '',
-    sessionCount: 0,
-    sessions: [],
-  });
-  useEffect(() => {
-    // @todo: need error state here
-    setLoading(true);
-    (async () => {
-      const r = (await (await fetch('/api/getEvent', {
-        body: JSON.stringify({event: eventHash}),
-        method: 'POST',
-        headers: {'Content-type': 'application/json'},
-      })).json()).data;
-      setEventDetails(r);
-    })();
-    setLoading(false);
-  }, [eventHash]);
+  } = query;
+  const {isLoading, isError, data, isFetching} = useQuery(
+      `rsvp_${eventHash}`,
+      async () => {
+        const r = (await (await fetch('/api/getEvent', {
+          body: JSON.stringify({event: eventHash}),
+          method: 'POST',
+          headers: {'Content-type': 'application/json'},
+        })).json()).data;
+        return r;
+      },
+      {
+        refetchInterval: 60000, // refetch every 30 seconds
+      },
+  );
   return (
     <Main className='
       container
       mx-auto
     '>
-      {loading?
-      <div className="p-32"><Spinner /></div> :
-      <EventPage
-        event={eventDetails}
-      />}
+      {/* @todo */}
+      {isLoading && <div>Loading</div>}
+      {isFetching && <div>Fetching data</div>}
+      {isError && <div>There was an error</div>}
+
+      {
+        !isLoading &&
+        !isError &&
+        data &&
+
+        <EventPage
+          event={data}
+        />
+
+      }
+
     </Main>
   );
 };

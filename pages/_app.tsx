@@ -1,7 +1,8 @@
 import 'styles/globals.css';
 import type {AppProps} from 'next/app';
 import {NextSeo} from 'next-seo';
-
+import {QueryClient, QueryClientProvider} from 'react-query';
+const queryClient = new QueryClient();
 function MyApp({Component, pageProps}: AppProps) {
   return (
     <>
@@ -66,7 +67,9 @@ function MyApp({Component, pageProps}: AppProps) {
           },
         ]}
       />
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </>
   );
 }
