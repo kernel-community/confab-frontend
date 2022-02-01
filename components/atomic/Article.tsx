@@ -10,7 +10,10 @@ export const Article = ({
   };
   return (
     <article className="
-        prose prose-xl font-primary
+          prose
+          md:prose-xl
+          font-primary
+          sm:prose-lg
         "
     >
       <div
