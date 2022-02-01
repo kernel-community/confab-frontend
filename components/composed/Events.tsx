@@ -5,7 +5,6 @@ import {ServerEvent} from '../../types';
 import Link from 'next/link';
 import {useInfiniteQuery} from 'react-query';
 import {useInView} from 'react-intersection-observer';
-import {useState} from 'react';
 const types = '1,2';
 export const Events = ({
   type,
