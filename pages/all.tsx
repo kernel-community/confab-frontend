@@ -42,7 +42,7 @@ const All: NextPage = () => {
           </div>
           <Events
             type='upcoming'
-            take={100}
+            take={50}
             infinite={true}
           />
         </div>
