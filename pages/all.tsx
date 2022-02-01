@@ -26,8 +26,8 @@ const All: NextPage = () => {
       />
       <Main>
         <div className='
-          lg:pl-64
-          md:pl-12
+          lg:px-32
+          md:px-12
           pl-6
         '>
           <div className="
