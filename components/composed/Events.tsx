@@ -5,6 +5,7 @@ import {ServerEvent} from '../../types';
 import Link from 'next/link';
 import {useInfiniteQuery} from 'react-query';
 import {useInView} from 'react-intersection-observer';
+import {useState} from 'react';
 const types = '1,2';
 export const Events = ({
   type,
@@ -80,7 +81,10 @@ export const Events = ({
         }
         {
           // @todo
-          !isLoading && (!data || !data.pages) && <div>No events</div>
+          !isLoading && data && data.pages[0].data && data.pages[0].data.length === 0 &&
+          <div className='font-primary lowercase'>
+            no events to display here
+          </div>
         }
         {
           // @todo
