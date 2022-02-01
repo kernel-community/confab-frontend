@@ -88,7 +88,7 @@ export const Card = ({
             text-base
           '>
             {
-              title.replace(/\s/g, '').length < 45 ? title : title.substring(0, 45) + '...'
+              title.replace(/\s/g, '').length < 25 ? title : title.substring(0, 25) + '...'
             }
           </div>
           <div className='font-primary lg:text-sm sm:text-xs text-xxs'>
