@@ -29,6 +29,7 @@ export const Card = ({
     month: DT.now().toFormat('LLL'),
     time: DT.now().toFormat('hh: mm a'),
   });
+  const [isPast, setIsPast] = useState<boolean>(false);
   const [seats, setSeats] = useState<{
     available: number,
     total: number,
@@ -44,6 +45,7 @@ export const Card = ({
       month: d.toFormat('LLL'),
       time: d.toFormat('hh: mm a'),
     });
+    if (d.diffNow().milliseconds < 0) setIsPast(true);
   }, [startDateTime]);
   useEffect(() => {
     if (limit === 0) {
@@ -126,6 +128,7 @@ export const Card = ({
       </div>
       {
         seats.available > 0 &&
+        !isPast &&
         <div className='font-primary font-thin lg:text-base text-sm'>
           <span>
             {seats.available} / {seats.total}
