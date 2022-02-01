@@ -42,7 +42,8 @@ const Archive: NextPage = () => {
           </div>
           <Events
             type='past'
-            take={50}
+            take={100}
+            infinite={true}
           />
         </div>
       </Main>
