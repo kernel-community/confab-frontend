@@ -9,9 +9,8 @@ const About: NextPage = () => {
     {
       question: 'What is a Junto?',
       answer: `
-      A uniquely KERNEL experience to connect with other fellows is through organising a Junto. A Junto is a group conversation held to with a common end goal in mind. It is the organiser's responsibility to define a "common purpose" for the group.
-
-      A Junto could be a Yoga class, an exploration of NFTs, formal verification deep dive, or user testing of products
+      A uniquely KERNEL experience to connect with other fellows is through organising a Junto. A Junto is a group conversation held to with a common end goal in mind. It is the organiser's responsibility to define a "common purpose" for the group. A Junto could be a Yoga class, an exploration of NFTs, formal verification deep dive, or user testing of products. The motivation behind the word and the concept of Junto comes from Benjamin Franklin discussion groups, here are a few resources if you're interested in the history and meaning of Juntos :)
+      
       `,
     },
     {
