@@ -20,7 +20,6 @@ const EventType = ({
       >
         <option value="1">Junto</option>
         <option value="2">Build Guild</option>
-        <option value="3">Offer</option>
       </select>
     </>
   );

@@ -158,7 +158,6 @@ const SessionsWrapper = ({
   sessions: ClientSession[]
   email?: string
 }) => {
-  console.log('email', email);
   const showSessions: boolean = true;
   // const [showSessions, setShowSessions] = useState<boolean>(true);
   const [toRsvp, setToRsvp] = useState<(number | undefined)[]>([]);

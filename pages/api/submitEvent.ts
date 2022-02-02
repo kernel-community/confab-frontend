@@ -6,28 +6,18 @@ import {DateTime} from 'luxon';
 const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSession[]): ServerEvent[] => {
   const payload: ServerEvent[] = [];
   for (const s of sessions) {
-    const startDateTime = DateTime.fromObject({
-      day: s.date,
-      year: s.year,
-      month: s.month,
-      hour: s.time![0],
-      minute: s.time![1],
-    }, {
-      zone: event.timezone,
-    });
-    const endDateTime = startDateTime.plus({
-      hours: 1,
-    });
+    const startDateTime = s.startDateTime;
+    const endDateTime = s.endDateTime;
     payload.push({
-      title: event.eventType == 3 ? '' : event.title!,
-      descriptionText: event.descriptionText!,
-      descriptionHtml: event.descriptionHtml!,
-      location: event.location!,
+      title: event.title ?? '',
+      descriptionText: event.descriptionText ?? '',
+      descriptionHtml: event.descriptionHtml ?? '',
+      location: event.location ?? '',
       series: sessions.length > 1 ? true : false,
       proposerEmail: event.proposerEmail!,
       proposerName: event.proposerName!,
-      startDateTime: event.eventType == 3 ? DateTime.local().toISO() : startDateTime.toISO(),
-      endDateTime: event.eventType == 3 ? DateTime.local().toISO() : endDateTime.toISO(),
+      startDateTime: event.eventType == 3 ? DateTime.local().toISO() : startDateTime!,
+      endDateTime: event.eventType == 3 ? DateTime.local().toISO() : endDateTime!,
       limit: Number(event.limit) || 0,
       postOnSlack: true,
       slackChannel: slackChannel[event.eventType - 1],
