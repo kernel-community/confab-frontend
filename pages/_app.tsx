@@ -63,7 +63,9 @@ function MyApp({Component, pageProps}: AppProps) {
           },
           {
             rel: 'preload',
-            href: '/public/fonts/Futura/futura-medium.ttf',
+            href: '/fonts/Futura/futura-medium.ttf',
+            as: 'font',
+            crossOrigin: 'anonymous',
           },
         ]}
       />
