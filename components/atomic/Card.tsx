@@ -66,21 +66,21 @@ export const Card = ({
         sm:h-64
         m-4 sm:m-0
         rounded-lg
-        ${type === 'guild' && `bg-kernel-bright`}
-        ${type === 'junto' && `bg-kernel`}
-        hover:shadow-kernel
+        bg-white
+        hover:shadow-lg hover:shadow-outline
         transition-shadow
         duration-300
         ease-in-out
         cursor-pointer
         text-primary-muted
+        bg-gradient-to-tl from-indigo-900 to-slate-900
         p-4 flex flex-col
       `}>
       <div className="flex flex-row justify-between w-full gap-3">
         <div className="flex flex-col justify-start">
-          <div className='font-secondary uppercase lg:text-sm sm:text-xs text-xxs'>
+          {/*<div className='font-secondary uppercase lg:text-sm sm:text-xs text-xxs'>
             {type}
-          </div>
+          </div>*/}
           <div className='
             font-heading
             lg:text-2xl

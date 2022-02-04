@@ -21,7 +21,7 @@ const Button = ({
           `
           bg-kernel
           text-gray-200
-          hover:shadow-dark
+          hover:shadow-outline
           `}
         font-secondary
         py-2
@@ -29,7 +29,7 @@ const Button = ({
         rounded-lg
         text-lg
         uppercase
-        hover:shadow-xl
+        hover:shadow-md
         transition-shadow
         duration-300
         ease-in-out
