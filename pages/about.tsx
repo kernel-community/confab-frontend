@@ -62,7 +62,7 @@ const About: NextPage = () => {
           </div>
           <div className='font-primary lg:px-32'>
             <div className='pb-4'>
-            Convos is intended to help any community of care craft beautiful conversations. This is a convivial tool which works with us and helps us help each other. We know that cultivating creative, diverse and trusted spaces in which people can be honest and vulnerable is no small task. Convos helps us grow environments for dialogue by easing the coordination required, so we can spend our time and energy where it really matters: relating with other people from the heart.
+            Convo is intended to help any community of care craft beautiful conversations. This is a convivial tool which works with us and helps us help each other. We know that cultivating creative, diverse and trusted spaces in which people can be honest and vulnerable is no small task. Convo helps us grow environments for dialogue by easing the coordination required, so we can spend our time and energy where it really matters: relating with other people from the heart.
             </div>
             {
               faqs.map((faq, key) => {
