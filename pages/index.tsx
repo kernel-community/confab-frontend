@@ -1,8 +1,8 @@
 import type {NextPage} from 'next';
-import Main from '../layouts/Main';
-// import {Events} from '../components/composed/Events';
+import Main from 'layouts/Main';
+import {Events} from 'components/composed/Events';
 import {NextSeo} from 'next-seo';
-import BigFatBanner from '../components/composed/BigFatBanner';
+import Link from 'next/link';
 const Home: NextPage = () => {
   return (
     <>
@@ -23,16 +23,58 @@ const Home: NextPage = () => {
         }}
       />
       <Main>
-        {/* <Events
-          type='live'
-        />
-        <Events
-          type='upcoming'
-        />
-        <Events
-          type='past'
-        /> */}
-        <BigFatBanner text='Coming Soon'></BigFatBanner>
+        <div className='
+          lg:pl-64
+          md:pl-12
+          pl-12
+        '>
+          <div className="
+              font-heading
+              font-bold
+              lg:text-7xl text-5xl
+              text-primary
+              lg:py-5
+            ">
+            Convo.
+          </div>
+          <div
+            className="
+                font-secondary
+                text-lg
+                text-kernel
+                pt-12
+              "
+          >
+            {/* Spark a thought,&nbsp; */}
+            <Link href='/propose'>
+              <span className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-highlight relative inline-block cursor-pointer'>
+                <span className='relative text-primary'>
+                  <span className='underline decoration-dotted'>
+                    Start a Convo
+                  </span>.
+                </span>
+              </span>
+            </Link>
+            &nbsp;Make a Friend.
+          </div>
+        </div>
+        <div className='mt-12 px-12 lg:px-32 xl:px-40 2xl:px-52'>
+          <div>
+            <Events
+              type='today'
+              title='upcoming'
+              highlight='today'
+              take={6}
+            />
+          </div>
+          <div className='mt-12'>
+            <Events
+              type='week'
+              highlight='next 7 days'
+              take={6}
+            />
+          </div>
+        </div>
       </Main>
     </>
   );
