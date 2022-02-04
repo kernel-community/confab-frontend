@@ -78,7 +78,7 @@ export const Card = ({
       `}>
       <div className="flex flex-row justify-between w-full gap-3">
         <div className="flex flex-col justify-start">
-          {/*<div className='font-secondary uppercase lg:text-sm sm:text-xs text-xxs'>
+          {/* <div className='font-secondary uppercase lg:text-sm sm:text-xs text-xxs'>
             {type}
           </div>*/}
           <div className='

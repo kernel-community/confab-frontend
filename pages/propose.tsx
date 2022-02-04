@@ -3,7 +3,6 @@ import Main from '../layouts/Main';
 import ProposeForm from 'components/composed/Propose';
 import {NextSeo} from 'next-seo';
 import {useRouter} from 'next/router';
-import Link from 'next/link';
 
 const Propose: NextPage = () => {
   const router = useRouter();
@@ -38,11 +37,6 @@ const Propose: NextPage = () => {
             text-primary
           ">
             Propose a Conversation
-            {/*<Link href="/about">
-              <div className='text-base font-bold mt-2 underline cursor-pointer'>
-              what is a junto / guild?
-              </div>
-            </Link>*/}
           </div>
           <div className="border border-primary my-12 lg:w-9/12 w-full">
           </div>

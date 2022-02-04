@@ -2,7 +2,6 @@
 import Text from 'components/atomic/Text';
 import SessionsInput from 'components/form/SessionsInput';
 import NumberComponent from 'components/atomic/Number';
-import EventType from 'components/form/EventType';
 import Button from 'components/atomic/Button';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
@@ -280,7 +279,7 @@ const Propose = ({
   return (
     <div className={className}>
       <div className="flex flex-col gap-14">
-        {/*<EventType
+        {/* <EventType
           handleChange={handleInput}
         />*/}
         <Text
