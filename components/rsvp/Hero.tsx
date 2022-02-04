@@ -7,7 +7,7 @@ const Hero = ({
 }) => {
   return (
     <div className="flex flex-col justify-items-start">
-      <div
+      {/*<div
         className="
             font-secondary
             uppercase
@@ -16,7 +16,7 @@ const Hero = ({
           "
       >
         {type}
-      </div>
+      </div>*/}
       <div className="
           font-heading
           font-bold

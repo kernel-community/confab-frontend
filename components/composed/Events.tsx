@@ -5,7 +5,13 @@ import {ServerEvent} from '../../types';
 import Link from 'next/link';
 import {useInfiniteQuery} from 'react-query';
 import {useInView} from 'react-intersection-observer';
+
+/** 
+ * @todo: change this on the backend - merge the two types
+ * Only fetch types 1 (junto) and 2 (guild) 
+ */
 const types = '1,2';
+
 export const Events = ({
   type,
   title,

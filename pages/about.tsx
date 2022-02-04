@@ -6,19 +6,19 @@ import {useRouter} from 'next/router';
 const About: NextPage = () => {
   const {pathname} = useRouter();
   const faqs = [
-    {
-      question: 'What is a Junto?',
-      answer: `
-      A uniquely KERNEL experience to connect with other fellows is through organising a Junto. A Junto is a group conversation held to with a common end goal in mind. It is the organiser's responsibility to define a "common purpose" for the group. A Junto could be a Yoga class, an exploration of NFTs, formal verification deep dive, or user testing of products. The motivation behind the word and the concept of Junto comes from Benjamin Franklin discussion groups, here are a few resources if you're interested in the history and meaning of Juntos :)
+    // {
+    //   question: 'What is a Junto?',
+    //   answer: `
+    //   A uniquely KERNEL experience to connect with other fellows is through organising a Junto. A Junto is a group conversation held to with a common end goal in mind. It is the organiser's responsibility to define a "common purpose" for the group. A Junto could be a Yoga class, an exploration of NFTs, formal verification deep dive, or user testing of products. The motivation behind the word and the concept of Junto comes from Benjamin Franklin discussion groups, here are a few resources if you're interested in the history and meaning of Juntos :)
       
-      `,
-    },
-    {
-      question: 'What is a Guild?',
-      answer: `
-        Guilds are shared sense-making environments. They are about co-creative exploration, and differ from juntos in that they include some participatory practice. Such practice can take the form of shared Figma, Miro or Excalidraw boards; drawing, painting or sculpting together; coding together; creating songs, sounds and melodies; playing a game; managing a DAO with D&D prompts and so much more. While juntos are often one-off events, guilds repeat for a set period so you can become more adept with the tools being used, and develop an intuition for the skills being explored together.
-      `,
-    },
+    //   `,
+    // },
+    // {
+    //   question: 'What is a Guild?',
+    //   answer: `
+    //     Guilds are shared sense-making environments. They are about co-creative exploration, and differ from juntos in that they include some participatory practice. Such practice can take the form of shared Figma, Miro or Excalidraw boards; drawing, painting or sculpting together; coding together; creating songs, sounds and melodies; playing a game; managing a DAO with D&D prompts and so much more. While juntos are often one-off events, guilds repeat for a set period so you can become more adept with the tools being used, and develop an intuition for the skills being explored together.
+    //   `,
+    // },
   ];
   return (
     <>
