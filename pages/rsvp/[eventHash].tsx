@@ -28,10 +28,9 @@ const Post = () => {
       mx-auto
     '>
       {/* @todo */}
-      {isLoading && <div>Loading</div>}
-      {isFetching && <div>Fetching data</div>}
+      {/* {isLoading && <div>Loading</div>} */}
+      {/* {isFetching && <div>Fetching data</div>} */}
       {isError && <div>There was an error</div>}
-
       {
         !isLoading &&
         !isError &&
