@@ -8,6 +8,7 @@ const Post = () => {
   const {
     eventHash,
   } = query;
+  // eslint-disable-next-line no-unused-vars
   const {isLoading, isError, data, isFetching} = useQuery(
       `rsvp_${eventHash}`,
       async () => {
