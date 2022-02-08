@@ -9,18 +9,12 @@ type Faq = {
 const About: NextPage = () => {
   const {pathname} = useRouter();
   const faqs: Faq[] = [
-    // {
-    //   question: 'What is a Junto?',
-    //   answer: `
-    //   A uniquely KERNEL experience to connect with other fellows is through organising a Junto. A Junto is a group conversation held to with a common end goal in mind. It is the organiser's responsibility to define a "common purpose" for the group. A Junto could be a Yoga class, an exploration of NFTs, formal verification deep dive, or user testing of products. The motivation behind the word and the concept of Junto comes from Benjamin Franklin discussion groups, here are a few resources if you're interested in the history and meaning of Juntos :)
-    //   `,
-    // },
-    // {
-    //   question: 'What is a Guild?',
-    //   answer: `
-    //     Guilds are shared sense-making environments. They are about co-creative exploration, and differ from juntos in that they include some participatory practice. Such practice can take the form of shared Figma, Miro or Excalidraw boards; drawing, painting or sculpting together; coding together; creating songs, sounds and melodies; playing a game; managing a DAO with D&D prompts and so much more. While juntos are often one-off events, guilds repeat for a set period so you can become more adept with the tools being used, and develop an intuition for the skills being explored together.
-    //   `,
-    // },
+    {
+      question: 'What are Daylight Savings and how do they affect me?',
+      answer: `
+        The idea of Daylight Savings is to move clocks one hour ahead of the "standard" time in summer and one hour back in winter. Normaly in the summer sun would rise very early (depending on your latitude) eg., at 5 am, the daylight then can be thought of as not being used since very few people are going to be awake. So DST moves sunrise and sunset an hour later so that the time we have daylight is of more use. It's decided by the Governments of the countries to follow or not follow Daylight savings. Some countries that do follow are: Canada, United States, Australia, New Zealand, etc. You would already know if you have been following Daylight Savings in the country you're residing. The way it would affect you as an attendee of any Convo on this website is that if the proposer is taking sessions from a Country that follows Daylight Savings, you can expect sessions to be off by an hour (earlier or later depending on the part of the year). If you are a proposer, however, it's recommended that you add a little note in the description that mentions that some sessions would be affected by daylight savings.
+      `,
+    },
   ];
   return (
     <>
