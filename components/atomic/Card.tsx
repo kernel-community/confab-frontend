@@ -138,7 +138,7 @@ export const Card = ({
           </span>
         </div>
       }
-      {seats.available <= 0 && <div></div>}
+      {seats.total !== 0 && seats.available <= 0 && <div className='font-primary font-thin text-xxs'>No seats available</div>}
     </div>
   );
 };
