@@ -63,7 +63,7 @@ const Home: NextPage = () => {
             <Events
               type='today'
               title='upcoming'
-              highlight='today'
+              highlight='next 24 hours'
               take={6}
             />
           </div>
