@@ -7,7 +7,10 @@ const prepareEventPayload = (event: ClientInputEvent, sessions: ClientInputSessi
   const payload: ServerEvent[] = [];
   for (const s of sessions) {
     const startDateTime = s.startDateTime;
-    const endDateTime = s.endDateTime;
+    let endDateTime = s.endDateTime;
+    if (startDateTime && endDateTime && (DateTime.fromISO(startDateTime) > DateTime.fromISO(endDateTime))) {
+      endDateTime = DateTime.fromISO(startDateTime).plus({hours: 1}).toISO();
+    }
     payload.push({
       title: event.title ?? '',
       descriptionText: event.descriptionText ?? '',

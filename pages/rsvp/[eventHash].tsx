@@ -8,6 +8,7 @@ const Post = () => {
   const {
     eventHash,
   } = query;
+  // eslint-disable-next-line no-unused-vars
   const {isLoading, isError, data, isFetching} = useQuery(
       `rsvp_${eventHash}`,
       async () => {
@@ -28,10 +29,9 @@ const Post = () => {
       mx-auto
     '>
       {/* @todo */}
-      {isLoading && <div>Loading</div>}
-      {isFetching && <div>Fetching data</div>}
+      {/* {isLoading && <div>Loading</div>} */}
+      {/* {isFetching && <div>Fetching data</div>} */}
       {isError && <div>There was an error</div>}
-
       {
         !isLoading &&
         !isError &&

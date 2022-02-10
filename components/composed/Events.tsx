@@ -93,12 +93,12 @@ export const Events = ({
         }
         {
           // @todo
-          isLoading || isFetching && <div>Loading...</div>
+          isLoading || isFetching && <div></div>
         }
         {
           isError && <div>There was an error in fetching</div>
         }
-        {isFetchingNextPage && <div>Loading...</div>}
+        {isFetchingNextPage && <div></div>}
       </div>
       {infinite === true && <div ref={ref} className='invisible'>Intersection Observer Marker</div>}
     </div>
