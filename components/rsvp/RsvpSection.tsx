@@ -109,7 +109,7 @@ const Session = ({
             <div>
               {availableSeats}/{totalSeats}
             </div>
-            <span className="text-xs">Seats</span>
+            <span className="text-xs">Seats Available</span>
           </div>
         )}
       </div>
