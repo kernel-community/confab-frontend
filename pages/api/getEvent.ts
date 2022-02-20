@@ -12,6 +12,7 @@ const prepareSessions = (e: ServerEvent[]): Session[] => {
     sessions.push({
       id: e[i].id,
       startDateTime: e[i].startDateTime,
+      endDateTime: e[i].endDateTime,
       availableSeats,
       totalSeats: e[i].limit,
       noLimit,
@@ -29,6 +30,7 @@ const prepareResponse = (e: ServerEvent[]): ClientEvent => {
     sessionCount: e.length,
     sessions: prepareSessions(e),
     type: firstInSeries.type!.type,
+    location: firstInSeries.location,
   };
 };
 

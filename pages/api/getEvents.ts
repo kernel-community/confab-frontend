@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {serverUrl} from '../../utils/env';
-import {ServerEvent} from '../../types';
+import {serverUrl} from 'utils/env';
+import {ServerEvent} from 'types';
 
 export default async function getEvents(
     req: NextApiRequest,
