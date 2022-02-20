@@ -27,6 +27,7 @@ export type ClientInputEvent = {
 export type Session = {
   id?:number
   startDateTime?: string
+  endDateTime?:string
   availableSeats?: number
   totalSeats?: number
   noLimit?: boolean
@@ -35,9 +36,12 @@ export type Session = {
 export type ClientEvent = {
   title?: string,
   description?: string,
+  descriptionHtml?:string,
+  descriptionText?:string,
   type?: 'Junto' | 'Build Guild',
   proposerName?: string,
   sessionCount?: number,
+  location?:string,
   sessions?: Session[]
 }
 
@@ -47,8 +51,8 @@ export type ServerEvent = {
   descriptionText: string | null
   descriptionHtml: string | null
   location: string
-  series: boolean
-  proposerEmail: string
+  series?: boolean
+  proposerEmail?: string
   proposerName?: string
   startDateTime: string
   endDateTime: string
