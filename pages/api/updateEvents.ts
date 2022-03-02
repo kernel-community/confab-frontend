@@ -11,15 +11,7 @@ const fetchSessions = (editData: any, allSessions: any) => {
     if (k.startsWith("date-")) {
       let pieces = k.split("-");
       let id = pieces[2];
-      let old = allSessions.find((o: any) => {
-        console.log({
-          id: o.id,
-          curr: id
-        })
-        return o.id.toString() === id
-      }) ?? {id};
-      console.log(old)
-      console.log(allSessions.find((o: any) => o.id === id))
+      let old = allSessions.find((o: any) => o.id.toString() === id) ?? {id};
       let session = sessions.find((o) => o.id === id) ?? old;
 
       switch(pieces[1]) {
@@ -37,7 +29,6 @@ const fetchSessions = (editData: any, allSessions: any) => {
       if (!sessions.find((o) => o.id === id)) sessions.push(session);
     }
   })
-  console.log(sessions);
   return sessions;
 }
 
@@ -49,11 +40,6 @@ const fromClientToServerEvent = (e: ClientEvent): ServerEvent[] => {
       || !session.startDateTime
       || !session.endDateTime
     ) {
-      console.log({
-        title: e.title,
-        sessionStartDateTime: session.startDateTime,
-        sessionEndDateTime: session.endDateTime
-      })
       throw new Error("check fields");
     }
     return {
@@ -80,7 +66,6 @@ export default async function updateEvents (
     hash,
     data: editData
   } = req.body;
-  console.log(editData);
   const sessions = fetchSessions(editData, editData.allSessions);
   sessions.forEach((session) => {
     if (DateTime.fromISO(session.startDateTime) > DateTime.fromISO(session.endDateTime)) {
@@ -117,6 +102,5 @@ export default async function updateEvents (
     }),
     headers: { 'Content-type': 'application/json' },
   })).json());
-  console.log(r);
   return res.status(200).json({ r });
 }
