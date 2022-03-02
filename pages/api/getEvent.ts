@@ -5,13 +5,14 @@ import {ServerEvent, ClientEvent, Session} from '../../types';
 const prepareSessions = (e: ServerEvent[]): Session[] => {
   const sessions: Session[] = [];
   for (let i = 0; i < e.length; i ++) {
-    const limit = e[i].limit;
+    const limit = e[i].limit!;
     const rsvpArray = e[i].RSVP![0] ? e[i].RSVP![0] : {attendees: []};
     const availableSeats = ((limit - rsvpArray.attendees.length) > 0) ? (limit - rsvpArray.attendees.length) : 0;
     const noLimit = (e[i].limit == 0);
     sessions.push({
       id: e[i].id,
       startDateTime: e[i].startDateTime,
+      endDateTime: e[i].endDateTime,
       availableSeats,
       totalSeats: e[i].limit,
       noLimit,
@@ -29,6 +30,7 @@ const prepareResponse = (e: ServerEvent[]): ClientEvent => {
     sessionCount: e.length,
     sessions: prepareSessions(e),
     type: firstInSeries.type!.type,
+    location: firstInSeries.location,
   };
 };
 

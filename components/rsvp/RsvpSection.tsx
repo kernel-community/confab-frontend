@@ -6,29 +6,7 @@ import Button from 'components/atomic/Button';
 import Text from 'components/atomic/Text';
 import {useEffect, useState} from 'react';
 import {Session as ClientSession} from 'types';
-import {DateTime} from 'luxon';
-
-const isPast = (date: string): boolean => {
-  const zone = DateTime.local().zoneName;
-  const time = DateTime.fromISO(date, {zone});
-  const now = DateTime.local();
-  return now > time;
-};
-const getDateTimeString = (
-    date: string, // iso string with offset
-    option: 'date' | 'time',
-): string => {
-  const zone = DateTime.local().zoneName;
-  const time = DateTime.fromISO(date, {zone});
-  switch (option) {
-    case 'date':
-      return time.toFormat('d LLL');
-      break;
-    case 'time':
-      return time.toFormat('hh:mm a');
-    default: return '';
-  }
-};
+import { isPast, getDateTimeString } from 'utils';
 
 const Session = ({
   active,
