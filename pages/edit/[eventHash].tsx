@@ -170,7 +170,12 @@ const Post = () => {
               </div>
             </button>
             :
-            <div>{errorMessage}</div>
+            <div className='font-secondary text-lg'>
+              {errorMessage}&nbsp;
+              <span className='lowercase underline cursor-pointer' onClick={() => setErrorMessage("")}>
+                Try again?
+              </span>
+            </div>
           }
       </form>
       )
